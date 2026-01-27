@@ -16,8 +16,8 @@
 4. **Configure**:
    - Name: `scholarxafrica-backend`
    - Root Directory: `backend`
-   - Build: `npm install`
-   - Start: `npm start`
+   - Build Command: `npm install --production`
+   - Start Command: `node server.js`
 5. **Add Environment Variables** (click "Add from .env"):
    ```
    NODE_ENV=production

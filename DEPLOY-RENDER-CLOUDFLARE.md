@@ -39,8 +39,8 @@ This guide covers deploying:
    - **Branch**: `main`
    - **Root Directory**: `backend`
    - **Runtime**: `Node`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
+   - **Build Command**: `npm install --production`
+   - **Start Command**: `node server.js`
    - **Plan**: Free (or paid for production)
 
 ### Step 4: Configure Environment Variables

@@ -10,8 +10,8 @@ services:
     plan: free  # Options: free, starter, standard, pro
     branch: main
     rootDir: backend
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm install --production
+    startCommand: node server.js
     healthCheckPath: /api/health
     
     # Environment variables

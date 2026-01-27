@@ -29,8 +29,10 @@ Your ScholarXafrica project is now configured for deployment to:
 2. New + → Web Service
 3. Connect zimscholar-projects repo
 4. Root Directory: backend
-5. Add environment variables
-6. Deploy!
+5. Build Command: npm install --production
+6. Start Command: node server.js
+7. Add environment variables
+8. Deploy!
 ```
 
 ### Step 2: Deploy Frontend to Cloudflare (3 min)
