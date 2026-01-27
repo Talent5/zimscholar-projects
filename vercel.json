@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "npm run build:prod",
   "builds": [
     {
       "src": "package.json",
