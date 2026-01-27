@@ -6,11 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:prod": "vite build --mode production",
+    "build:cloudflare": "npm run build:prod && cd admin && npm install && npm run build && cd .. && mkdir -p dist/admin && cp -r admin/dist/* dist/admin/",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:cloudflare": "npm run build:cloudflare && wrangler pages deploy dist"
   },
   "dependencies": {
     "lucide-react": "^0.562.0",

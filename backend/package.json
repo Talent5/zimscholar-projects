@@ -6,7 +6,16 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "start:prod": "NODE_ENV=production node server.js",
+    "pm2:start": "pm2 start server.js --name scholarxafrica-backend",
+    "pm2:stop": "pm2 stop scholarxafrica-backend",
+    "pm2:restart": "pm2 restart scholarxafrica-backend",
+    "pm2:logs": "pm2 logs scholarxafrica-backend",
+    "seed:services": "node seedServices.js",
+    "seed:pricing": "node seedPricing.js",
+    "seed:customers": "node seedCustomers.js",
+    "seed:all": "npm run seed:services && npm run seed:pricing && npm run seed:customers"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",

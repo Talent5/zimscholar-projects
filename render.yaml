@@ -1,0 +1,74 @@
+# render.yaml
+# Render Blueprint for ScholarXafrica Backend
+
+services:
+  # Backend API Service
+  - type: web
+    name: scholarxafrica-backend
+    runtime: node
+    region: oregon  # Choose closest to your users: oregon, frankfurt, singapore, ohio
+    plan: free  # Options: free, starter, standard, pro
+    branch: main
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    
+    # Environment variables
+    envVars:
+      - key: NODE_ENV
+        value: production
+      
+      - key: PORT
+        value: 5000
+      
+      # MongoDB - Add from Render Dashboard (Secret)
+      - key: MONGODB_URI
+        sync: false
+      
+      # JWT - Add from Render Dashboard (Secret)  
+      - key: JWT_SECRET
+        sync: false
+      
+      # Admin credentials - Add from Render Dashboard (Secret)
+      - key: ADMIN_USERNAME
+        value: admin
+      
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      
+      # Email configuration - Add from Render Dashboard (Secret)
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      
+      - key: EMAIL_PORT
+        value: 587
+      
+      - key: EMAIL_SECURE
+        value: false
+      
+      - key: EMAIL_USER
+        sync: false
+      
+      - key: EMAIL_PASSWORD
+        sync: false
+      
+      - key: ADMIN_EMAIL
+        sync: false
+      
+      - key: ADMIN_DASHBOARD_URL
+        value: https://scholarxafrica.dev/admin
+      
+      # Supabase - Add from Render Dashboard (Secret)
+      - key: SUPABASE_URL
+        sync: false
+      
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      
+      # CORS - Update with your actual domain
+      - key: ALLOWED_ORIGINS
+        value: https://scholarxafrica.dev,https://www.scholarxafrica.dev
+
+    # Auto-deploy settings
+    autoDeploy: true

@@ -1,0 +1,157 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+
+jobs:
+  # Test Backend
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+      
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+      
+      # Add your test command here when you have tests
+      # - name: Run backend tests
+      #   working-directory: backend
+      #   run: npm test
+
+  # Test Frontend
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install frontend dependencies
+        run: npm ci
+      
+      - name: Run frontend tests
+        run: npm test
+
+  # Build and Deploy Frontend
+  deploy-frontend:
+    name: Deploy Frontend
+    needs: [test-backend, test-frontend]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build main site
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_APP_NAME: ScholarXafrica
+        run: npm run build:prod
+      
+      - name: Install admin dependencies
+        working-directory: admin
+        run: npm ci
+      
+      - name: Build admin panel
+        working-directory: admin
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: npm run build
+      
+      # Deploy to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+
+  # Deploy Backend (to VPS via SSH)
+  deploy-backend:
+    name: Deploy Backend
+    needs: [test-backend, test-frontend]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            cd /var/www/scholarxafrica
+            git pull origin main
+            cd backend
+            npm install --production
+            pm2 restart scholarxafrica-backend
+            pm2 save
+
+  # Health Check
+  health-check:
+    name: Health Check
+    needs: [deploy-backend, deploy-frontend]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Wait for deployment
+        run: sleep 30
+      
+      - name: Check backend health
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://api.scholarxafrica.dev/api/health)
+          if [ $response -eq 200 ]; then
+            echo "Backend is healthy"
+          else
+            echo "Backend health check failed with status $response"
+            exit 1
+          fi
+      
+      - name: Check frontend
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://scholarxafrica.dev)
+          if [ $response -eq 200 ]; then
+            echo "Frontend is accessible"
+          else
+            echo "Frontend check failed with status $response"
+            exit 1
+          fi
