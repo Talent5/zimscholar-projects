@@ -103,7 +103,7 @@ export const localBusinessStructuredData = {
   "image": "https://scholarxafrica.com/scholarxafrica-logo.png",
   "@id": "https://scholarxafrica.com",
   "url": "https://scholarxafrica.com",
-  "telephone": "+263-XXX-XXXXX",
+  "telephone": "+26784286089",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",

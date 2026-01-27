@@ -165,7 +165,7 @@ const ProjectRequestForm: React.FC = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+263 77 123 4567"
+                placeholder="+267 84 286 089"
                 required
               />
             </div>

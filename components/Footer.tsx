@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
             <p className="mb-2">Mon - Fri: 9am - 6pm (GMT+2)</p>
             <p className="mb-2">Email: support@zimscholar.dev</p>
             <a 
-              href="https://wa.me/263770000000" 
+              href="https://wa.me/26784286089" 
               className="text-green-400 hover:text-green-300 font-bold inline-flex items-center gap-2 mt-2"
             >
               Chat on WhatsApp

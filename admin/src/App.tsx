@@ -45,16 +45,75 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50">
-        <div className="flex flex-col items-center space-y-4">
-          <img 
-            src="/zimscholar-logo.png" 
-            alt="ZimScholar Logo" 
-            className="w-16 h-16 object-contain mb-2 animate-pulse"
-          />
-          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-600 font-medium">Verifying authentication...</p>
+      <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 overflow-hidden">
+        {/* Animated background grid */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          <div className="particle particle-1"></div>
+          <div className="particle particle-2"></div>
+          <div className="particle particle-3"></div>
+          <div className="particle particle-4"></div>
+          <div className="particle particle-5"></div>
         </div>
+
+        {/* Main loader container */}
+        <div className="relative z-10 flex flex-col items-center space-y-8">
+          {/* Logo with glow effect */}
+          <div className="relative">
+            <div className="absolute inset-0 blur-2xl bg-blue-500/30 animate-pulse-slow"></div>
+            <div className="relative bg-slate-900/50 backdrop-blur-sm p-6 rounded-2xl border border-blue-500/30 shadow-2xl">
+              <img 
+                src="/scholarxafrica-logo.png" 
+                alt="ZimScholar Logo" 
+                className="w-20 h-20 object-contain animate-float"
+              />
+            </div>
+          </div>
+
+          {/* Futuristic spinner */}
+          <div className="relative w-32 h-32">
+            {/* Outer ring */}
+            <div className="absolute inset-0 rounded-full border-4 border-blue-500/20"></div>
+            
+            {/* Spinning rings */}
+            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 border-r-blue-400 animate-spin-slow"></div>
+            <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-cyan-400 border-r-cyan-300 animate-spin-reverse"></div>
+            <div className="absolute inset-4 rounded-full border-4 border-transparent border-t-blue-300 border-r-blue-200 animate-spin"></div>
+            
+            {/* Center glow */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-8 h-8 bg-blue-500 rounded-full animate-pulse-glow shadow-lg shadow-blue-500/50"></div>
+            </div>
+          </div>
+
+          {/* Loading text with typing effect */}
+          <div className="text-center space-y-2">
+            <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 animate-gradient">
+              Initializing System
+            </p>
+            <div className="flex items-center justify-center space-x-2">
+              <div className="flex space-x-1">
+                <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce-delay-0"></span>
+                <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce-delay-1"></span>
+                <span className="w-2 h-2 bg-blue-300 rounded-full animate-bounce-delay-2"></span>
+              </div>
+            </div>
+            <p className="text-sm text-slate-400 font-mono">Verifying authentication...</p>
+          </div>
+
+          {/* Progress bar */}
+          <div className="w-64 h-1 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 animate-progress"></div>
+          </div>
+        </div>
+
+        {/* Corner decorations */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-blue-500/30 rounded-tl-3xl"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 border-r-2 border-t-2 border-blue-500/30 rounded-tr-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 border-l-2 border-b-2 border-blue-500/30 rounded-bl-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-blue-500/30 rounded-br-3xl"></div>
       </div>
     );
   }

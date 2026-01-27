@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, onLogout }
       <div className="p-6 border-b border-slate-800 bg-slate-950/50">
         <div className="flex items-center gap-3">
           <img 
-            src="/zimscholar-logo.png" 
+            src="/scholarxafrica-logo.png" 
             alt="ZimScholar Logo" 
             className="w-8 h-8 rounded-lg object-contain shadow-lg"
           />
