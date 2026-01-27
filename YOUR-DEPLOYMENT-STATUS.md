@@ -25,8 +25,8 @@ Expected response:
 
 ### Step 2: Configure Build Settings
 ```
-Framework preset: None (or Vite)
-Build command: npm install --legacy-peer-deps && npm run build:prod
+Framework preset: None
+Build command: npm run build:prod
 Build output directory: dist
 Root directory: (leave empty)
 ```
