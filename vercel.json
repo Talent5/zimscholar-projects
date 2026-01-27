@@ -40,7 +40,7 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "@vite_api_url",
+    "VITE_API_URL": "https://zimscholar-projects.onrender.com/",
     "VITE_APP_NAME": "ScholarXafrica"
   }
 }
