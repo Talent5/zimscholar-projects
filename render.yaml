@@ -66,7 +66,7 @@ services:
       - key: SUPABASE_SERVICE_KEY
         sync: false
       
-      # CORS - Update with your actual domain
+      # CORS - Update with your actual Cloudflare Pages domain after deployment
       - key: ALLOWED_ORIGINS
         value: https://scholarxafrica.dev,https://www.scholarxafrica.dev
 

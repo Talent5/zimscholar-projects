@@ -33,7 +33,7 @@
    ALLOWED_ORIGINS=https://scholarxafrica.dev
    ```
 6. **Click**: Create Web Service
-7. **Copy URL**: `https://your-app.onrender.com` (you'll need this!)
+7. **Your Backend URL**: `https://zimscholar-projects.onrender.com` ✅
 
 ### 2️⃣ Frontend (Cloudflare Pages) - 3 minutes
 
@@ -41,13 +41,13 @@
 2. **Click**: Create application → Connect to Git
 3. **Select**: `Talent5/zimscholar-projects`
 4. **Configure**:
-   - Build command: `npm install && npm run build:prod`
+   - Build command: `npm install --legacy-peer-deps && npm run build:prod`
    - Build output: `dist`
    - Root directory: (leave empty)
 5. **Environment Variables**:
    ```
    NODE_VERSION=20
-   VITE_API_URL=https://your-app.onrender.com
+   VITE_API_URL=https://zimscholar-projects.onrender.com
    VITE_APP_NAME=ScholarXafrica
    ```
 6. **Click**: Save and Deploy
@@ -64,6 +64,11 @@ Go back to Render → Environment → Update:
 ALLOWED_ORIGINS=https://scholarxafrica.dev,https://www.scholarxafrica.dev
 ```
 
+**Note**: Once you get your Cloudflare Pages URL (e.g., `zimscholar-projects.pages.dev`), add it too:
+```
+ALLOWED_ORIGINS=https://scholarxafrica.dev,https://www.scholarxafrica.dev,https://zimscholar-projects.pages.dev
+```
+
 Click "Save" → Service will auto-redeploy
 
 ---
@@ -72,7 +77,7 @@ Click "Save" → Service will auto-redeploy
 
 ```bash
 # Test backend
-curl https://your-app.onrender.com/api/health
+curl https://zimscholar-projects.onrender.com/api/health
 
 # Test frontend
 curl https://scholarxafrica.dev

@@ -3,7 +3,7 @@
 
 # Build configuration
 [build]
-  command = "npm install && npm run build:prod"
+  command = "npm install --legacy-peer-deps && npm run build:prod"
   publish = "dist"
 
 # Build environment variables

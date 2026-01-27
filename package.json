@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:prod": "vite build --mode production",
-    "build:cloudflare": "npm run build:prod && cd admin && npm install && npm run build && cd .. && mkdir -p dist/admin && cp -r admin/dist/* dist/admin/",
+    "build:cloudflare": "npm install --legacy-peer-deps && npm run build:prod && cd admin && npm install --legacy-peer-deps && npm run build && cd .. && mkdir -p dist/admin && cp -r admin/dist/* dist/admin/",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

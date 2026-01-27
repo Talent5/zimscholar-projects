@@ -83,12 +83,12 @@ node -e "const bcrypt = require('bcryptjs'); bcrypt.hash('YourPassword123!', 10)
 ### Step 5: Deploy
 1. Click **"Create Web Service"**
 2. Wait for deployment (~2-5 minutes)
-3. Copy your Render URL: `https://scholarxafrica-backend.onrender.com`
+3. Your Render URL: `https://zimscholar-projects.onrender.com` ✅
 
 ### Step 6: Verify Backend
 ```bash
 # Test health endpoint
-curl https://scholarxafrica-backend.onrender.com/api/health
+curl https://zimscholar-projects.onrender.com/api/health
 
 # Expected response:
 {"status":"ok","message":"Server is running"}
@@ -116,7 +116,7 @@ curl https://scholarxafrica-backend.onrender.com/api/health
 **Build configuration:**
 ```
 Root Directory: (leave empty)
-Build command: npm install && npm run build:prod
+Build command: npm install --legacy-peer-deps && npm run build:prod
 Build output directory: dist
 ```
 
@@ -125,7 +125,7 @@ Build output directory: dist
 Build environment variables:
 ```
 NODE_VERSION = 20
-VITE_API_URL = https://scholarxafrica-backend.onrender.com
+VITE_API_URL = https://zimscholar-projects.onrender.com
 VITE_APP_NAME = ScholarXafrica
 ```
 
@@ -199,7 +199,7 @@ Save and redeploy.
 
 In Cloudflare Pages → Settings → Environment variables:
 ```
-VITE_API_URL = https://scholarxafrica-backend.onrender.com
+VITE_API_URL = https://zimscholar-projects.onrender.com
 ```
 
 Trigger a new deployment to apply changes.
@@ -257,7 +257,7 @@ Cloudflare automatically provisions SSL. Verify:
                │ API Requests
                ▼
 ┌──────────────────────────────────────────────┐
-│   scholarxafrica-backend.onrender.com        │
+│   zimscholar-projects.onrender.com           │
 │         (Render - Backend API)               │
 │                                              │
 │  ┌──────────────────────────────────────┐  │
@@ -425,9 +425,9 @@ git push origin main
 
 ## Quick Reference
 
-**Backend URL**: https://scholarxafrica-backend.onrender.com
-**Frontend URL**: https://scholarxafrica.dev
-**Admin Panel**: https://scholarxafrica.dev/admin
+**Backend URL**: https://zimscholar-projects.onrender.com ✅
+**Frontend URL**: https://scholarxafrica.dev (pending)
+**Admin Panel**: https://scholarxafrica.dev/admin (pending)
 
 **Render Dashboard**: https://dashboard.render.com
 **Cloudflare Dashboard**: https://dash.cloudflare.com
