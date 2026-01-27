@@ -1,10 +1,11 @@
 # Cloudflare Pages Configuration
 # This file configures build settings for Cloudflare Pages deployment
 
-# Build configuration
+name = "zimscholar-projects"
+pages_build_output_dir = "dist"
+
 [build]
-  command = "npm install --legacy-peer-deps && npm run build:prod"
-  publish = "dist"
+command = "npm install --legacy-peer-deps && npm run build:prod"
 
 # Build environment variables
 [build.environment]
