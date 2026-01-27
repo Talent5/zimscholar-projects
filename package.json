@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:prod": "vite build --mode production",
+    "build": "npm install --legacy-peer-deps && vite build",
+    "build:prod": "npm install --legacy-peer-deps && vite build --mode production",
     "build:cloudflare": "npm install --legacy-peer-deps && npm run build:prod && cd admin && npm install --legacy-peer-deps && npm run build && cd .. && mkdir -p dist/admin && cp -r admin/dist/* dist/admin/",
     "preview": "vite preview",
     "test": "vitest run",
