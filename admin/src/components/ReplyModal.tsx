@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Send, Loader2, Paperclip } from 'lucide-react';
-import { getAuthToken } from '../../../config/api.config';
+import { apiRequest } from '../../../config/api.config';
 
 interface ReplyModalProps {
   isOpen: boolean;
@@ -56,12 +56,8 @@ const ReplyModal: React.FC<ReplyModalProps> = ({ isOpen, onClose, recipient, onS
         }
       }
 
-      const token = getAuthToken();
-      const response = await fetch('http://localhost:5000/api/admin/send-reply', {
+      const response = await apiRequest('/api/admin/send-reply', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
         body: formData,
       });
 

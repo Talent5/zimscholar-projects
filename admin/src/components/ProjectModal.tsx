@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Loader2, Plus, Trash2, Upload, Image as ImageIcon, Video, FileText, DollarSign, Award, Calendar, GraduationCap, Link as LinkIcon, Eye, Star, Hash, Folder, Check } from 'lucide-react';
-import { getAuthToken } from '../../../config/api.config';
+import { apiRequest } from '../../../config/api.config';
 
 interface PortfolioProject {
   _id?: string;
@@ -154,13 +154,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, onClose, project, o
         : '/api/admin/portfolio';
       
       const method = project ? 'PUT' : 'POST';
-      const token = getAuthToken();
 
-      const response = await fetch(`http://localhost:5000${url}`, {
+      const response = await apiRequest(url, {
         method,
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
         body: formDataToSend
       });
 

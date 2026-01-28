@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, ShieldCheck, Mail, Key } from 'lucide-react';
 import { login } from '../config/auth.config';
+import Logo from './Logo';
 
 interface LoginProps {
   onLogin: () => void;
@@ -41,10 +42,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
             <div className="relative h-20 w-20 bg-slate-900 rounded-2xl flex items-center justify-center text-white ring-1 ring-white/10 shadow-2xl overflow-hidden">
-              <img 
-                src="/zimscholar-logo.png" 
-                alt="ZimScholar Logo" 
+              <Logo
+                alt="ZimScholar Logo"
                 className="w-16 h-16 object-contain"
+                width={64}
+                height={64}
               />
             </div>
           </div>

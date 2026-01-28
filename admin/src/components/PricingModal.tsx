@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save, Loader2, Plus, Trash2, Check, Sparkles } from 'lucide-react';
-import { getAuthToken } from '../../../config/api.config';
+import { apiRequest } from '../../../config/api.config';
 
 interface PricingPackage {
   _id?: string;
@@ -98,14 +98,9 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, package: p
         : '/api/admin/pricing';
       
       const method = pkg ? 'PUT' : 'POST';
-      const token = getAuthToken();
 
-      const response = await fetch(`http://localhost:5000${url}`, {
+      const response = await apiRequest(url, {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
         body: JSON.stringify(dataToSend)
       });
 

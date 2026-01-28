@@ -10,6 +10,7 @@ import PricingManager from './components/PricingManager';
 import CustomersManager from './components/CustomersManager';
 import RevenueAnalytics from './components/RevenueAnalytics';
 import Login from './components/Login';
+import Logo from './components/Logo';
 import { verifyAuth, logout, isAuthenticated as checkAuth } from './config/auth.config';
 import './styles/global.css';
 
@@ -64,11 +65,7 @@ const App: React.FC = () => {
           <div className="relative">
             <div className="absolute inset-0 blur-2xl bg-blue-500/30 animate-pulse-slow"></div>
             <div className="relative bg-slate-900/50 backdrop-blur-sm p-6 rounded-2xl border border-blue-500/30 shadow-2xl">
-              <img 
-                src="/scholarxafrica-logo.png" 
-                alt="ZimScholar Logo" 
-                className="w-20 h-20 object-contain animate-float"
-              />
+                <Logo className="w-20 h-20 object-contain animate-float" />
             </div>
           </div>
 

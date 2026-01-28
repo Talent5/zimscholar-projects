@@ -12,6 +12,7 @@ import {
   LogOut,
   ChevronRight
 } from 'lucide-react';
+import Logo from './Logo';
 
 interface SidebarProps {
   currentView: string;
@@ -36,10 +37,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, onLogout }
     <aside className="fixed inset-y-0 left-0 w-64 bg-slate-900 text-slate-300 flex flex-col shadow-xl z-50">
       <div className="p-6 border-b border-slate-800 bg-slate-950/50">
         <div className="flex items-center gap-3">
-          <img 
-            src="/scholarxafrica-logo.png" 
-            alt="ZimScholar Logo" 
+          <Logo
+            alt="ZimScholar Logo"
             className="w-8 h-8 rounded-lg object-contain shadow-lg"
+            width={32}
+            height={32}
           />
           <div>
             <h2 className="text-lg font-bold text-white tracking-tight">ZimScholar</h2>
