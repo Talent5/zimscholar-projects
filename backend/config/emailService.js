@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 // Create reusable transporter
 const createTransporter = () => {
-  return (nodemailer.default || nodemailer).createTransporter({
+  return (nodemailer.default || nodemailer).createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT || 587,
     secure: process.env.EMAIL_SECURE === 'true', // true for 465, false for other ports
