@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Trash2, Send } from 'lucide-react';
+import { apiRequest } from '../utils/api';
+import { getAuthToken } from '../../../config/api.config';
 
 interface LineItem {
   description: string;
@@ -149,7 +151,7 @@ const QuotationModal: React.FC<QuotationModalProps> = ({
     setLoading(true);
 
     try {
-      const token = localStorage.getItem('zimscholar_auth_token');
+      const token = getAuthToken();
       if (!token) {
         throw new Error('Please login to continue');
       }
@@ -157,14 +159,13 @@ const QuotationModal: React.FC<QuotationModalProps> = ({
       const endpoint = editMode 
         ? `/api/admin/quote-requests/${quoteRequest._id}/quotation`
         : `/api/admin/quote-requests/${quoteRequest._id}/generate-quotation`;
-      
       const method = editMode ? 'PUT' : 'POST';
 
-      const response = await fetch(endpoint, {
+      const response = await apiRequest(endpoint, {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          // apiRequest will add Authorization if token exists
         },
         body: JSON.stringify({
           lineItems: validLineItems,
