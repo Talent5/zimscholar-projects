@@ -96,7 +96,7 @@ const ProjectRequestForm: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.PUBLIC.PROJECT_REQUEST}`, {
+      const response = await fetch(getApiUrl(API_CONFIG.PUBLIC.PROJECT_REQUEST), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import { Button } from './Button';
+import { API_CONFIG, getApiUrl } from '../config/api.config';
 
 interface QuoteFormData {
   name: string;
@@ -100,7 +101,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ projectInfo }) => {
     setError('');
 
     try {
-      const response = await fetch('/api/quote-request', {
+      const response = await fetch(getApiUrl(API_CONFIG.PUBLIC.QUOTE_REQUEST), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
