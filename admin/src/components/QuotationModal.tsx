@@ -201,27 +201,28 @@ const QuotationModal: React.FC<QuotationModalProps> = ({
           link.href = downloadUrl;
           link.download = `quotation-${data.quotation.quotationNumber}.pdf`;
           
-          // Add authorization header using shared helper
-          const { getAuthToken } = await import('../../../config/api.config');
-          const token = getAuthToken();
-          fetch(downloadUrl, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          .then(res => {
-            if (!res.ok) throw new Error('Please login to download quotations');
-            return res.blob();
-          })
-          .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            link.href = url;
-            link.click();
-            window.URL.revokeObjectURL(url);
-          })
-          .catch(err => {
-            console.error('Download error:', err);
-            alert(err.message || 'Failed to download quotation. Please try from the quote requests list.');
+          // Always use getAuthToken from shared config for download
+          import('../../../config/api.config').then(({ getAuthToken }) => {
+            const token = getAuthToken();
+            fetch(downloadUrl, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            .then(res => {
+              if (!res.ok) throw new Error('Please login to download quotations');
+              return res.blob();
+            })
+            .then(blob => {
+              const url = window.URL.createObjectURL(blob);
+              link.href = url;
+              link.click();
+              window.URL.revokeObjectURL(url);
+            })
+            .catch(err => {
+              console.error('Download error:', err);
+              alert(err.message || 'Failed to download quotation. Please try from the quote requests list.');
+            });
           });
         }
         
