@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, Bell, Search } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import ContactsList from './components/ContactsList';
@@ -18,12 +19,27 @@ import './styles/global.css';
 
 type View = 'dashboard' | 'contacts' | 'quotes' | 'projects' | 'services' | 'portfolio' | 'pricing' | 'customers' | 'revenue' | 'users' | 'documents';
 
+const VIEW_TITLES: Record<View, string> = {
+  dashboard: 'Dashboard',
+  contacts: 'Contact Forms',
+  quotes: 'Quote Requests',
+  projects: 'Project Requests',
+  services: 'Services',
+  portfolio: 'Portfolio',
+  pricing: 'Pricing',
+  customers: 'Customers',
+  revenue: 'Revenue Analytics',
+  users: 'Admin Users',
+  documents: 'Send Documents',
+};
+
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  // Verify authentication on mount
   useEffect(() => {
     const verifyToken = async () => {
       if (checkAuth()) {
@@ -32,13 +48,10 @@ const App: React.FC = () => {
       }
       setLoading(false);
     };
-
     verifyToken();
   }, []);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
+  const handleLogin = () => setIsAuthenticated(true);
 
   const handleLogout = () => {
     logout();
@@ -46,73 +59,30 @@ const App: React.FC = () => {
     setCurrentView('dashboard');
   };
 
+  const handleViewChange = (view: View) => {
+    setCurrentView(view);
+    setSidebarOpen(false);
+  };
+
   if (loading) {
     return (
-      <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 overflow-hidden">
-        {/* Animated background grid */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        
-        {/* Floating particles */}
-        <div className="absolute inset-0">
-          <div className="particle particle-1"></div>
-          <div className="particle particle-2"></div>
-          <div className="particle particle-3"></div>
-          <div className="particle particle-4"></div>
-          <div className="particle particle-5"></div>
-        </div>
-
-        {/* Main loader container */}
-        <div className="relative z-10 flex flex-col items-center space-y-8">
-          {/* Logo with glow effect */}
+      <div className="flex items-center justify-center min-h-screen bg-[#0f1117]">
+        <div className="flex flex-col items-center gap-6">
           <div className="relative">
-            <div className="absolute inset-0 blur-2xl bg-blue-500/30 animate-pulse-slow"></div>
-            <div className="relative bg-slate-900/50 backdrop-blur-sm p-6 rounded-2xl border border-blue-500/30 shadow-2xl">
-                <Logo className="w-20 h-20 object-contain animate-float" />
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-xl shadow-indigo-500/25">
+              <Logo className="w-10 h-10 object-contain" />
             </div>
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 opacity-20 blur-lg animate-pulse"></div>
           </div>
-
-          {/* Futuristic spinner */}
-          <div className="relative w-32 h-32">
-            {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full border-4 border-blue-500/20"></div>
-            
-            {/* Spinning rings */}
-            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 border-r-blue-400 animate-spin-slow"></div>
-            <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-cyan-400 border-r-cyan-300 animate-spin-reverse"></div>
-            <div className="absolute inset-4 rounded-full border-4 border-transparent border-t-blue-300 border-r-blue-200 animate-spin"></div>
-            
-            {/* Center glow */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 bg-blue-500 rounded-full animate-pulse-glow shadow-lg shadow-blue-500/50"></div>
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex gap-1.5">
+              <span className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce [animation-delay:0ms]"></span>
+              <span className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce [animation-delay:150ms]"></span>
+              <span className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce [animation-delay:300ms]"></span>
             </div>
-          </div>
-
-          {/* Loading text with typing effect */}
-          <div className="text-center space-y-2">
-            <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 animate-gradient">
-              Initializing System
-            </p>
-            <div className="flex items-center justify-center space-x-2">
-              <div className="flex space-x-1">
-                <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce-delay-0"></span>
-                <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce-delay-1"></span>
-                <span className="w-2 h-2 bg-blue-300 rounded-full animate-bounce-delay-2"></span>
-              </div>
-            </div>
-            <p className="text-sm text-slate-400 font-mono">Verifying authentication...</p>
-          </div>
-
-          {/* Progress bar */}
-          <div className="w-64 h-1 bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 animate-progress"></div>
+            <p className="text-sm text-slate-500 font-medium">Loading dashboard...</p>
           </div>
         </div>
-
-        {/* Corner decorations */}
-        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-blue-500/30 rounded-tl-3xl"></div>
-        <div className="absolute top-0 right-0 w-32 h-32 border-r-2 border-t-2 border-blue-500/30 rounded-tr-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-32 border-l-2 border-b-2 border-blue-500/30 rounded-bl-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-blue-500/30 rounded-br-3xl"></div>
       </div>
     );
   }
@@ -123,43 +93,98 @@ const App: React.FC = () => {
 
   const renderView = () => {
     switch (currentView) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'contacts':
-        return <ContactsList />;
-      case 'quotes':
-        return <QuoteRequestsList />;
-      case 'projects':
-        return <ProjectRequestsList />;
-      case 'services':
-        return <ServicesManager />;
-      case 'portfolio':
-        return <PortfolioManager />;
-      case 'pricing':
-        return <PricingManager />;
-      case 'customers':
-        return <CustomersManager />;
-      case 'revenue':
-        return <RevenueAnalytics />;
-      case 'users':
-        return <UserManagement />;
-      case 'documents':
-        return <DocumentDelivery />;
-      default:
-        return <Dashboard />;
+      case 'dashboard': return <Dashboard />;
+      case 'contacts': return <ContactsList />;
+      case 'quotes': return <QuoteRequestsList />;
+      case 'projects': return <ProjectRequestsList />;
+      case 'services': return <ServicesManager />;
+      case 'portfolio': return <PortfolioManager />;
+      case 'pricing': return <PricingManager />;
+      case 'customers': return <CustomersManager />;
+      case 'revenue': return <RevenueAnalytics />;
+      case 'users': return <UserManagement />;
+      case 'documents': return <DocumentDelivery />;
+      default: return <Dashboard />;
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 font-sans text-slate-800">
-      <Sidebar 
-        currentView={currentView} 
-        onViewChange={setCurrentView}
-        onLogout={handleLogout}
-      />
-      <main className="flex-1 ml-64 p-8 overflow-y-auto h-screen">
-        {renderView()}
-      </main>
+    <div className="flex h-screen bg-[#f8f9fb] overflow-hidden">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden backdrop-blur-sm transition-opacity"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`
+        fixed inset-y-0 left-0 z-50 transform transition-all duration-300 ease-out
+        lg:relative lg:translate-x-0 lg:flex-shrink-0
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${sidebarCollapsed ? 'w-[72px]' : 'w-[260px]'}
+      `}>
+        <Sidebar
+          currentView={currentView}
+          onViewChange={handleViewChange}
+          onLogout={handleLogout}
+          collapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+        />
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Top bar */}
+        <header className="h-[60px] bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-4 lg:px-6 flex-shrink-0 z-30">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="hidden lg:block">
+              <h1 className="text-[15px] font-semibold text-slate-800">{VIEW_TITLES[currentView]}</h1>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {/* Search */}
+            <div className="hidden md:flex items-center gap-2 bg-slate-50/80 border border-slate-200/80 rounded-xl px-3 py-[7px] w-56 focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-500/10 focus-within:bg-white transition-all">
+              <Search size={15} className="text-slate-400 flex-shrink-0" />
+              <input
+                type="text"
+                placeholder="Search..."
+                className="bg-transparent border-none outline-none text-sm text-slate-600 placeholder-slate-400 w-full"
+              />
+            </div>
+
+            {/* Notifications */}
+            <button className="relative p-2 rounded-xl text-slate-400 hover:bg-slate-50 hover:text-slate-600 transition-colors">
+              <Bell size={19} />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+            </button>
+
+            {/* Divider + Profile */}
+            <div className="w-px h-7 bg-slate-200 mx-1.5"></div>
+            <button className="flex items-center gap-2 hover:bg-slate-50 rounded-xl px-2 py-1.5 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-sm shadow-indigo-500/25">
+                A
+              </div>
+              <span className="hidden sm:block text-sm font-medium text-slate-700">Admin</span>
+            </button>
+          </div>
+        </header>
+
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="p-4 lg:p-6 xl:p-8 max-w-[1600px] mx-auto animate-fadeIn">
+            {renderView()}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

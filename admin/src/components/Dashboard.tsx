@@ -1,5 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { MessageSquare, DollarSign, FolderKanban, TrendingUp, ArrowUpRight, ArrowDownRight, Activity } from 'lucide-react';
+import {
+  MessageSquare,
+  DollarSign,
+  FolderKanban,
+  TrendingUp,
+  ArrowUpRight,
+  ArrowDownRight,
+  Activity,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  Zap,
+  BarChart3,
+  CalendarDays,
+} from 'lucide-react';
 import { fetchStats } from '../utils/api';
 
 interface Stats {
@@ -36,163 +50,200 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const now = new Date();
+  const greeting = now.getHours() < 12 ? 'Good morning' : now.getHours() < 18 ? 'Good afternoon' : 'Good evening';
+  const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
   const statCards = [
     {
-      title: 'Contact Forms',
+      title: 'Contacts',
       value: stats.totalContacts,
       change: '+12%',
-      trend: 'up',
+      trend: 'up' as const,
       icon: MessageSquare,
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-50',
-      borderColor: 'border-indigo-100',
+      gradient: 'from-blue-500 to-blue-600',
+      shadowColor: 'shadow-blue-500/20',
+      bgAccent: 'bg-blue-50',
+      textAccent: 'text-blue-600',
     },
     {
       title: 'Quote Requests',
       value: stats.totalQuotes,
       change: '+4%',
-      trend: 'up',
+      trend: 'up' as const,
       icon: DollarSign,
-      color: 'text-emerald-600',
-      bgColor: 'bg-emerald-50',
-      borderColor: 'border-emerald-100',
+      gradient: 'from-emerald-500 to-emerald-600',
+      shadowColor: 'shadow-emerald-500/20',
+      bgAccent: 'bg-emerald-50',
+      textAccent: 'text-emerald-600',
     },
     {
-      title: 'Project Requests',
+      title: 'Projects',
       value: stats.totalProjects,
       change: '-2%',
-      trend: 'down',
+      trend: 'down' as const,
       icon: FolderKanban,
-      color: 'text-amber-600',
-      bgColor: 'bg-amber-50',
-      borderColor: 'border-amber-100',
+      gradient: 'from-amber-500 to-orange-500',
+      shadowColor: 'shadow-amber-500/20',
+      bgAccent: 'bg-amber-50',
+      textAccent: 'text-amber-600',
     },
     {
-      title: 'Recent Activity',
+      title: 'Activity',
       value: stats.recentSubmissions,
       change: '+8%',
-      trend: 'up',
-      icon: TrendingUp,
-      color: 'text-violet-600',
-      bgColor: 'bg-violet-50',
-      borderColor: 'border-violet-100',
+      trend: 'up' as const,
+      icon: Zap,
+      gradient: 'from-violet-500 to-purple-600',
+      shadowColor: 'shadow-violet-500/20',
+      bgAccent: 'bg-violet-50',
+      textAccent: 'text-violet-600',
     },
   ];
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full p-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-[3px] border-slate-200 border-t-indigo-500 rounded-full animate-spin"></div>
+          <p className="text-sm text-slate-400 font-medium">Loading stats...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-6">
+      {/* Welcome header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard Overview</h1>
-          <p className="mt-1 text-slate-500">Welcome back! Here's what's happening today.</p>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">{greeting} 👋</h1>
+          <p className="text-sm text-slate-500 mt-1 flex items-center gap-1.5">
+            <CalendarDays size={14} className="text-slate-400" />
+            {dateStr}
+          </p>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-slate-500 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            System Online
+        <div className="flex items-center gap-2.5">
+          <span className="inline-flex items-center gap-2 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-3 py-1.5 rounded-full">
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+            All systems online
           </span>
-          <button className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20">
-            Download Report
-          </button>
         </div>
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-700 p-4 rounded-lg border border-red-100 flex items-center gap-2">
-          <Activity size={20} />
-          {error}
+        <div className="flex items-center gap-3 p-4 bg-rose-50 border border-rose-200/60 rounded-xl text-rose-700 text-sm">
+          <AlertCircle size={18} className="flex-shrink-0" />
+          <span>{error}</span>
+          <button onClick={loadStats} className="ml-auto text-xs font-semibold underline hover:no-underline">Retry</button>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((card) => {
+      {/* Stat cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {statCards.map((card, i) => {
           const Icon = card.icon;
           return (
-            <div 
-              key={card.title} 
-              className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group"
+            <div
+              key={card.title}
+              className="group relative bg-white rounded-2xl border border-slate-200/60 p-5 hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-0.5 transition-all duration-300"
+              style={{ animationDelay: `${i * 80}ms` }}
             >
-              <div className="flex items-start justify-between">
-                <div className={`p-3 rounded-xl ${card.bgColor} ${card.color} group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon size={24} />
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${card.gradient} ${card.shadowColor} shadow-lg flex items-center justify-center`}>
+                  <Icon size={20} className="text-white" strokeWidth={2} />
                 </div>
-                {card.trend === 'up' ? (
-                  <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
-                    <ArrowUpRight size={14} />
-                    {card.change}
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1 text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">
-                    <ArrowDownRight size={14} />
-                    {card.change}
-                  </div>
-                )}
+                <div className={`flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-md ${
+                  card.trend === 'up' 
+                    ? 'text-emerald-700 bg-emerald-50' 
+                    : 'text-rose-700 bg-rose-50'
+                }`}>
+                  {card.trend === 'up' ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                  {card.change}
+                </div>
               </div>
-              <div className="mt-4">
-                <h3 className="text-sm font-medium text-slate-500">{card.title}</h3>
-                <p className="text-3xl font-bold text-slate-900 mt-1 tracking-tight">{card.value}</p>
+              <div>
+                <p className="text-[13px] font-medium text-slate-500 mb-0.5">{card.title}</p>
+                <p className="text-[28px] font-bold text-slate-900 tracking-tight leading-none">{card.value.toLocaleString()}</p>
               </div>
+              {/* Subtle bottom accent */}
+              <div className={`absolute bottom-0 left-4 right-4 h-[2px] rounded-full bg-gradient-to-r ${card.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
             </div>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-slate-900">Notifications</h2>
-            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">View All</button>
-          </div>
-          <div className="flex flex-col items-center justify-center py-8 text-slate-400">
-             <MessageSquare size={48} className="mb-4 opacity-20" />
-             <p>No new notifications</p> 
+      {/* Bottom grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        {/* Quick actions */}
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200/60 p-5">
+          <h2 className="text-sm font-semibold text-slate-800 mb-4 flex items-center gap-2">
+            <BarChart3 size={16} className="text-slate-400" />
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-2 gap-2.5">
+            {[
+              { label: 'View Contacts', color: 'bg-blue-50 text-blue-700 hover:bg-blue-100', icon: MessageSquare },
+              { label: 'View Quotes', color: 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100', icon: DollarSign },
+              { label: 'View Projects', color: 'bg-amber-50 text-amber-700 hover:bg-amber-100', icon: FolderKanban },
+              { label: 'Analytics', color: 'bg-violet-50 text-violet-700 hover:bg-violet-100', icon: TrendingUp },
+            ].map((action) => {
+              const ActionIcon = action.icon;
+              return (
+                <button
+                  key={action.label}
+                  className={`flex items-center gap-2.5 p-3 rounded-xl text-xs font-semibold ${action.color} transition-colors`}
+                >
+                  <ActionIcon size={16} />
+                  {action.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-xl border border-slate-800 text-white shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-          
-          <h2 className="text-lg font-bold mb-2">System Status</h2>
-          <div className="flex items-center gap-3 mb-8">
-            <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
-            <span className="text-slate-300 text-sm">All systems operational</span>
-          </div>
+        {/* System status */}
+        <div className="lg:col-span-3 bg-gradient-to-br from-[#0f1117] to-[#1a1d2e] rounded-2xl p-5 text-white relative overflow-hidden">
+          {/* Background glow */}
+          <div className="absolute -top-20 -right-20 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-          <div className="space-y-4 relative z-10">
-            <div>
-              <div className="flex justify-between text-sm mb-1 text-slate-300">
-                <span>Server Load</span>
-                <span>24%</span>
-              </div>
-              <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                <div className="h-full w-[24%] bg-blue-500 rounded-full"></div>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-sm mb-1 text-slate-300">
-                <span>Database Usage</span>
-                <span>45%</span>
-              </div>
-              <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                <div className="h-full w-[45%] bg-purple-500 rounded-full"></div>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-sm font-semibold flex items-center gap-2">
+                <Activity size={16} className="text-indigo-400" />
+                System Status
+              </h2>
+              <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
+                <CheckCircle2 size={14} />
+                Operational
               </div>
             </div>
-            <div>
-              <div className="flex justify-between text-sm mb-1 text-slate-300">
-                <span>Memory</span>
-                <span>12%</span>
-              </div>
-              <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                <div className="h-full w-[12%] bg-emerald-500 rounded-full"></div>
-              </div>
+
+            <div className="space-y-4">
+              {[
+                { label: 'API Server', value: 24, color: 'bg-indigo-500' },
+                { label: 'Database', value: 45, color: 'bg-purple-500' },
+                { label: 'Storage', value: 12, color: 'bg-emerald-500' },
+              ].map((metric) => (
+                <div key={metric.label}>
+                  <div className="flex justify-between text-xs mb-1.5">
+                    <span className="text-slate-400 font-medium">{metric.label}</span>
+                    <span className="text-slate-300 font-semibold">{metric.value}%</span>
+                  </div>
+                  <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div
+                      className={`h-full ${metric.color} rounded-full transition-all duration-1000`}
+                      style={{ width: `${metric.value}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-[11px] text-slate-500">
+              <Clock size={12} />
+              Last updated: just now
             </div>
           </div>
         </div>
