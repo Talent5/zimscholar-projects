@@ -905,36 +905,29 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
       return res.status(400).json({ error: 'Required fields missing' });
     }
 
-    // Upload attachments to Supabase if provided
-    const emailAttachments = [];
-    
-    if (attachments.length > 0) {
-      const uploadResults = await uploadMultipleFiles(
-        attachments,
-        BUCKETS.ATTACHMENTS,
-        `replies/${Date.now()}`
-      );
-      
-      for (const result of uploadResults) {
-        if (result.success) {
-          emailAttachments.push({
-            filename: result.originalName,
-            path: result.data.publicUrl
-          });
-        } else {
-          logger.error('Attachment upload failed:', result.error);
-        }
-      }
-    }
+    // Build email attachments directly from memory buffers (no re-download needed)
+    const emailAttachments = attachments.map(file => ({
+      filename: file.originalname,
+      content: file.buffer,
+      contentType: file.mimetype
+    }));
 
-    // Send email
-    const result = await sendAdminReply({
+    // Send email with buffers directly — fast, no extra network hops
+    const emailPromise = sendAdminReply({
       recipientEmail,
       recipientName,
       subject,
       message,
       attachments: emailAttachments
     });
+
+    // Upload to Supabase for storage in parallel (non-blocking for the email)
+    const storagePromise = attachments.length > 0
+      ? uploadMultipleFiles(attachments, BUCKETS.ATTACHMENTS, `replies/${Date.now()}`)
+          .catch(err => { logger.error('Background Supabase upload failed:', err); return []; })
+      : Promise.resolve([]);
+
+    const [result] = await Promise.all([emailPromise, storagePromise]);
 
     if (!result.success) {
       return res.status(500).json({ error: 'Failed to send email' });
