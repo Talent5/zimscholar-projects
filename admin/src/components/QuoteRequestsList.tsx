@@ -4,6 +4,7 @@ import { Mail, Phone, Calendar, Search, RefreshCw, GraduationCap, Briefcase, Rep
 import ReplyModal from './ReplyModal';
 import QuotationModal from './QuotationModal';
 import { fetchQuoteRequests, updateQuoteStatus } from '../utils/api';
+import { getAuthToken } from '../../../config/api.config';
 
 interface LineItem {
   description: string;
@@ -83,7 +84,7 @@ const QuoteRequestsList: React.FC = () => {
 
   const downloadQuotation = async (quotationNumber: string) => {
     try {
-      const token = localStorage.getItem('zimscholar_auth_token');
+      const token = getAuthToken();
       if (!token) {
         alert('Please login to download quotations');
         return;
@@ -123,7 +124,7 @@ const QuoteRequestsList: React.FC = () => {
     }
 
     try {
-      const token = localStorage.getItem('zimscholar_auth_token');
+      const token = getAuthToken();
       if (!token) {
         alert('Please login to delete quotations');
         return;
