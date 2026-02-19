@@ -405,10 +405,188 @@ export const sendQuotationEmail = async (quotationData) => {
   }
 };
 
+// Send professional project document delivery email to customer
+export const sendDocumentDeliveryEmail = async (deliveryData) => {
+  try {
+    const transporter = createTransporter();
+
+    const attachmentsList = deliveryData.attachments && deliveryData.attachments.length > 0
+      ? deliveryData.attachments.map(att => 
+          `<tr>
+            <td style="padding: 10px 15px; border-bottom: 1px solid #e5e7eb;">
+              <div style="display: flex; align-items: center;">
+                <span style="font-size: 20px; margin-right: 10px;">📄</span>
+                <span style="color: #374151; font-size: 14px;">${att.filename}</span>
+              </div>
+            </td>
+          </tr>`
+        ).join('')
+      : '';
+
+    const mailOptions = {
+      from: `"ScholarXAfrica" <${process.env.EMAIL_USER}>`,
+      to: deliveryData.recipientEmail,
+      subject: `📦 Project Delivery: ${deliveryData.projectTitle} - ScholarXAfrica`,
+      html: `
+        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 640px; margin: 0 auto; background-color: #f8fafc;">
+          <!-- Header Banner -->
+          <div style="background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #4f46e5 100%); padding: 45px 40px; text-align: center; border-radius: 16px 16px 0 0;">
+            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">ScholarXAfrica</h1>
+            <p style="color: rgba(255,255,255,0.9); margin: 12px 0 0 0; font-size: 15px; font-weight: 400;">Professional Academic Project Services</p>
+            <div style="margin-top: 25px; background: rgba(255,255,255,0.15); border-radius: 10px; padding: 15px 25px; display: inline-block;">
+              <p style="color: white; margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">📦 Project Delivery</p>
+            </div>
+          </div>
+          
+          <!-- Main Content -->
+          <div style="background: white; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+            <!-- Greeting -->
+            <p style="font-size: 17px; color: #1f2937; line-height: 1.6; margin: 0 0 8px 0;">
+              Dear <strong>${deliveryData.recipientName}</strong>,
+            </p>
+            <p style="font-size: 15px; color: #4b5563; line-height: 1.7; margin: 0 0 25px 0;">
+              We are excited to deliver your completed project! Your documents have been carefully prepared and are attached to this email.
+            </p>
+            
+            <!-- Project Details Card -->
+            <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%); border-radius: 12px; padding: 25px; margin: 25px 0; border: 1px solid #bfdbfe;">
+              <h3 style="margin: 0 0 18px 0; color: #1e40af; font-size: 18px; font-weight: 700;">📋 Project Details</h3>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 8px 0; color: #6b7280; font-size: 14px; width: 140px;"><strong>Project:</strong></td>
+                  <td style="padding: 8px 0; color: #1f2937; font-size: 14px; font-weight: 600;">${deliveryData.projectTitle}</td>
+                </tr>
+                ${deliveryData.projectType ? `
+                <tr>
+                  <td style="padding: 8px 0; color: #6b7280; font-size: 14px;"><strong>Type:</strong></td>
+                  <td style="padding: 8px 0; color: #1f2937; font-size: 14px;">${deliveryData.projectType}</td>
+                </tr>` : ''}
+                ${deliveryData.university ? `
+                <tr>
+                  <td style="padding: 8px 0; color: #6b7280; font-size: 14px;"><strong>University:</strong></td>
+                  <td style="padding: 8px 0; color: #1f2937; font-size: 14px;">${deliveryData.university}</td>
+                </tr>` : ''}
+                ${deliveryData.course ? `
+                <tr>
+                  <td style="padding: 8px 0; color: #6b7280; font-size: 14px;"><strong>Course:</strong></td>
+                  <td style="padding: 8px 0; color: #1f2937; font-size: 14px;">${deliveryData.course}</td>
+                </tr>` : ''}
+                <tr>
+                  <td style="padding: 8px 0; color: #6b7280; font-size: 14px;"><strong>Delivery Date:</strong></td>
+                  <td style="padding: 8px 0; color: #1f2937; font-size: 14px;">${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Custom Message -->
+            ${deliveryData.message ? `
+            <div style="background: #f9fafb; border-radius: 10px; padding: 20px 25px; margin: 25px 0; border-left: 4px solid #7c3aed;">
+              <h3 style="margin: 0 0 10px 0; color: #4b5563; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Message from our team:</h3>
+              <p style="color: #374151; font-size: 15px; line-height: 1.7; margin: 0; white-space: pre-wrap;">${deliveryData.message}</p>
+            </div>` : ''}
+            
+            <!-- Attached Documents -->
+            ${attachmentsList ? `
+            <div style="margin: 30px 0;">
+              <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 15px 0; font-weight: 700;">📎 Attached Documents</h3>
+              <div style="border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse;">
+                  <thead>
+                    <tr style="background: #f3f4f6;">
+                      <th style="padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600;">File Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${attachmentsList}
+                  </tbody>
+                </table>
+              </div>
+            </div>` : ''}
+            
+            <!-- Important Notes -->
+            <div style="background: #fffbeb; border-radius: 10px; padding: 20px 25px; margin: 30px 0; border: 1px solid #fde68a;">
+              <h3 style="margin: 0 0 12px 0; color: #92400e; font-size: 15px;">⚠️ Important Notes</h3>
+              <ul style="color: #78350f; margin: 0; padding-left: 20px; line-height: 2; font-size: 14px;">
+                <li>Please review all delivered files carefully</li>
+                <li>If you need any revisions, contact us within 7 days</li>
+                <li>Keep these files in a secure location</li>
+                <li>Do not share these files with others</li>
+              </ul>
+            </div>
+            
+            <!-- Satisfaction Section -->
+            <div style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 10px; padding: 25px; margin: 30px 0; border: 1px solid #bbf7d0; text-align: center;">
+              <h3 style="margin: 0 0 10px 0; color: #065f46; font-size: 18px;">🌟 Your Satisfaction Matters</h3>
+              <p style="color: #047857; font-size: 14px; line-height: 1.6; margin: 0;">
+                We strive for excellence in every project. If you're happy with our work,<br>
+                we'd appreciate a recommendation to fellow students!
+              </p>
+            </div>
+
+            <!-- CTA -->
+            <div style="text-align: center; margin: 35px 0 25px 0;">
+              <a href="mailto:${process.env.EMAIL_USER}?subject=Re: Project Delivery - ${deliveryData.projectTitle}" 
+                 style="display: inline-block; background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%); 
+                        color: white; padding: 14px 35px; text-decoration: none; border-radius: 10px; 
+                        font-weight: 700; font-size: 15px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
+                Need Revisions? Contact Us
+              </a>
+            </div>
+            
+            <!-- Contact Info -->
+            <div style="background: #f9fafb; padding: 20px; border-radius: 10px; margin: 25px 0;">
+              <h3 style="margin: 0 0 12px 0; color: #374151; font-size: 15px;">📞 Get in Touch</h3>
+              <p style="color: #6b7280; margin: 4px 0; font-size: 14px;">
+                <strong>Email:</strong> <a href="mailto:zimscholarprojects@gmail.com" style="color: #4f46e5; text-decoration: none;">zimscholarprojects@gmail.com</a>
+              </p>
+              <p style="color: #6b7280; margin: 4px 0; font-size: 14px;">
+                <strong>WhatsApp:</strong> <a href="https://wa.me/263785183361" style="color: #25D366; text-decoration: none;">+263 78 518 3361</a>
+              </p>
+            </div>
+            
+            <!-- Sign off -->
+            <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid #e5e7eb;">
+              <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0;">
+                Thank you for choosing ScholarXAfrica for your academic project needs. We wish you the very best with your studies!
+              </p>
+              <p style="color: #4b5563; font-size: 14px; margin: 15px 0 0 0;">
+                Warm regards,<br>
+                <strong style="color: #4f46e5; font-size: 16px;">The ScholarXAfrica Team</strong>
+              </p>
+            </div>
+          </div>
+          
+          <!-- Footer -->
+          <div style="background: #111827; padding: 30px 40px; text-align: center; border-radius: 0 0 16px 16px;">
+            <p style="color: #9ca3af; font-size: 12px; margin: 0 0 8px 0;">
+              © ${new Date().getFullYear()} ScholarXAfrica. All rights reserved.
+            </p>
+            <p style="color: #6b7280; font-size: 11px; margin: 0;">
+              Professional Academic Project Services • Supporting African Students Worldwide
+            </p>
+            <p style="color: #4b5563; font-size: 11px; margin: 8px 0 0 0;">
+              This email contains confidential project deliverables. Please do not forward.
+            </p>
+          </div>
+        </div>
+      `,
+      attachments: deliveryData.attachments || []
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Document delivery email sent:', info.messageId);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error('Error sending document delivery email:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 export default {
   sendContactNotification,
   sendQuoteRequestNotification,
   sendProjectRequestNotification,
   sendAdminReply,
   sendQuotationEmail,
+  sendDocumentDeliveryEmail,
 };

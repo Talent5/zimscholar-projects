@@ -30,7 +30,8 @@ import {
   sendContactNotification,
   sendQuoteRequestNotification,
   sendProjectRequestNotification,
-  sendAdminReply
+  sendAdminReply,
+  sendDocumentDeliveryEmail
 } from './config/emailService.js';
 import { generateToken, verifyToken } from './middleware/auth.js';
 import { 
@@ -953,6 +954,118 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
   } catch (error) {
     logger.error('Send reply error:', error);
     res.status(500).json({ error: 'Failed to send reply' });
+  }
+});
+
+// ==================== DOCUMENT DELIVERY ====================
+// Send project documents to customer via email
+app.post('/api/admin/deliver-documents', verifyToken, adminLimiter, uploadFields([
+  { name: 'documents', maxCount: 15 }
+]), handleMulterError, async (req, res) => {
+  try {
+    const { 
+      recipientEmail, recipientName, projectTitle, projectType,
+      university, course, message, customerId, projectId 
+    } = req.body;
+    const documents = req.files?.documents || [];
+
+    // Validate required fields
+    if (!recipientEmail || !recipientName || !projectTitle) {
+      return res.status(400).json({ error: 'Recipient email, name, and project title are required' });
+    }
+
+    if (documents.length === 0) {
+      return res.status(400).json({ error: 'Please attach at least one document to deliver' });
+    }
+
+    // Upload documents to Supabase storage
+    const emailAttachments = [];
+    const uploadedUrls = [];
+
+    if (documents.length > 0) {
+      const uploadResults = await uploadMultipleFiles(
+        documents,
+        BUCKETS.ATTACHMENTS,
+        `deliveries/${recipientEmail.replace(/[^a-zA-Z0-9]/g, '_')}/${Date.now()}`
+      );
+      
+      for (const result of uploadResults) {
+        if (result.success) {
+          emailAttachments.push({
+            filename: result.originalName,
+            path: result.data.publicUrl
+          });
+          uploadedUrls.push(result.data.publicUrl);
+        } else {
+          logger.error('Document upload failed:', result.error);
+        }
+      }
+    }
+
+    if (emailAttachments.length === 0) {
+      return res.status(500).json({ error: 'Failed to upload documents. Please try again.' });
+    }
+
+    // Send the professional delivery email
+    const result = await sendDocumentDeliveryEmail({
+      recipientEmail,
+      recipientName,
+      projectTitle,
+      projectType: projectType || '',
+      university: university || '',
+      course: course || '',
+      message: message || '',
+      attachments: emailAttachments
+    });
+
+    if (!result.success) {
+      return res.status(500).json({ error: 'Failed to send delivery email. Documents were uploaded but email failed.' });
+    }
+
+    // Update customer project status if customerId and projectId provided
+    if (customerId && projectId) {
+      try {
+        await Customer.findOneAndUpdate(
+          { _id: customerId, 'projects._id': projectId },
+          { 
+            $set: { 
+              'projects.$.status': 'delivered',
+              'projects.$.progress': 100
+            }
+          }
+        );
+      } catch (updateErr) {
+        logger.warn('Could not update customer project status:', updateErr.message);
+      }
+    }
+
+    // If a project request ID is provided, update its status
+    if (req.body.projectRequestId) {
+      try {
+        await ProjectRequest.findByIdAndUpdate(req.body.projectRequestId, {
+          status: 'delivered',
+          deliveryDate: new Date()
+        });
+      } catch (updateErr) {
+        logger.warn('Could not update project request status:', updateErr.message);
+      }
+    }
+
+    logger.info('Documents delivered successfully', {
+      recipientEmail,
+      projectTitle,
+      filesCount: emailAttachments.length
+    });
+
+    res.json({
+      success: true,
+      message: `${emailAttachments.length} document(s) delivered successfully to ${recipientEmail}`,
+      deliveredFiles: emailAttachments.map(a => a.filename),
+      uploadedUrls
+    });
+  } catch (error) {
+    logger.error('Document delivery error:', error);
+    res.status(500).json({ error: 'Failed to deliver documents' });
   }
 });
 
