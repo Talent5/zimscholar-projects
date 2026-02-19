@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig(({ command }) => ({
-  // In production (build), admin is served under /admin/ path via nginx
-  // In dev, serve from root so localhost:3001 works directly
-  base: command === 'build' ? '/admin/' : '/',
+  // When deployed standalone on Vercel, serve from root
+  // For nginx/docker, override with VITE_BASE_PATH=/admin/ if needed
+  base: process.env.VITE_BASE_PATH || '/',
   server: {
     port: 3001,
     host: '0.0.0.0',

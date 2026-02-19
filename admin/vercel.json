@@ -42,7 +42,7 @@
   "build": {
     "env": {
       "VITE_API_URL": "https://zimscholar-projects.onrender.com/",
-      "VITE_APP_NAME": "ScholarXafrica"
+      "VITE_APP_NAME": "ScholarXafrica Admin"
     }
   }
 }
