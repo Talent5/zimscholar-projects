@@ -9,6 +9,7 @@ import {
   Tag,
   Users,
   TrendingUp,
+  UserCog,
   LogOut,
   ChevronRight
 } from 'lucide-react';
@@ -16,7 +17,7 @@ import Logo from './Logo';
 
 interface SidebarProps {
   currentView: string;
-  onViewChange: (view: 'dashboard' | 'contacts' | 'quotes' | 'projects' | 'services' | 'portfolio' | 'pricing' | 'customers' | 'revenue') => void;
+  onViewChange: (view: 'dashboard' | 'contacts' | 'quotes' | 'projects' | 'services' | 'portfolio' | 'pricing' | 'customers' | 'revenue' | 'users') => void;
   onLogout: () => void;
 }
 
@@ -31,6 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, onLogout }
     { id: 'pricing', label: 'Pricing', icon: Tag },
     { id: 'customers', label: 'Customers', icon: Users },
     { id: 'revenue', label: 'Revenue Analytics', icon: TrendingUp },
+    { id: 'users', label: 'Admin Users', icon: UserCog },
   ];
 
   return (

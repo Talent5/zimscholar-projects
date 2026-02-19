@@ -25,6 +25,7 @@ import PortfolioProject from './models/PortfolioProject.js';
 import PricingPackage from './models/PricingPackage.js';
 import Customer from './models/Customer.js';
 import Payment from './models/Payment.js';
+import AdminUser from './models/AdminUser.js';
 import { 
   sendContactNotification,
   sendQuoteRequestNotification,
@@ -106,6 +107,29 @@ app.get('/api/health', (req, res) => {
 });
 
 // ==================== AUTHENTICATION ENDPOINTS ====================
+// Seed default admin user if none exist
+(async () => {
+  try {
+    const adminCount = await AdminUser.countDocuments();
+    if (adminCount === 0) {
+      const defaultAdmin = new AdminUser({
+        username: 'TalentM',
+        email: 'talentmundwa5@gmail.com',
+        password: '@2084Mundwa',
+        role: 'superadmin',
+        createdBy: 'system',
+      });
+      await defaultAdmin.save();
+      console.log('Default admin user created: TalentM (superadmin)');
+    }
+  } catch (error) {
+    // User might already exist (unique constraint), that's fine
+    if (error.code !== 11000) {
+      console.error('Error seeding default admin:', error.message);
+    }
+  }
+})();
+
 // Admin login
 app.post('/api/admin/login', authLimiter, async (req, res) => {
   try {
@@ -116,29 +140,32 @@ app.post('/api/admin/login', authLimiter, async (req, res) => {
       return res.status(400).json({ error: 'Username and password are required' });
     }
 
-    // Get admin credentials from environment variables
-    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-    const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
-    
-    // For initial setup, use a default password (CHANGE THIS IN PRODUCTION)
-    const defaultPasswordHash = await bcrypt.hash('admin123', 10);
-    const adminPasswordHash = ADMIN_PASSWORD_HASH || defaultPasswordHash;
+    // Find user by username (include password field for comparison)
+    const user = await AdminUser.findOne({ 
+      username,
+      isActive: true 
+    }).select('+password');
 
-    // Verify username
-    if (username !== ADMIN_USERNAME) {
+    if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Verify password
-    const isValidPassword = await bcrypt.compare(password, adminPasswordHash);
+    const isValidPassword = await user.comparePassword(password);
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    // Update last login time
+    user.lastLogin = new Date();
+    await user.save();
+
     // Generate JWT token
     const token = generateToken({ 
-      username: ADMIN_USERNAME,
-      role: 'admin',
+      userId: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
       loginTime: Date.now()
     });
 
@@ -146,8 +173,9 @@ app.post('/api/admin/login', authLimiter, async (req, res) => {
       success: true,
       token,
       user: {
-        username: ADMIN_USERNAME,
-        role: 'admin'
+        username: user.username,
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error) {
@@ -314,6 +342,105 @@ app.post('/api/project-request', formLimiter, projectRequestValidation, async (r
       error: 'Failed to submit project request',
       message: error.message 
     });
+  }
+});
+
+// ==================== ADMIN USER MANAGEMENT ====================
+// Get all admin users
+app.get('/api/admin/users', verifyToken, adminLimiter, async (req, res) => {
+  try {
+    const users = await AdminUser.find().sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching admin users:', error);
+    res.status(500).json({ error: 'Failed to fetch admin users' });
+  }
+});
+
+// Create a new admin user
+app.post('/api/admin/users', verifyToken, adminLimiter, async (req, res) => {
+  try {
+    const { username, email, password, role } = req.body;
+
+    // Validate required fields
+    if (!username || !email || !password) {
+      return res.status(400).json({ error: 'Username, email, and password are required' });
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    }
+
+    // Check if username or email already exists
+    const existingUser = await AdminUser.findOne({
+      $or: [{ username }, { email: email.toLowerCase() }]
+    });
+    if (existingUser) {
+      return res.status(409).json({ 
+        error: existingUser.username === username 
+          ? 'Username already taken' 
+          : 'Email already registered' 
+      });
+    }
+
+    const newUser = new AdminUser({
+      username,
+      email,
+      password,
+      role: role || 'admin',
+      createdBy: req.user.username || 'admin',
+    });
+
+    await newUser.save();
+    console.log(`Admin user created: ${username} by ${req.user.username}`);
+
+    res.status(201).json({
+      success: true,
+      message: 'Admin user created successfully',
+      user: newUser.toJSON(),
+    });
+  } catch (error) {
+    console.error('Error creating admin user:', error);
+    if (error.code === 11000) {
+      return res.status(409).json({ error: 'Username or email already exists' });
+    }
+    res.status(500).json({ error: 'Failed to create admin user' });
+  }
+});
+
+// Delete an admin user
+app.delete('/api/admin/users/:id', verifyToken, adminLimiter, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Prevent self-deletion
+    if (req.user.userId === id) {
+      return res.status(400).json({ error: 'You cannot delete your own account' });
+    }
+
+    // Check the user to delete exists
+    const userToDelete = await AdminUser.findById(id);
+    if (!userToDelete) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Ensure at least one admin remains
+    const adminCount = await AdminUser.countDocuments({ isActive: true });
+    if (adminCount <= 1) {
+      return res.status(400).json({ error: 'Cannot delete the last admin user' });
+    }
+
+    await AdminUser.findByIdAndDelete(id);
+    console.log(`Admin user deleted: ${userToDelete.username} by ${req.user.username}`);
+
+    res.json({
+      success: true,
+      message: `User "${userToDelete.username}" deleted successfully`,
+    });
+  } catch (error) {
+    console.error('Error deleting admin user:', error);
+    res.status(500).json({ error: 'Failed to delete admin user' });
   }
 });
 

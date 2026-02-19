@@ -30,6 +30,7 @@ const Logo: React.FC<LogoProps> = ({ alt = 'ZimScholar Logo', className, style, 
     const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
     return [
       `${normalizedBase}scholarxafrica-logo.png`,
+      '/admin/scholarxafrica-logo.png',
       '/scholarxafrica-logo.png'
     ];
   }, []);

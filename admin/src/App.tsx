@@ -9,12 +9,13 @@ import PortfolioManager from './components/PortfolioManager';
 import PricingManager from './components/PricingManager';
 import CustomersManager from './components/CustomersManager';
 import RevenueAnalytics from './components/RevenueAnalytics';
+import UserManagement from './components/UserManagement';
 import Login from './components/Login';
 import Logo from './components/Logo';
 import { verifyAuth, logout, isAuthenticated as checkAuth } from './config/auth.config';
 import './styles/global.css';
 
-type View = 'dashboard' | 'contacts' | 'quotes' | 'projects' | 'services' | 'portfolio' | 'pricing' | 'customers' | 'revenue';
+type View = 'dashboard' | 'contacts' | 'quotes' | 'projects' | 'services' | 'portfolio' | 'pricing' | 'customers' | 'revenue' | 'users';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('dashboard');
@@ -139,6 +140,8 @@ const App: React.FC = () => {
         return <CustomersManager />;
       case 'revenue':
         return <RevenueAnalytics />;
+      case 'users':
+        return <UserManagement />;
       default:
         return <Dashboard />;
     }
