@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cd admin && npm install && npm run build && cd .. && mkdir -p dist/admin && cp -r admin/dist/* dist/admin/",
     "build:prod": "vite build --mode production",
     "build:cloudflare": "npm run build:prod && cd admin && npm run build && cd .. && mkdir -p dist/admin && cp -r admin/dist/* dist/admin/",
     "preview": "vite preview",
