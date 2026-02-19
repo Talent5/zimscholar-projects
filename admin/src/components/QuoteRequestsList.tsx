@@ -4,7 +4,7 @@ import { Mail, Phone, Calendar, Search, RefreshCw, GraduationCap, Briefcase, Rep
 import ReplyModal from './ReplyModal';
 import QuotationModal from './QuotationModal';
 import { fetchQuoteRequests, updateQuoteStatus } from '../utils/api';
-import { getAuthToken } from '../../../config/api.config';
+import { getAuthToken, apiRequest } from '../../../config/api.config';
 
 interface LineItem {
   description: string;
@@ -90,13 +90,9 @@ const QuoteRequestsList: React.FC = () => {
         return;
       }
 
-      const response = await fetch(
+      const response = await apiRequest(
         `/api/admin/quotations/${quotationNumber}/pdf`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        { method: 'GET' }
       );
 
       if (!response.ok) {
@@ -130,14 +126,9 @@ const QuoteRequestsList: React.FC = () => {
         return;
       }
 
-      const response = await fetch(
+      const response = await apiRequest(
         `/api/admin/quote-requests/${quoteId}/quotation`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        { method: 'DELETE' }
       );
 
       if (!response.ok) {
