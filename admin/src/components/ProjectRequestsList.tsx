@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Mail, Phone, Calendar, Search, RefreshCw, GraduationCap, Briefcase, Package, Wrench, Reply } from 'lucide-react';
 import ReplyModal from './ReplyModal';
+import PageLoader from './PageLoader';
 import { fetchProjectRequests, updateProjectStatus } from '../utils/api';
 
 interface ProjectRequest {
@@ -75,12 +76,7 @@ const ProjectRequestsList: React.FC = () => {
   }) : [];
 
   if (loading) {
-    return (
-      <div className="list-container">
-        <h1>Project Requests</h1>
-        <p>Loading requests...</p>
-      </div>
-    );
+    return <PageLoader variant="list" />;
   }
 
   if (error) {

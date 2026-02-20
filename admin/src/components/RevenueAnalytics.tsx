@@ -2,8 +2,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 import {
   DollarSign, TrendingUp, TrendingDown, Calendar,
   CreditCard, RefreshCw, BarChart3, Users, ArrowUpRight,
-  ArrowDownRight, Wallet, PieChart, Award, Loader2
+  ArrowDownRight, Wallet, PieChart, Award
 } from 'lucide-react';
+import PageLoader from './PageLoader';
 import { apiRequest } from '../utils/api';
 
 interface RevenueData {
@@ -279,14 +280,7 @@ const RevenueAnalytics: React.FC = () => {
 
   /* ── Loading state ─────────────────────────── */
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-96">
-        <div className="flex flex-col items-center gap-4 text-slate-400">
-          <Loader2 size={36} className="animate-spin text-indigo-500" />
-          <p className="text-sm font-medium">Loading analytics…</p>
-        </div>
-      </div>
-    );
+    return <PageLoader variant="analytics" />;
   }
 
   if (!data || !computed) {

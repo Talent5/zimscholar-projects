@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, RefreshCw, Plus, Edit, Trash2, Eye, EyeOff, Star, Upload } from 'lucide-react';
 import ProjectModal from './ProjectModal';
+import PageLoader from './PageLoader';
 import { fetchAdminPortfolio, deletePortfolioProject, patchPortfolioProject } from '../utils/api';
 
 interface PortfolioProject {
@@ -93,12 +94,7 @@ const PortfolioManager: React.FC = () => {
   }) : [];
 
   if (loading) {
-    return (
-      <div className="list-container">
-        <h1>Portfolio Management</h1>
-        <p>Loading projects...</p>
-      </div>
-    );
+    return <PageLoader variant="grid" />;
   }
 
   if (error) {

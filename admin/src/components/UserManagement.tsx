@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { UserPlus, Trash2, Shield, ShieldCheck, Mail, User, Calendar, RefreshCw, Eye, EyeOff, Search } from 'lucide-react';
 import { apiRequest } from '../utils/api';
+import PageLoader from './PageLoader';
 
 interface AdminUser {
   _id: string;
@@ -304,10 +305,7 @@ const UserManagement: React.FC = () => {
 
       {/* Loading */}
       {loading ? (
-        <div className="flex items-center justify-center py-16">
-          <RefreshCw size={24} className="animate-spin text-blue-500" />
-          <span className="ml-3 text-slate-500">Loading users...</span>
-        </div>
+        <PageLoader variant="table" />
       ) : filteredUsers.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-200">
           <User size={48} className="mx-auto text-slate-300 mb-4" />

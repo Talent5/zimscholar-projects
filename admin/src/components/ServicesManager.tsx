@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, RefreshCw, Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react';
 import ServiceModal from './ServiceModal';
+import PageLoader from './PageLoader';
 import { fetchAdminServices, deleteService, patchService } from '../utils/api';
 
 interface Service {
@@ -78,12 +79,7 @@ const ServicesManager: React.FC = () => {
     : [];
 
   if (loading) {
-    return (
-      <div className="list-container">
-        <h1>Services Management</h1>
-        <p>Loading services...</p>
-      </div>
-    );
+    return <PageLoader variant="grid" />;
   }
 
   if (error) {

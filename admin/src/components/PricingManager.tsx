@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, RefreshCw, Plus, Edit, Trash2, Eye, EyeOff, Star, DollarSign, CheckCircle2, AlertCircle, Package } from 'lucide-react';
 import PricingModal from './PricingModal';
+import PageLoader from './PageLoader';
 import { fetchPricingPackages, deletePricingPackage, patchPricingPackage } from '../utils/api';
 
 interface PricingPackage {
@@ -97,11 +98,7 @@ const PricingManager: React.FC = () => {
   }) : [];
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full p-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
-      </div>
-    );
+    return <PageLoader variant="grid" />;
   }
 
   return (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Search, RefreshCw, Plus, Trash2, Eye, CheckCircle, Users, Briefcase, TrendingUp, DollarSign, Receipt } from 'lucide-react';
 import { apiRequest } from '../utils/api';
 import CustomerModal from './CustomerModal';
+import PageLoader from './PageLoader';
 import PaymentModal from './PaymentModal';
 import PaymentHistoryModal from './PaymentHistoryModal';
 
@@ -148,12 +149,7 @@ const CustomersManager: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="list-container">
-        <h1>Customer Management</h1>
-        <p>Loading customers...</p>
-      </div>
-    );
+    return <PageLoader variant="table" />;
   }
 
   return (

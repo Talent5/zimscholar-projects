@@ -3,6 +3,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { Mail, Phone, Calendar, Search, RefreshCw, GraduationCap, Briefcase, Reply, FileText, Download, CheckCircle, Trash2 } from 'lucide-react';
 import ReplyModal from './ReplyModal';
 import QuotationModal from './QuotationModal';
+import PageLoader from './PageLoader';
 import { fetchQuoteRequests, updateQuoteStatus } from '../utils/api';
 import { getAuthToken, apiRequest } from '../../../config/api.config';
 
@@ -155,12 +156,7 @@ const QuoteRequestsList: React.FC = () => {
   }) : [];
 
   if (loading) {
-    return (
-      <div className="list-container">
-        <h1>Quote Requests</h1>
-        <p>Loading requests...</p>
-      </div>
-    );
+    return <PageLoader variant="list" />;
   }
 
   if (error) {

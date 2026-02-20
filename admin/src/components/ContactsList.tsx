@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Mail, Phone, Calendar, Search, RefreshCw, Reply } from 'lucide-react';
 import ReplyModal from './ReplyModal';
+import PageLoader from './PageLoader';
 import { fetchContacts as fetchContactsAPI, updateContactStatus } from '../utils/api';
 
 interface Contact {
@@ -65,12 +66,7 @@ const ContactsList: React.FC = () => {
   }) : [];
 
   if (loading) {
-    return (
-      <div className="list-container">
-        <h1>Contact Forms</h1>
-        <p>Loading submissions...</p>
-      </div>
-    );
+    return <PageLoader variant="list" />;
   }
 
   if (error) {

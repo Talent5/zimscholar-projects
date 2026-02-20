@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PageLoader from './PageLoader';
 import {
   MessageSquare,
   DollarSign,
@@ -102,14 +103,7 @@ const Dashboard: React.FC = () => {
   ];
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-[3px] border-slate-200 border-t-indigo-500 rounded-full animate-spin"></div>
-          <p className="text-sm text-slate-400 font-medium">Loading stats...</p>
-        </div>
-      </div>
-    );
+    return <PageLoader variant="dashboard" />;
   }
 
   return (
