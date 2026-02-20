@@ -1,14 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -38,11 +32,5 @@
         { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
-  ],
-  "build": {
-    "env": {
-      "VITE_API_URL": "https://zimscholar-projects.onrender.com",
-      "VITE_APP_NAME": "ScholarXafrica Admin"
-    }
-  }
+  ]
 }
