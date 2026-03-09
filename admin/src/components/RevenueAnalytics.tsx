@@ -103,7 +103,7 @@ const MonthlyChart: React.FC<{ data: any[]; year: number }> = ({ data, year }) =
   }, [data]);
 
   return (
-    <div className="flex items-end gap-1.5 h-64 pt-8 pb-1">
+    <div className="flex gap-1.5 h-64 pt-8 pb-1">
       {fullYear.map((m, i) => {
         const pct = maxRevenue > 0 ? (m.total / maxRevenue) * 100 : 0;
         const hasData = m.total > 0;
