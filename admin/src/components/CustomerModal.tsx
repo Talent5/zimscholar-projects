@@ -61,6 +61,27 @@ const emptyProject = (): Project => ({
   endDate: '',
 });
 
+/* ─── Shared UI ──────────────────────────── */
+const inputCls = 'w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none transition-all placeholder:text-slate-300';
+const selectCls = `${inputCls} appearance-none cursor-pointer bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")] bg-[length:1.25rem] bg-[right_0.5rem_center] bg-no-repeat pr-8`;
+
+const Field: React.FC<{
+  label: string;
+  icon?: React.ReactNode;
+  required?: boolean;
+  span?: boolean;
+  children: React.ReactNode;
+}> = ({ label, icon, required, span, children }) => (
+  <div className={span ? 'col-span-2' : ''}>
+    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+      {icon}
+      {label}
+      {required && <span className="text-red-400">*</span>}
+    </label>
+    {children}
+  </div>
+);
+
 /* ─── Component ──────────────────────────── */
 const CustomerModal: React.FC<CustomerModalProps> = ({ customer, isOpen, onClose, onSave }) => {
   const [formData, setFormData] = useState({
@@ -154,27 +175,6 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ customer, isOpen, onClose
   const totalBudget = projects.reduce((s, p) => s + (p.budget || 0), 0);
 
   if (!isOpen) return null;
-
-  /* ── Field helper ── */
-  const Field: React.FC<{
-    label: string;
-    icon?: React.ReactNode;
-    required?: boolean;
-    span?: boolean;
-    children: React.ReactNode;
-  }> = ({ label, icon, required, span, children }) => (
-    <div className={span ? 'col-span-2' : ''}>
-      <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
-        {icon}
-        {label}
-        {required && <span className="text-red-400">*</span>}
-      </label>
-      {children}
-    </div>
-  );
-
-  const inputCls = 'w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none transition-all placeholder:text-slate-300';
-  const selectCls = `${inputCls} appearance-none cursor-pointer bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E")] bg-[length:1.25rem] bg-[right_0.5rem_center] bg-no-repeat pr-8`;
 
   return (
     <div
