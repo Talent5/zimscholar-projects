@@ -971,32 +971,29 @@ app.post('/api/admin/deliver-documents', verifyToken, adminLimiter, uploadFields
       return res.status(400).json({ error: 'Please attach at least one document to deliver' });
     }
 
-    // Upload documents to Supabase storage
-    const emailAttachments = [];
-    const uploadedUrls = [];
+    // Send email attachments directly from memory buffers to avoid remote fetch failures
+    const emailAttachments = documents.map(file => ({
+      filename: file.originalname,
+      content: file.buffer,
+      contentType: file.mimetype,
+    }));
 
+    // Upload documents to Supabase storage (best-effort)
+    const uploadedUrls = [];
     if (documents.length > 0) {
       const uploadResults = await uploadMultipleFiles(
         documents,
         BUCKETS.ATTACHMENTS,
         `deliveries/${recipientEmail.replace(/[^a-zA-Z0-9]/g, '_')}/${Date.now()}`
       );
-      
+
       for (const result of uploadResults) {
         if (result.success) {
-          emailAttachments.push({
-            filename: result.originalName,
-            path: result.data.publicUrl
-          });
           uploadedUrls.push(result.data.publicUrl);
         } else {
           logger.error('Document upload failed:', result.error);
         }
       }
-    }
-
-    if (emailAttachments.length === 0) {
-      return res.status(500).json({ error: 'Failed to upload documents. Please try again.' });
     }
 
     // Send the professional delivery email
