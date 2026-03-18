@@ -38,7 +38,8 @@ import {
   apiLimiter, 
   formLimiter, 
   authLimiter, 
-  adminLimiter 
+  adminLimiter,
+  deliverDocumentsLimiter 
 } from './middleware/rateLimiter.js';
 import { 
   contactFormValidation, 
@@ -952,7 +953,7 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
 
 // ==================== DOCUMENT DELIVERY ====================
 // Send project documents to customer via email
-app.post('/api/admin/deliver-documents', verifyToken, adminLimiter, uploadFields([
+app.post('/api/admin/deliver-documents', verifyToken, deliverDocumentsLimiter, uploadFields([
   { name: 'documents', maxCount: 15 }
 ]), handleMulterError, async (req, res) => {
   try {

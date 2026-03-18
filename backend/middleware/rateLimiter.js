@@ -60,10 +60,25 @@ export const adminLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+/**
+ * High-priority limiter for document delivery
+ * 120 requests per 15 minutes
+ */
+export const deliverDocumentsLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 120,
+  message: {
+    error: 'Too many document delivery requests. Please slow down.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 export default {
   apiLimiter,
   formLimiter,
   authLimiter,
-  adminLimiter
+  adminLimiter,
+  deliverDocumentsLimiter
 };
 
