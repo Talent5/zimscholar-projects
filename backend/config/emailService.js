@@ -422,6 +422,8 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
   const MAX_TOTAL_SIZE = 100 * 1024 * 1024;    // 100MB total
   
   try {
+    const transporter = createTransporter();
+    
     // Validate attachment sizes before attempting to send
     let totalSize = 0;
     const validAttachments = [];
@@ -704,4 +706,5 @@ export default {
   sendAdminReply,
   sendQuotationEmail,
   sendDocumentDeliveryEmail,
+  sendLargeDocumentDelivery,
 };

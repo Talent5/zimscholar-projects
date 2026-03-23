@@ -1025,9 +1025,7 @@ app.post('/api/admin/deliver-documents', verifyToken, deliverDocumentsLimiter, u
     if (!result.success) {
       logger.error(`Failed to send delivery email: ${result.error}`);
       return res.status(500).json({ 
-        error: 'Failed to send delivery email. Documents were uploaded but email failed.',
-        details: result.error,
-        suggestion: 'Check email server configuration or try sending fewer/smaller documents.'
+        error: 'Failed to send delivery email. Documents were uploaded but email failed.' 
       });
     }
 
