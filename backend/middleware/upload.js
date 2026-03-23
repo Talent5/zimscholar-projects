@@ -28,6 +28,8 @@ const fileFilter = (req, file, cb) => {
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/vnd.ms-powerpoint',
     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    // Notebooks & Scientific
+    'application/x-ipynb+json',
     // Archives
     'application/zip',
     'application/x-zip-compressed',

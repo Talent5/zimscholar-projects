@@ -1,7 +1,8 @@
+
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import logger from '../utils/logger.js';
-
+import { processFileMimeType } from '../utils/mimeTypes.js';
 // Load environment variables
 dotenv.config();
 
@@ -82,11 +83,14 @@ export async function uploadMultipleFiles(files, bucket, folderPath = '') {
     const uniqueName = `${Date.now()}-${index}-${file.originalname || file.name}`;
     const filePath = folderPath ? `${folderPath}/${uniqueName}` : uniqueName;
     
+    // Process MIME type to ensure Supabase compatibility
+    const mimeType = processFileMimeType(file);
+    
     const result = await uploadFile(
       file,
       bucket,
       filePath,
-      { contentType: file.mimetype || file.type }
+      { contentType: mimeType }
     );
 
     return {
