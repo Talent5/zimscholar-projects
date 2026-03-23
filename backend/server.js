@@ -932,7 +932,15 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
     const [result] = await Promise.all([emailPromise, storagePromise]);
 
     if (!result.success) {
-      return res.status(500).json({ error: 'Failed to send email' });
+      logger.error('Send reply email failed', {
+        recipientEmail,
+        error: result.error,
+        code: result.code || null,
+      });
+      return res.status(500).json({
+        error: 'Failed to send email',
+        details: result.error || 'Unknown email error',
+      });
     }
 
     // Update submission status based on type
@@ -948,7 +956,10 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
     res.json({ success: true, message: 'Email sent successfully' });
   } catch (error) {
     logger.error('Send reply error:', error);
-    res.status(500).json({ error: 'Failed to send reply' });
+    res.status(500).json({
+      error: 'Failed to send reply',
+      details: error.message,
+    });
   }
 });
 

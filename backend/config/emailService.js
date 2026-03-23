@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 const createTransporter = () => {
   return (nodemailer.default || nodemailer).createTransport({
     host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT || 587,
+    port: Number(process.env.EMAIL_PORT) || 587,
     secure: process.env.EMAIL_SECURE === 'true', // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER,
@@ -15,12 +15,11 @@ const createTransporter = () => {
     socketTimeout: 60000,     // 60 seconds for socket operations
     greetingTimeout: 10000,   // 10 seconds for SMTP greeting
     // Enable connection pooling for better performance
-    pool: {
-      maxConnections: 5,
-      maxMessages: 100,
-      rateDelta: 1000,
-      rateLimit: 10,
-    },
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100,
+    rateDelta: 1000,
+    rateLimit: 10,
   });
 };
 
@@ -274,7 +273,7 @@ export const sendAdminReply = async (replyData) => {
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error('Error sending admin reply email:', error);
-    return { success: false, error: error.message };
+    return { success: false, error: error.message, code: error.code || null };
   }
 };
 
