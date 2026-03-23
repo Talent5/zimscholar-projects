@@ -31,7 +31,8 @@ import {
   sendQuoteRequestNotification,
   sendProjectRequestNotification,
   sendAdminReply,
-  sendDocumentDeliveryEmail
+  sendDocumentDeliveryEmail,
+  sendLargeDocumentDelivery
 } from './config/emailService.js';
 import { generateToken, verifyToken } from './middleware/auth.js';
 import { 
@@ -979,38 +980,55 @@ app.post('/api/admin/deliver-documents', verifyToken, deliverDocumentsLimiter, u
       contentType: file.mimetype,
     }));
 
-    // Upload documents to Supabase storage (best-effort)
+    // Upload documents to Supabase storage (best-effort, non-blocking)
     const uploadedUrls = [];
     if (documents.length > 0) {
-      const uploadResults = await uploadMultipleFiles(
-        documents,
-        BUCKETS.ATTACHMENTS,
-        `deliveries/${recipientEmail.replace(/[^a-zA-Z0-9]/g, '_')}/${Date.now()}`
-      );
-
-      for (const result of uploadResults) {
-        if (result.success) {
-          uploadedUrls.push(result.data.publicUrl);
-        } else {
-          logger.error('Document upload failed:', result.error);
-        }
-      }
+      setTimeout(() => {
+        uploadMultipleFiles(
+          documents,
+          BUCKETS.ATTACHMENTS,
+          `deliveries/${recipientEmail.replace(/[^a-zA-Z0-9]/g, '_')}/${Date.now()}`
+        )
+          .then(uploadResults => {
+            for (const result of uploadResults) {
+              if (result.success) {
+                uploadedUrls.push(result.data.publicUrl);
+              } else {
+                logger.error('Document upload failed:', result.error);
+              }
+            }
+          })
+          .catch(err => {
+            logger.error('Background Supabase upload failed:', err);
+          });
+      }, 0); // Non-blocking, runs in background
     }
 
-    // Send the professional delivery email
-    const result = await sendDocumentDeliveryEmail({
-      recipientEmail,
-      recipientName,
-      projectTitle,
-      projectType: projectType || '',
-      university: university || '',
-      course: course || '',
-      message: message || '',
-      attachments: emailAttachments
-    });
+    // Send the professional delivery email with timeout handling
+    let result;
+    try {
+      result = await sendLargeDocumentDelivery({
+        recipientEmail,
+        recipientName,
+        projectTitle,
+        projectType: projectType || '',
+        university: university || '',
+        course: course || '',
+        message: message || '',
+        attachments: emailAttachments
+      });
+    } catch (emailError) {
+      logger.error('Email sending error:', emailError);
+      result = { success: false, error: emailError.message };
+    }
 
     if (!result.success) {
-      return res.status(500).json({ error: 'Failed to send delivery email. Documents were uploaded but email failed.' });
+      logger.error(`Failed to send delivery email: ${result.error}`);
+      return res.status(500).json({ 
+        error: 'Failed to send delivery email. Documents were uploaded but email failed.',
+        details: result.error,
+        suggestion: 'Check email server configuration or try sending fewer/smaller documents.'
+      });
     }
 
     // Update customer project status if customerId and projectId provided
@@ -1045,7 +1063,8 @@ app.post('/api/admin/deliver-documents', verifyToken, deliverDocumentsLimiter, u
     logger.info('Documents delivered successfully', {
       recipientEmail,
       projectTitle,
-      filesCount: emailAttachments.length
+      filesCount: emailAttachments.length,
+      messageId: result.messageId
     });
 
     res.json({
@@ -1056,7 +1075,16 @@ app.post('/api/admin/deliver-documents', verifyToken, deliverDocumentsLimiter, u
     });
   } catch (error) {
     logger.error('Document delivery error:', error);
-    res.status(500).json({ error: 'Failed to deliver documents' });
+    
+    // Provide helpful error message
+    let errorMsg = 'Failed to deliver documents';
+    if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+      errorMsg = 'Request timeout. Please try sending fewer or smaller documents.';
+    } else if (error.message?.includes('ECONNREFUSED')) {
+      errorMsg = 'Email server connection failed. Check email configuration.';
+    }
+    
+    res.status(500).json({ error: errorMsg });
   }
 });
 

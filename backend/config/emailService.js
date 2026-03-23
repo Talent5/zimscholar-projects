@@ -10,6 +10,17 @@ const createTransporter = () => {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
     },
+    // Add timeout configurations for document delivery
+    connectionTimeout: 30000, // 30 seconds to establish connection
+    socketTimeout: 60000,     // 60 seconds for socket operations
+    greetingTimeout: 10000,   // 10 seconds for SMTP greeting
+    // Enable connection pooling for better performance
+    pool: {
+      maxConnections: 5,
+      maxMessages: 100,
+      rateDelta: 1000,
+      rateLimit: 10,
+    },
   });
 };
 
@@ -407,16 +418,50 @@ export const sendQuotationEmail = async (quotationData) => {
 
 // Send professional project document delivery email to customer
 export const sendDocumentDeliveryEmail = async (deliveryData) => {
+  const MAX_ATTACHMENT_SIZE = 25 * 1024 * 1024; // 25MB per attachment
+  const MAX_TOTAL_SIZE = 100 * 1024 * 1024;    // 100MB total
+  
   try {
-    const transporter = createTransporter();
+    // Validate attachment sizes before attempting to send
+    let totalSize = 0;
+    const validAttachments = [];
+    
+    if (deliveryData.attachments && Array.isArray(deliveryData.attachments)) {
+      for (const att of deliveryData.attachments) {
+        const attSize = att.content ? att.content.length : 0;
+        
+        if (attSize > MAX_ATTACHMENT_SIZE) {
+          console.warn(`Attachment ${att.filename} exceeds size limit (${(attSize / 1024 / 1024).toFixed(2)}MB), skipping`);
+          continue;
+        }
+        
+        totalSize += attSize;
+        if (totalSize > MAX_TOTAL_SIZE) {
+          console.warn('Total attachment size exceeds limit, stopping here');
+          break;
+        }
+        
+        validAttachments.push(att);
+      }
+    }
+    
+    if (validAttachments.length === 0 && deliveryData.attachments?.length > 0) {
+      return { 
+        success: false, 
+        error: 'All attachments exceed maximum allowed size. Please send files separately.' 
+      };
+    }
 
-    const attachmentsList = deliveryData.attachments && deliveryData.attachments.length > 0
-      ? deliveryData.attachments.map(att => 
+    const attachmentsList = validAttachments && validAttachments.length > 0
+      ? validAttachments.map(att => 
           `<tr>
             <td style="padding: 10px 15px; border-bottom: 1px solid #e5e7eb;">
-              <div style="display: flex; align-items: center;">
-                <span style="font-size: 20px; margin-right: 10px;">📄</span>
-                <span style="color: #374151; font-size: 14px;">${att.filename}</span>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                  <span style="font-size: 20px; margin-right: 10px;">📄</span>
+                  <span style="color: #374151; font-size: 14px;">${att.filename}</span>
+                </div>
+                <span style="color: #9ca3af; font-size: 12px;">${att.content ? (att.content.length / 1024 / 1024).toFixed(2) : '0'}MB</span>
               </div>
             </td>
           </tr>`
@@ -488,12 +533,12 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
             <!-- Attached Documents -->
             ${attachmentsList ? `
             <div style="margin: 30px 0;">
-              <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 15px 0; font-weight: 700;">📎 Attached Documents</h3>
+              <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 15px 0; font-weight: 700;">📎 Attached Documents (${validAttachments.length} file${validAttachments.length !== 1 ? 's' : ''})</h3>
               <div style="border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;">
                 <table style="width: 100%; border-collapse: collapse;">
                   <thead>
                     <tr style="background: #f3f4f6;">
-                      <th style="padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600;">File Name</th>
+                      <th style="padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; font-weight: 600;">File Name & Size</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -570,7 +615,7 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
           </div>
         </div>
       `,
-      attachments: deliveryData.attachments || []
+      attachments: validAttachments || []
     };
 
     const info = await transporter.sendMail(mailOptions);
@@ -578,6 +623,76 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error('Error sending document delivery email:', error);
+    
+    // Provide specific error messages for debugging
+    let errorMessage = error.message;
+    if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+      errorMessage = 'Email server connection timeout. Large attachments may need time to upload.';
+    } else if (error.code === 'ECONNREFUSED') {
+      errorMessage = 'Could not connect to email server. Please verify email configuration.';
+    } else if (error.message.includes('size')) {
+      errorMessage = 'Attachment size exceeds limit. Please send fewer or smaller documents.';
+    }
+    
+    return { success: false, error: errorMessage };
+  }
+};
+
+// Helper function to send documents via streaming/chunks if needed
+export const sendLargeDocumentDelivery = async (deliveryData) => {
+  // This sends documents in multiple emails if they exceed size limits
+  const MAX_EMAIL_SIZE = 20 * 1024 * 1024; // 20MB per email
+  
+  try {
+    const allAttachments = deliveryData.attachments || [];
+    if (allAttachments.length === 0) {
+      return await sendDocumentDeliveryEmail(deliveryData);
+    }
+    
+    let currentBatch = [];
+    let currentSize = 0;
+    const results = [];
+    
+    for (const attachment of allAttachments) {
+      const attSize = attachment.content ? attachment.content.length : 0;
+      
+      if (currentSize + attSize > MAX_EMAIL_SIZE && currentBatch.length > 0) {
+        // Send current batch
+        const result = await sendDocumentDeliveryEmail({
+          ...deliveryData,
+          attachments: currentBatch,
+          message: `${deliveryData.message}\n\n[Part ${results.length + 1} of multiple deliveries]`
+        });
+        
+        results.push(result);
+        if (!result.success) {
+          return result;
+        }
+        
+        currentBatch = [];
+        currentSize = 0;
+      }
+      
+      currentBatch.push(attachment);
+      currentSize += attSize;
+    }
+    
+    // Send remaining batch
+    if (currentBatch.length > 0) {
+      const result = await sendDocumentDeliveryEmail({
+        ...deliveryData,
+        attachments: currentBatch,
+        message: results.length > 0 
+          ? `${deliveryData.message}\n\n[Final batch of documents]`
+          : deliveryData.message
+      });
+      
+      results.push(result);
+    }
+    
+    return results[results.length - 1];
+  } catch (error) {
+    console.error('Error in large document delivery:', error);
     return { success: false, error: error.message };
   }
 };
