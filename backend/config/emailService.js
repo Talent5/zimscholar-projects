@@ -45,6 +45,65 @@ const createTransporter = () => {
   });
 };
 
+const createTransporterWithOverrides = (overrides = {}) => {
+  const config = resolveEmailConfig();
+  const host = overrides.host || config.host;
+  const secure = typeof overrides.secure === 'boolean' ? overrides.secure : config.secure;
+  const port = Number(overrides.port) || config.port;
+
+  return (nodemailer.default || nodemailer).createTransport({
+    host,
+    port,
+    secure,
+    auth: {
+      user: config.user,
+      pass: config.pass,
+    },
+    connectionTimeout: 12000,
+    socketTimeout: 60000,
+    greetingTimeout: 10000,
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100,
+    rateDelta: 1000,
+    rateLimit: 10,
+  });
+};
+
+const shouldTryGmailSslFallback = (error) => {
+  const host = (process.env.EMAIL_HOST || '').toLowerCase();
+  const isGmailHost = host === 'smtp.gmail.com' || host === '';
+  const configuredPort = Number(process.env.EMAIL_PORT) || 587;
+  const isConnectFailure = ['ETIMEDOUT', 'ECONNREFUSED', 'EHOSTUNREACH', 'ENOTFOUND'].includes(error?.code);
+
+  return isGmailHost && configuredPort === 587 && isConnectFailure;
+};
+
+const sendMailWithFallback = async (mailOptions) => {
+  const primary = createTransporter();
+
+  try {
+    return await primary.sendMail(mailOptions);
+  } catch (error) {
+    if (!shouldTryGmailSslFallback(error)) {
+      throw error;
+    }
+
+    const fallback = createTransporterWithOverrides({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+    });
+
+    try {
+      return await fallback.sendMail(mailOptions);
+    } catch (fallbackError) {
+      fallbackError.originalError = error;
+      throw fallbackError;
+    }
+  }
+};
+
 // Send email notification for contact form
 export const sendContactNotification = async (contactData) => {
   try {
@@ -240,8 +299,6 @@ export const sendProjectRequestNotification = async (projectData) => {
 // Send admin reply to student
 export const sendAdminReply = async (replyData) => {
   try {
-    const transporter = createTransporter();
-
     const mailOptions = {
       from: `"ZimScholar" <${process.env.EMAIL_USER}>`,
       to: replyData.recipientEmail,
@@ -290,7 +347,7 @@ export const sendAdminReply = async (replyData) => {
       attachments: replyData.attachments || []
     };
 
-    const info = await transporter.sendMail(mailOptions);
+    const info = await sendMailWithFallback(mailOptions);
     console.log('Admin reply email sent:', info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (error) {
@@ -300,6 +357,11 @@ export const sendAdminReply = async (replyData) => {
       command: error.command || null,
       host: process.env.EMAIL_HOST || null,
       port: Number(process.env.EMAIL_PORT) || null,
+      fallback: error.originalError ? {
+        message: error.originalError.message,
+        code: error.originalError.code || null,
+        command: error.originalError.command || null,
+      } : null,
     });
     return { success: false, error: error.message, code: error.code || null };
   }
