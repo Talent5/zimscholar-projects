@@ -1,17 +1,39 @@
 import nodemailer from 'nodemailer';
 
+const resolveEmailConfig = () => {
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASSWORD || process.env.EMAIL_PASS;
+  const isGmailUser = Boolean(user && user.toLowerCase().includes('@gmail.com'));
+
+  const host = process.env.EMAIL_HOST || (isGmailUser ? 'smtp.gmail.com' : undefined);
+  const secure = process.env.EMAIL_SECURE === 'true';
+  const port = Number(process.env.EMAIL_PORT) || (secure ? 465 : 587);
+
+  if (!user || !pass) {
+    throw new Error('Email configuration error: EMAIL_USER and EMAIL_PASSWORD (or EMAIL_PASS) are required.');
+  }
+
+  if (!host) {
+    throw new Error('Email configuration error: EMAIL_HOST is required.');
+  }
+
+  return { host, port, secure, user, pass };
+};
+
 // Create reusable transporter
 const createTransporter = () => {
+  const config = resolveEmailConfig();
+
   return (nodemailer.default || nodemailer).createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT) || 587,
-    secure: process.env.EMAIL_SECURE === 'true', // true for 465, false for other ports
+    host: config.host,
+    port: config.port,
+    secure: config.secure, // true for 465, false for other ports
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
+      user: config.user,
+      pass: config.pass,
     },
     // Add timeout configurations for document delivery
-    connectionTimeout: 30000, // 30 seconds to establish connection
+    connectionTimeout: 12000, // fail fast when SMTP is unreachable
     socketTimeout: 60000,     // 60 seconds for socket operations
     greetingTimeout: 10000,   // 10 seconds for SMTP greeting
     // Enable connection pooling for better performance
@@ -272,7 +294,13 @@ export const sendAdminReply = async (replyData) => {
     console.log('Admin reply email sent:', info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('Error sending admin reply email:', error);
+    console.error('Error sending admin reply email:', {
+      message: error.message,
+      code: error.code || null,
+      command: error.command || null,
+      host: process.env.EMAIL_HOST || null,
+      port: Number(process.env.EMAIL_PORT) || null,
+    });
     return { success: false, error: error.message, code: error.code || null };
   }
 };
