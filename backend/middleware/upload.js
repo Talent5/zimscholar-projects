@@ -30,6 +30,18 @@ const fileFilter = (req, file, cb) => {
     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     // Notebooks & Scientific
     'application/x-ipynb+json',
+    // Code files
+    'application/javascript',
+    'text/javascript',
+    'application/typescript',
+    'text/typescript',
+    'text/x-python',
+    'text/html',
+    'text/css',
+    'text/markdown',
+    // Additional common office/archive/video variants
+    'application/vnd.rar',
+    'video/x-msvideo',
     // Archives
     'application/zip',
     'application/x-zip-compressed',
@@ -57,7 +69,7 @@ const fileFilter = (req, file, cb) => {
   } else if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error(`Invalid file type: ${file.mimetype}. Only images, documents, videos, and archives are allowed.`), false);
+    cb(new Error(`Invalid file type: ${file.mimetype}. Only supported document, code, image, video, and archive files are allowed.`), false);
   }
 };
 

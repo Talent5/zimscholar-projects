@@ -1036,8 +1036,14 @@ app.post('/api/admin/deliver-documents', verifyToken, deliverDocumentsLimiter, u
     if (!result.success) {
       logger.error(`Failed to send delivery email: ${result.error}`);
       return res.status(500).json({ 
-        error: 'Failed to send delivery email. Documents were uploaded but email failed.' 
+        error: 'Failed to send delivery email. Documents were uploaded but email failed.',
+        details: result.error
       });
+    }
+
+    // Handle partial delivery success (some batches failed)
+    if (result.warning) {
+      logger.warn(`Partial delivery: ${result.message}`, { batchResults: result.batchResults });
     }
 
     // Update customer project status if customerId and projectId provided

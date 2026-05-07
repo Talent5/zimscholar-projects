@@ -370,7 +370,16 @@ export const sendAdminReply = async (replyData) => {
 // Send professional quotation PDF to client
 export const sendQuotationEmail = async (quotationData) => {
   try {
-    const transporter = createTransporter();
+    const fs = await import('fs/promises');
+
+    // Validate PDF file exists before attempting to send
+    if (quotationData.pdfPath) {
+      try {
+        await fs.access(quotationData.pdfPath, fs.constants.F_OK);
+      } catch {
+        return { success: false, error: `Quotation PDF not found at path: ${quotationData.pdfPath}` };
+      }
+    }
 
     const mailOptions = {
       from: `"ZimScholar" <${process.env.EMAIL_USER}>`,
@@ -496,7 +505,7 @@ export const sendQuotationEmail = async (quotationData) => {
       }]
     };
 
-    const info = await transporter.sendMail(mailOptions);
+    const info = await sendMailWithFallback(mailOptions);
     console.log('Quotation email sent:', info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (error) {
@@ -511,8 +520,6 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
   const MAX_TOTAL_SIZE = 100 * 1024 * 1024;    // 100MB total
   
   try {
-    const transporter = createTransporter();
-    
     // Validate attachment sizes before attempting to send
     let totalSize = 0;
     const validAttachments = [];
@@ -709,7 +716,18 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
       attachments: validAttachments || []
     };
 
-    const info = await transporter.sendMail(mailOptions);
+    // Verify SMTP connection before sending (rejects stale pooled connections)
+    const transporter = createTransporter();
+    let verified = false;
+    try {
+      await transporter.verify();
+      verified = true;
+    } catch (verifyErr) {
+      console.warn('SMTP verify failed, will attempt send anyway:', verifyErr.message);
+    }
+
+    const sendFn = verified ? transporter.sendMail.bind(transporter) : sendMailWithFallback;
+    const info = await sendFn(mailOptions);
     console.log('Document delivery email sent:', info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (error) {
@@ -721,7 +739,7 @@ export const sendDocumentDeliveryEmail = async (deliveryData) => {
       errorMessage = 'Email server connection timeout. Large attachments may need time to upload.';
     } else if (error.code === 'ECONNREFUSED') {
       errorMessage = 'Could not connect to email server. Please verify email configuration.';
-    } else if (error.message.includes('size')) {
+    } else if (error.message && error.message.includes('size')) {
       errorMessage = 'Attachment size exceeds limit. Please send fewer or smaller documents.';
     }
     
@@ -749,15 +767,15 @@ export const sendLargeDocumentDelivery = async (deliveryData) => {
       
       if (currentSize + attSize > MAX_EMAIL_SIZE && currentBatch.length > 0) {
         // Send current batch
-        const result = await sendDocumentDeliveryEmail({
-          ...deliveryData,
-          attachments: currentBatch,
-          message: `${deliveryData.message}\n\n[Part ${results.length + 1} of multiple deliveries]`
-        });
-        
-        results.push(result);
-        if (!result.success) {
-          return result;
+        try {
+          const result = await sendDocumentDeliveryEmail({
+            ...deliveryData,
+            attachments: currentBatch,
+            message: `${deliveryData.message}\n\n[Part ${results.length + 1} of multiple deliveries]`
+          });
+          results.push(result);
+        } catch (batchErr) {
+          results.push({ success: false, error: batchErr.message });
         }
         
         currentBatch = [];
@@ -770,18 +788,35 @@ export const sendLargeDocumentDelivery = async (deliveryData) => {
     
     // Send remaining batch
     if (currentBatch.length > 0) {
-      const result = await sendDocumentDeliveryEmail({
-        ...deliveryData,
-        attachments: currentBatch,
-        message: results.length > 0 
-          ? `${deliveryData.message}\n\n[Final batch of documents]`
-          : deliveryData.message
-      });
-      
-      results.push(result);
+      try {
+        const result = await sendDocumentDeliveryEmail({
+          ...deliveryData,
+          attachments: currentBatch,
+          message: results.length > 0 
+            ? `${deliveryData.message}\n\n[Final batch of documents]`
+            : deliveryData.message
+        });
+        results.push(result);
+      } catch (batchErr) {
+        results.push({ success: false, error: batchErr.message });
+      }
     }
     
-    return results[results.length - 1];
+    // Consolidate results: report success/failure across all batches
+    const failedBatches = results.filter(r => !r.success);
+    if (failedBatches.length === 0) {
+      return { success: true, messageId: results[results.length - 1]?.messageId };
+    }
+    if (failedBatches.length === results.length) {
+      return { success: false, error: 'All delivery batches failed', batchResults: results };
+    }
+    // Partial success: some batches failed
+    return {
+      success: true,
+      warning: true,
+      message: `${failedBatches.length} of ${results.length} batch(es) failed to send. Please check and resend.`,
+      batchResults: results
+    };
   } catch (error) {
     console.error('Error in large document delivery:', error);
     return { success: false, error: error.message };
