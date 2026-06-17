@@ -32,7 +32,7 @@ function ScrollProgress() {
       className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
       style={{
         scaleX: scrollYProgress,
-        background: 'linear-gradient(90deg, #00f0ff, #a855f7, #ec4899)',
+        background: 'linear-gradient(90deg, #0ea5e9, #6366f1, #2563eb)',
       }}
     />
   );

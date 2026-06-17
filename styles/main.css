@@ -1,4 +1,4 @@
-/* ScholarXafrica - Futuristic Design System */
+/* ScholarXafrica - Professional Design System */
 * {
   margin: 0;
   padding: 0;
@@ -30,25 +30,24 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Neon Glow Effects */
+/* Subtle Glow Effects */
 .neon-text {
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5),
-               0 0 20px rgba(0, 240, 255, 0.3),
-               0 0 40px rgba(0, 240, 255, 0.1);
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.4),
+               0 0 20px rgba(99, 102, 241, 0.2);
 }
 
 .neon-box {
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3),
-              inset 0 0 15px rgba(168, 85, 247, 0.05);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.2),
+              inset 0 0 15px rgba(99, 102, 241, 0.03);
 }
 
 .neon-border {
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.1),
-              inset 0 0 10px rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.08),
+              inset 0 0 10px rgba(14, 165, 233, 0.03);
 }
 
-/* Glitch Effect */
+/* Glitch Effect — softer tones */
 .glitch-text {
   position: relative;
 }
@@ -65,14 +64,14 @@ body {
 
 .glitch-text::before {
   left: 2px;
-  text-shadow: -2px 0 #ec4899;
+  text-shadow: -2px 0 #818cf8;
   animation: glitch-1 2s infinite linear alternate-reverse;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
 .glitch-text::after {
   left: -2px;
-  text-shadow: 2px 0 #00f0ff;
+  text-shadow: 2px 0 #0ea5e9;
   animation: glitch-2 3s infinite linear alternate-reverse;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }
@@ -95,27 +94,27 @@ body {
   100% { transform: translate(0); }
 }
 
-/* Particle grid background */
+/* Subtle grid background */
 .cyber-grid {
   background-image:
-    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(14, 165, 233, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.025) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
-/* Hero gradient orbs */
+/* Hero gradient orbs — refined, softer */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.3;
+  filter: blur(120px);
+  opacity: 0.2;
   animation: float 6s ease-in-out infinite;
 }
 
 .orb-1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent);
   top: -10%;
   right: -10%;
 }
@@ -123,7 +122,7 @@ body {
 .orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.3), transparent);
   bottom: -10%;
   left: -10%;
   animation-delay: -3s;
@@ -132,7 +131,7 @@ body {
 .orb-3 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.3), transparent);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.25), transparent);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -151,11 +150,11 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: 17px;
-  background: linear-gradient(135deg, #00f0ff, #a855f7, #ec4899, #00f0ff);
+  background: linear-gradient(135deg, #0ea5e9, #6366f1, #2563eb, #0ea5e9);
   background-size: 300% 300%;
   animation: gradientSpin 4s linear infinite;
   z-index: -1;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 @keyframes gradientSpin {
@@ -171,9 +170,9 @@ body {
 
 .glow-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(0, 240, 255, 0.15),
-              0 0 60px rgba(168, 85, 247, 0.1);
-  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 30px rgba(14, 165, 233, 0.12),
+              0 0 60px rgba(99, 102, 241, 0.08);
+  border-color: rgba(14, 165, 233, 0.25);
 }
 
 /* Page transition wrapper */
@@ -220,7 +219,7 @@ body {
 
 .btn-glow:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 40px rgba(168, 85, 247, 0.25);
+  box-shadow: 0 10px 40px rgba(14, 165, 233, 0.25);
 }
 
 /* Premium badge pulse */
@@ -230,9 +229,9 @@ body {
 
 @keyframes badgePulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.15);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(0, 240, 255, 0);
+    box-shadow: 0 0 0 6px rgba(14, 165, 233, 0);
   }
 }

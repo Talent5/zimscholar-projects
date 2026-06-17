@@ -85,7 +85,7 @@ const TrustCard: React.FC<{
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -4, borderColor: 'rgba(0,240,255,0.3)' }}
+      whileHover={{ y: -4, borderColor: 'rgba(14,165,233,0.3)' }}
     >
       <div className="w-12 h-12 rounded-xl bg-glass-light flex items-center justify-center text-neon-cyan">
         {icon}
@@ -227,7 +227,7 @@ const HomePage: React.FC = () => {
               <motion.div
                 key={i}
                 className="p-4 rounded-2xl glass border border-glass-border"
-                whileHover={{ y: -2, borderColor: 'rgba(0,240,255,0.3)' }}
+                whileHover={{ y: -2, borderColor: 'rgba(14,165,233,0.3)' }}
               >
                 <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{stat.value}</div>
                 <div className="text-xs text-slate-500">{stat.label}</div>
@@ -514,7 +514,7 @@ const TestimonialCard: React.FC<{
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.15, duration: 0.5 }}
-      whileHover={{ y: -4, borderColor: 'rgba(0,240,255,0.2)' }}
+      whileHover={{ y: -4, borderColor: 'rgba(14,165,233,0.2)' }}
     >
       <div className="flex text-neon-cyan mb-4 gap-0.5">
         {[...Array(5)].map((_, i) => (
