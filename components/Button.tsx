@@ -14,19 +14,19 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseStyles = "inline-flex items-center justify-center font-bold transition-all duration-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyles = "inline-flex items-center justify-center font-semibold tracking-wide transition-all duration-300 rounded-xl focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
-    primary: "bg-brand-600 hover:bg-brand-700 text-white shadow-lg hover:shadow-xl focus:ring-brand-500",
-    secondary: "bg-accent-400 hover:bg-accent-500 text-slate-900 shadow-md hover:shadow-lg focus:ring-accent-400",
-    outline: "border-2 border-brand-600 text-brand-600 hover:bg-brand-50 focus:ring-brand-500",
-    ghost: "text-brand-600 hover:bg-brand-50 hover:text-brand-700",
+    primary: "bg-gradient-to-r from-neon-cyan to-neon-purple text-white shadow-lg shadow-neon-purple/20 hover:shadow-neon-purple/40 hover:-translate-y-0.5 active:translate-y-0",
+    secondary: "glass text-white border border-glass-border hover:border-neon-cyan/30 hover:shadow-lg hover:shadow-neon-cyan/10 hover:-translate-y-0.5 active:translate-y-0",
+    outline: "border-2 border-neon-cyan/40 text-neon-cyan hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-lg hover:shadow-neon-cyan/10",
+    ghost: "text-slate-400 hover:text-white hover:bg-glass-light",
   };
 
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
+    sm: "px-4 py-2 text-xs gap-1.5",
+    md: "px-6 py-3 text-sm gap-2",
+    lg: "px-8 py-4 text-base gap-2.5",
   };
 
   const widthStyle = fullWidth ? "w-full" : "";

@@ -1,3 +1,4 @@
+// === C:\Users\Takunda Mundwa\Desktop\zimscholar-projects\pages\PortfolioDetailPage.tsx ===
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ExternalLink, Calendar, Award, GraduationCap, ArrowLeft, Github, DollarSign, CheckCircle, XCircle } from 'lucide-react';
@@ -61,8 +62,8 @@ const PortfolioDetailPage: React.FC = () => {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-200 rounded w-1/3 mx-auto mb-4"></div>
-          <div className="h-4 bg-slate-200 rounded w-1/4 mx-auto"></div>
+          <div className="h-8 bg-white/10 rounded w-1/3 mx-auto mb-4"></div>
+          <div className="h-4 bg-white/10 rounded w-1/4 mx-auto"></div>
         </div>
       </div>
     );
@@ -71,8 +72,8 @@ const PortfolioDetailPage: React.FC = () => {
   if (error || !project) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
-        <h1 className="text-3xl font-bold text-slate-900 mb-4">Project Not Found</h1>
-        <p className="text-slate-600 mb-8">{error || 'The project you are looking for does not exist.'}</p>
+        <h1 className="text-3xl font-bold text-white mb-4">Project Not Found</h1>
+        <p className="text-slate-400 mb-8">{error || 'The project you are looking for does not exist.'}</p>
         <Button onClick={() => navigate('/portfolio')}>
           <ArrowLeft size={18} />
           Back to Portfolio
@@ -84,11 +85,11 @@ const PortfolioDetailPage: React.FC = () => {
   return (
     <div className="fade-in">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-brand-50 to-accent-50 py-12">
+      <div className="bg-gradient-to-br from-neon-cyan/5 to-neon-purple/5 py-12">
         <div className="container mx-auto px-4">
           <button
             onClick={() => navigate('/portfolio')}
-            className="flex items-center gap-2 text-brand-600 hover:text-brand-700 mb-6 font-medium transition-colors"
+            className="flex items-center gap-2 text-neon-cyan hover:text-neon-cyan/80 mb-6 font-medium transition-colors"
           >
             <ArrowLeft size={20} />
             Back to Portfolio
@@ -97,28 +98,28 @@ const PortfolioDetailPage: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-8 items-start">
             <div>
               <div className="flex gap-2 mb-4 flex-wrap">
-                <span className="px-3 py-1 bg-brand-100 text-brand-700 rounded-full text-sm font-semibold">
+                <span className="px-3 py-1 glass border border-glass-border text-neon-cyan rounded-full text-xs font-semibold">
                   {project.category}
                 </span>
-                <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold glass border border-glass-border ${
                   project.projectType === 'ready-made' 
-                    ? 'bg-green-100 text-green-700' 
-                    : 'bg-blue-100 text-blue-700'
+                    ? 'text-green-400' 
+                    : 'text-blue-400'
                 }`}>
                   {project.projectType === 'ready-made' ? 'Ready-Made' : 'Showcase'}
                 </span>
                 {project.projectId && (
-                  <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-mono font-semibold">
+                  <span className="px-3 py-1 glass border border-glass-border text-slate-400 rounded-full text-xs font-mono font-semibold">
                     {project.projectId}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 {project.title}
               </h1>
 
-              <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+              <p className="text-lg text-slate-400 mb-6 leading-relaxed">
                 {project.description}
               </p>
 
@@ -164,20 +165,20 @@ const PortfolioDetailPage: React.FC = () => {
               </div>
 
               {project.projectType === 'ready-made' && project.price && (
-                <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-brand-100">
+                <div className="glass rounded-2xl p-6 border border-glass-border">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-600 text-sm font-medium mb-1">Price</p>
-                      <p className="text-4xl font-bold text-brand-600">${project.price}</p>
+                      <p className="text-slate-500 text-sm font-medium mb-1">Price</p>
+                      <p className="text-4xl font-bold text-neon-cyan">${project.price}</p>
                     </div>
                     <div className="text-right">
                       {project.isAvailable ? (
-                        <div className="flex items-center gap-2 text-green-600">
+                        <div className="flex items-center gap-2 text-green-400">
                           <CheckCircle size={24} />
                           <span className="font-semibold">Available</span>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-2 text-red-600">
+                        <div className="flex items-center gap-2 text-red-400">
                           <XCircle size={24} />
                           <span className="font-semibold">Sold Out</span>
                         </div>
@@ -191,7 +192,7 @@ const PortfolioDetailPage: React.FC = () => {
             {/* Media Section */}
             <div>
               {project.videoUrl ? (
-                <div className="rounded-2xl overflow-hidden shadow-2xl bg-black">
+                <div className="rounded-2xl overflow-hidden glass border border-glass-border bg-black">
                   <video
                     src={getFileUrl(project.videoUrl)}
                     controls
@@ -200,7 +201,7 @@ const PortfolioDetailPage: React.FC = () => {
                   />
                 </div>
               ) : project.thumbnail ? (
-                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <div className="rounded-2xl overflow-hidden glass border border-glass-border">
                   <img
                     src={getFileUrl(project.thumbnail)}
                     alt={project.title}
@@ -220,13 +221,13 @@ const PortfolioDetailPage: React.FC = () => {
           <div className="lg:col-span-2 space-y-8">
             {/* Features */}
             {project.features && project.features.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Features</h2>
+              <div className="glass rounded-2xl p-8 border border-glass-border">
+                <h2 className="text-2xl font-bold text-white mb-6">Features</h2>
                 <ul className="grid md:grid-cols-2 gap-4">
                   {project.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <CheckCircle size={20} className="text-green-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-700">{feature}</span>
+                      <CheckCircle size={20} className="text-neon-cyan flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-400">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -235,13 +236,13 @@ const PortfolioDetailPage: React.FC = () => {
 
             {/* Technologies */}
             {project.technologies && project.technologies.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Technologies Used</h2>
+              <div className="glass rounded-2xl p-8 border border-glass-border">
+                <h2 className="text-2xl font-bold text-white mb-6">Technologies Used</h2>
                 <div className="flex flex-wrap gap-3">
                   {project.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium text-sm"
+                      className="px-4 py-2 glass border border-glass-border text-slate-400 rounded-lg font-medium text-sm"
                     >
                       {tech}
                     </span>
@@ -254,46 +255,46 @@ const PortfolioDetailPage: React.FC = () => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Project Info */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900 mb-4">Project Information</h3>
+            <div className="glass rounded-2xl p-6 border border-glass-border">
+              <h3 className="text-lg font-bold text-white mb-4">Project Information</h3>
               <div className="space-y-4">
                 {project.university && (
                   <div className="flex items-start gap-3">
-                    <GraduationCap size={20} className="text-brand-600 flex-shrink-0 mt-0.5" />
+                    <GraduationCap size={20} className="text-neon-cyan flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs text-slate-500 uppercase font-semibold">University</p>
-                      <p className="text-slate-900 font-medium">{project.university}</p>
+                      <p className="text-white font-medium">{project.university}</p>
                     </div>
                   </div>
                 )}
                 {project.yearCompleted && (
                   <div className="flex items-start gap-3">
-                    <Calendar size={20} className="text-brand-600 flex-shrink-0 mt-0.5" />
+                    <Calendar size={20} className="text-neon-cyan flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs text-slate-500 uppercase font-semibold">Year</p>
-                      <p className="text-slate-900 font-medium">{project.yearCompleted}</p>
+                      <p className="text-white font-medium">{project.yearCompleted}</p>
                     </div>
                   </div>
                 )}
                 {project.grade && (
                   <div className="flex items-start gap-3">
-                    <Award size={20} className="text-brand-600 flex-shrink-0 mt-0.5" />
+                    <Award size={20} className="text-neon-cyan flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs text-slate-500 uppercase font-semibold">Grade</p>
-                      <p className="text-slate-900 font-medium">{project.grade}</p>
+                      <p className="text-white font-medium">{project.grade}</p>
                     </div>
                   </div>
                 )}
-                <div className="pt-4 border-t border-slate-100">
-                  <p className="text-xs text-slate-500">Views: <span className="font-semibold text-slate-900">{project.viewCount}</span></p>
+                <div className="pt-4 border-t border-glass-border">
+                  <p className="text-xs text-slate-500">Views: <span className="font-semibold text-slate-400">{project.viewCount}</span></p>
                 </div>
               </div>
             </div>
 
             {/* CTA Box */}
-            <div className="bg-gradient-to-br from-brand-600 to-brand-700 rounded-2xl p-6 text-white shadow-xl">
-              <h3 className="text-xl font-bold mb-3">Interested in this project?</h3>
-              <p className="text-brand-100 mb-6 text-sm">
+            <div className="glass rounded-2xl p-6 border border-glass-border">
+              <h3 className="text-xl font-bold text-white mb-3">Interested in this project?</h3>
+              <p className="text-slate-400 mb-6 text-sm">
                 Get a custom quote or purchase this ready-made solution for your academic needs.
               </p>
               <Button

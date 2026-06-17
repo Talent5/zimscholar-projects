@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,7 +38,7 @@
     <meta name="twitter:image" content="https://scholarxafrica.com/scholarxafrica-logo.png" />
     
     <!-- Additional SEO -->
-    <meta name="theme-color" content="#8b5cf6" />
+    <meta name="theme-color" content="#0a0a1a" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
     <meta name="rating" content="general" />
@@ -54,21 +54,69 @@
         theme: {
           extend: {
             colors: {
-              brand: {
-                50: '#f5f3ff',
-                100: '#ede9fe',
-                500: '#8b5cf6', // Violet-500
-                600: '#7c3aed', // Violet-600
-                700: '#6d28d9', // Violet-700
-                900: '#4c1d95',
+              void: {
+                50: '#f0f0ff',
+                100: '#dcdcff',
+                200: '#b8b8ff',
+                300: '#8a8aff',
+                400: '#5c5cff',
+                500: '#2e2eff',
+                600: '#1a1a8a',
+                700: '#12125a',
+                800: '#0a0a2e',
+                900: '#060625',
+                950: '#020212',
               },
-              accent: {
-                400: '#fbbf24', // Amber-400
-                500: '#f59e0b', // Amber-500
-              }
+              neon: {
+                cyan: '#00f0ff',
+                blue: '#0088ff',
+                purple: '#a855f7',
+                pink: '#ec4899',
+                green: '#22d3ee',
+              },
+              glass: {
+                light: 'rgba(255,255,255,0.05)',
+                medium: 'rgba(255,255,255,0.08)',
+                heavy: 'rgba(255,255,255,0.12)',
+                border: 'rgba(255,255,255,0.1)',
+              },
             },
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+              sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+              'grid-scroll': 'gridScroll 20s linear infinite',
+              'border-glow': 'borderGlow 3s ease-in-out infinite',
+              'flicker': 'flicker 3s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              pulseGlow: {
+                '0%, 100%': { boxShadow: '0 0 20px rgba(0,240,255,0.2)' },
+                '50%': { boxShadow: '0 0 40px rgba(0,240,255,0.5), 0 0 80px rgba(0,240,255,0.1)' },
+              },
+              gridScroll: {
+                '0%': { transform: 'translateY(0)' },
+                '100%': { transform: 'translateY(-50%)' },
+              },
+              borderGlow: {
+                '0%, 100%': { borderColor: 'rgba(0,240,255,0.3)' },
+                '50%': { borderColor: 'rgba(0,240,255,0.8)' },
+              },
+              flicker: {
+                '0%, 100%': { opacity: '1' },
+                '41%': { opacity: '1' },
+                '42%': { opacity: '0.8' },
+                '43%': { opacity: '1' },
+                '45%': { opacity: '0.3' },
+                '46%': { opacity: '1' },
+              },
             },
           },
         },
@@ -76,21 +124,21 @@
     </script>
     <style>
       body {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
+        background: #020212;
       }
-      /* Smooth scrolling for anchor links */
-      html {
-        scroll-behavior: smooth;
+      ::-webkit-scrollbar {
+        width: 6px;
       }
-      .fade-in {
-        animation: fadeIn 0.5s ease-in-out;
+      ::-webkit-scrollbar-track {
+        background: #060625;
       }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #a855f7, #00f0ff);
+        border-radius: 3px;
       }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script type="importmap">
 {
   "imports": {
@@ -103,7 +151,7 @@
 </script>
 <link rel="stylesheet" href="/styles/forms.css">
 </head>
-  <body class="bg-slate-50 text-slate-900 antialiased">
+  <body class="bg-void-950 text-white antialiased">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   <script type="module" src="/index.tsx"></script>

@@ -1,3 +1,4 @@
+// === C:\Users\Takunda Mundwa\Desktop\zimscholar-projects\pages\PricingPage.tsx ===
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Loader2 } from 'lucide-react';
@@ -44,8 +45,8 @@ const PricingPage: React.FC = () => {
     return (
       <div className="fade-in py-12">
         <div className="container mx-auto px-4 text-center">
-          <Loader2 className="inline-block spin" size={48} />
-          <p className="mt-4 text-slate-600">Loading pricing...</p>
+          <Loader2 className="inline-block spin text-neon-cyan" size={48} />
+          <p className="mt-4 text-slate-400">Loading pricing...</p>
         </div>
       </div>
     );
@@ -55,7 +56,7 @@ const PricingPage: React.FC = () => {
     return (
       <div className="fade-in py-12">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-red-600">{error}</p>
+          <p className="text-red-400">{error}</p>
         </div>
       </div>
     );
@@ -71,8 +72,8 @@ const PricingPage: React.FC = () => {
       />
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">Transparent Pricing</h1>
-          <p className="text-lg text-slate-600">
+          <h1 className="text-4xl font-bold text-white mb-4">Transparent Pricing</h1>
+          <p className="text-lg text-slate-400">
             Choose a package that fits your needs. No hidden fees.
           </p>
         </div>
@@ -83,23 +84,23 @@ const PricingPage: React.FC = () => {
               key={tier._id} 
               className={`relative rounded-2xl p-8 transition-transform ${
                 tier.recommended 
-                  ? 'bg-white shadow-2xl border-2 border-brand-500 scale-105 md:-mt-4 z-10' 
-                  : 'bg-white shadow-lg border border-slate-100'
+                  ? 'glass neon-border scale-105 md:-mt-4 z-10' 
+                  : 'glass'
               }`}
             >
               {tier.recommended && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-brand-500 text-white px-4 py-1 rounded-full text-sm font-bold tracking-wide">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass border border-glass-border px-4 py-1 rounded-full text-xs font-bold tracking-wide text-neon-cyan">
                   MOST POPULAR
                 </div>
               )}
-              <h3 className="text-xl font-bold text-slate-900 mb-2">{tier.name}</h3>
-              <div className="text-3xl font-black text-slate-900 mb-2">{tier.price}</div>
+              <h3 className="text-xl font-bold text-white mb-2">{tier.name}</h3>
+              <div className="text-3xl font-black text-white mb-2">{tier.price}</div>
               <p className="text-sm text-slate-500 mb-6 h-10">{tier.description}</p>
               
               <ul className="space-y-4 mb-8">
                 {tier.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3 text-sm text-slate-700">
-                    <CheckCircle size={18} className="text-green-500 shrink-0 mt-0.5" />
+                  <li key={index} className="flex items-start gap-3 text-sm text-slate-400">
+                    <CheckCircle size={18} className="text-neon-cyan shrink-0 mt-0.5" />
                     <span>{feature}</span>
                   </li>
                 ))}

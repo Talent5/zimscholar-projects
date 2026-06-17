@@ -195,6 +195,53 @@ app.get('/api/admin/verify', verifyToken, (req, res) => {
   });
 });
 
+// SMTP Diagnostic endpoint — test email connectivity without sending
+app.get('/api/admin/email-check', verifyToken, adminLimiter, async (req, res) => {
+  try {
+    const nodemailer = await import('nodemailer');
+    const transporter = (nodemailer.default || nodemailer).createTransport({
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: Number(process.env.EMAIL_PORT) || 587,
+      secure: process.env.EMAIL_SECURE === 'true',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD || process.env.EMAIL_PASS,
+      },
+      connectionTimeout: 8000,
+      greetingTimeout: 8000,
+    });
+
+    const verified = await transporter.verify();
+    transporter.close();
+
+    res.json({
+      success: true,
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: Number(process.env.EMAIL_PORT) || 587,
+      secure: process.env.EMAIL_SECURE === 'true',
+      user: process.env.EMAIL_USER || '(not set)',
+      status: 'SMTP connection verified successfully',
+    });
+  } catch (error) {
+    let suggestion = 'Check EMAIL_HOST, EMAIL_PORT, EMAIL_USER, and EMAIL_PASSWORD environment variables.';
+    if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKET') {
+      suggestion = 'SMTP server unreachable. Render may block port 587. Try EMAIL_PORT=465 and EMAIL_SECURE=true (Gmail SSL).';
+    } else if (error.code === 'EAUTH') {
+      suggestion = 'Authentication failed. For Gmail: use an App Password (not regular password). Generate: myaccount.google.com/apppasswords. Also enable 2FA on the Google account first.';
+    }
+
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      code: error.code || null,
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: Number(process.env.EMAIL_PORT) || 587,
+      user: process.env.EMAIL_USER || '(not set)',
+      suggestion,
+    });
+  }
+});
+
 // Contact Form Endpoint
 app.post('/api/contact', formLimiter, contactFormValidation, async (req, res) => {
   try {
@@ -923,13 +970,18 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
       attachments: emailAttachments
     });
 
-    // Upload to Supabase for storage in parallel (non-blocking for the email)
-    const storagePromise = attachments.length > 0
-      ? uploadMultipleFiles(attachments, BUCKETS.ATTACHMENTS, `replies/${Date.now()}`)
-          .catch(err => { logger.error('Background Supabase upload failed:', err); return []; })
-      : Promise.resolve([]);
+    // Upload to Supabase in background (fire-and-forget — don't delay the response)
+    if (attachments.length > 0) {
+      uploadMultipleFiles(attachments, BUCKETS.ATTACHMENTS, `replies/${Date.now()}`)
+        .then(results => {
+          for (const r of results) {
+            if (!r.success) logger.error('Background reply attachment upload failed:', r.error);
+          }
+        })
+        .catch(err => { logger.error('Background Supabase upload failed:', err); });
+    }
 
-    const [result] = await Promise.all([emailPromise, storagePromise]);
+    const result = await emailPromise;
 
     if (!result.success) {
       logger.error('Send reply email failed', {
@@ -937,9 +989,23 @@ app.post('/api/admin/send-reply', verifyToken, adminLimiter, uploadFields([
         error: result.error,
         code: result.code || null,
       });
+
+      const errCode = result.code || '';
+      let suggestion = 'Check server logs for details.';
+
+      if (errCode === 'ETIMEDOUT' || errCode === 'ESOCKET' || errCode === 'ECONNREFUSED') {
+        suggestion = 'Cannot reach email server. Verify EMAIL_HOST and EMAIL_PORT are correct. Render may block port 25/587 — try port 465 with EMAIL_SECURE=true.';
+      } else if (errCode === 'EAUTH') {
+        suggestion = 'Email authentication failed. If using Gmail, ensure EMAIL_PASSWORD is an App Password (not your regular password). Generate one at: https://myaccount.google.com/apppasswords';
+      } else if (String(result.error || '').includes('certificate')) {
+        suggestion = 'SSL/TLS certificate error. Try setting EMAIL_SECURE=true and EMAIL_PORT=465.';
+      }
+
       return res.status(500).json({
         error: 'Failed to send email',
         details: result.error || 'Unknown email error',
+        code: result.code || null,
+        suggestion,
       });
     }
 

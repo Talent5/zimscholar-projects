@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { getApiUrl, API_CONFIG } from '../config/api.config';
 import { useFetch } from '../hooks/useFetch';
+import { Button } from '../components/Button';
 
 interface Service {
   _id: string;
@@ -17,6 +19,23 @@ interface Service {
   };
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }
+  }
+};
+
 const Services: React.FC = () => {
   const { data: services, loading, error, refetch } = useFetch<Service[]>(
     getApiUrl(API_CONFIG.PUBLIC.SERVICES)
@@ -24,140 +43,113 @@ const Services: React.FC = () => {
 
   if (loading) {
     return (
-      <div style={{ padding: '4rem 1rem', textAlign: 'center' }}>
-        <p>Loading services...</p>
-      </div>
+      <section className="py-24 px-4">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <Loader2 className="animate-spin text-neon-cyan" size={36} />
+          <p className="text-slate-400 text-sm tracking-wide">Loading services...</p>
+        </div>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <div style={{ padding: '4rem 1rem', textAlign: 'center' }}>
-        <p style={{ color: '#dc2626', marginBottom: '1rem' }}>Failed to load services</p>
-        <button
-          onClick={refetch}
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#4f46e5',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer'
-          }}
-        >
-          Retry
-        </button>
-      </div>
+      <section className="py-24 px-4">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <p className="text-red-400 text-sm">Failed to load services</p>
+          <Button variant="primary" size="md" onClick={refetch}>
+            Retry
+          </Button>
+        </div>
+      </section>
     );
   }
 
   return (
-    <section style={{ padding: '4rem 1rem', background: '#f9fafb' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: '700', color: '#111827', marginBottom: '1rem' }}>
+    <section className="py-24 px-4">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
             Our Services
           </h2>
-          <p style={{ fontSize: '1.125rem', color: '#6b7280', maxWidth: '600px', margin: '0 auto' }}>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">
             Professional academic project services tailored for Zimbabwe students
           </p>
-        </div>
+        </motion.div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem'
-        }}>
-          {(services || []).map(service => (
-            <div
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8"
+        >
+          {(services || []).map((service) => (
+            <motion.div
               key={service._id}
-              style={{
-                background: 'white',
-                borderRadius: '12px',
-                padding: '2rem',
-                border: '1px solid #e5e7eb',
-                transition: 'all 0.3s',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
+              variants={cardVariants}
+              className="glass rounded-2xl p-8 border border-glass-border glow-card group flex flex-col"
             >
-              <div style={{
-                padding: '0.5rem 1rem',
-                background: '#dbeafe',
-                color: '#1e40af',
-                borderRadius: '6px',
-                fontSize: '0.875rem',
-                fontWeight: '600',
-                display: 'inline-block',
-                marginBottom: '1rem'
-              }}>
+              <span className="inline-block w-fit px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5 glass border border-glass-border text-neon-cyan">
                 {service.category}
-              </div>
+              </span>
 
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#111827', marginBottom: '1rem' }}>
+              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-neon-cyan transition-colors duration-300">
                 {service.title}
               </h3>
 
-              <p style={{ color: '#6b7280', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+              <p className="text-slate-400 leading-relaxed mb-6">
                 {service.description}
               </p>
 
               {service.features && service.features.length > 0 && (
-                <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1.5rem' }}>
+                <ul className="space-y-3 mb-6">
                   {service.features.slice(0, 4).map((feature, idx) => (
-                    <li
-                      key={idx}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        padding: '0.5rem 0',
-                        color: '#374151',
-                        fontSize: '0.9375rem'
-                      }}
-                    >
-                      <CheckCircle size={18} style={{ color: '#10b981', flexShrink: 0 }} />
+                    <li key={idx} className="flex items-center gap-3 text-slate-300 text-sm">
+                      <CheckCircle size={18} className="text-neon-cyan shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
               )}
 
+              <div className="flex-1" />
+
               {service.pricing && (Object.keys(service.pricing).length > 0) && (
-                <div style={{
-                  padding: '1rem',
-                  background: '#f9fafb',
-                  borderRadius: '8px',
-                  marginBottom: '1.5rem'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-                    {service.pricing.basic && (
+                <div className="glass rounded-xl p-4 mb-6">
+                  <div className="flex justify-between flex-wrap gap-3">
+                    {service.pricing.basic !== undefined && (
                       <div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: '600' }}>BASIC</div>
-                        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: '#111827' }}>
+                        <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mb-0.5">
+                          Basic
+                        </div>
+                        <div className="text-xl font-bold text-white">
                           ${service.pricing.basic}
                         </div>
                       </div>
                     )}
-                    {service.pricing.standard && (
+                    {service.pricing.standard !== undefined && (
                       <div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: '600' }}>STANDARD</div>
-                        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: '#111827' }}>
+                        <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mb-0.5">
+                          Standard
+                        </div>
+                        <div className="text-xl font-bold text-white">
                           ${service.pricing.standard}
                         </div>
                       </div>
                     )}
-                    {service.pricing.premium && (
+                    {service.pricing.premium !== undefined && (
                       <div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: '600' }}>PREMIUM</div>
-                        <div style={{ fontSize: '1.25rem', fontWeight: '700', color: '#111827' }}>
+                        <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mb-0.5">
+                          Premium
+                        </div>
+                        <div className="text-xl font-bold text-white">
                           ${service.pricing.premium}
                         </div>
                       </div>
@@ -166,36 +158,13 @@ const Services: React.FC = () => {
                 </div>
               )}
 
-              <button
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1.5rem',
-                  background: '#4f46e5',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem',
-                  transition: 'all 0.2s'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#4338ca';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = '#4f46e5';
-                }}
-              >
+              <Button variant="primary" fullWidth>
                 Get Started
                 <ArrowRight size={18} />
-              </button>
-            </div>
+              </Button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

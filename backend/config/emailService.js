@@ -33,9 +33,9 @@ const createTransporter = () => {
       pass: config.pass,
     },
     // Add timeout configurations for document delivery
-    connectionTimeout: 12000, // fail fast when SMTP is unreachable
-    socketTimeout: 60000,     // 60 seconds for socket operations
-    greetingTimeout: 10000,   // 10 seconds for SMTP greeting
+    connectionTimeout: 8000,  // fail fast when SMTP is unreachable
+    socketTimeout: 30000,     // 30 seconds for socket operations
+    greetingTimeout: 8000,    // 8 seconds for SMTP greeting
     // Enable connection pooling for better performance
     pool: true,
     maxConnections: 5,
@@ -59,9 +59,9 @@ const createTransporterWithOverrides = (overrides = {}) => {
       user: config.user,
       pass: config.pass,
     },
-    connectionTimeout: 12000,
-    socketTimeout: 60000,
-    greetingTimeout: 10000,
+    connectionTimeout: 8000,
+    socketTimeout: 30000,
+    greetingTimeout: 8000,
     pool: true,
     maxConnections: 5,
     maxMessages: 100,
@@ -94,6 +94,8 @@ const sendMailWithFallback = async (mailOptions) => {
       port: 465,
       secure: true,
     });
+    // Disable pooling on fallback to force a fresh connection
+    fallback.options.pool = false;
 
     try {
       return await fallback.sendMail(mailOptions);
