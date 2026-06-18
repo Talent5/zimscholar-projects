@@ -11,7 +11,7 @@ const ServicesPage: React.FC = () => {
 
   const serviceCards = [
     {
-      icon: <BookOpen size={24} className="text-neon-cyan" />,
+      icon: <BookOpen size={24} className="text-slate-400" />,
       title: 'Research Papers & Essays',
       desc: 'Well-researched, properly cited academic papers across all subjects — Humanities, Social Sciences, Business, Law, and more.',
       features: ['In-depth Research', 'Proper Referencing (APA, MLA, Harvard)', 'Turnitin Checked', 'AI Content Removed'],
@@ -19,7 +19,7 @@ const ServicesPage: React.FC = () => {
       to: '/quote',
     },
     {
-      icon: <GraduationCap size={24} className="text-neon-cyan" />,
+      icon: <GraduationCap size={24} className="text-slate-400" />,
       title: 'Dissertations & Theses',
       desc: 'Full dissertation and thesis support from proposal to final submission. Literature reviews, methodology, data analysis, and discussion.',
       features: ['Literature Review', 'Research Methodology', 'Data Analysis & Findings', 'Full Formatting'],
@@ -27,7 +27,7 @@ const ServicesPage: React.FC = () => {
       to: '/quote',
     },
     {
-      icon: <FileText size={24} className="text-neon-cyan" />,
+      icon: <FileText size={24} className="text-slate-400" />,
       title: 'Research Proposals',
       desc: 'Compelling research proposals that get approved. Clear problem statements, objectives, methodology, and expected outcomes.',
       features: ['Problem Statement', 'Research Objectives', 'Literature Review', 'Methodology Design'],
@@ -35,7 +35,7 @@ const ServicesPage: React.FC = () => {
       to: '/quote',
     },
     {
-      icon: <BarChart3 size={24} className="text-neon-cyan" />,
+      icon: <BarChart3 size={24} className="text-slate-400" />,
       title: 'Data Analysis & Stats',
       desc: 'SPSS, Stata, R, Python, Excel — quantitative and qualitative data analysis with clear interpretation and visualization.',
       features: ['Statistical Analysis', 'Data Visualization', 'Interpretation & Write-up', 'SPSS / Stata / R / Python'],
@@ -43,7 +43,7 @@ const ServicesPage: React.FC = () => {
       to: '/quote',
     },
     {
-      icon: <Microscope size={24} className="text-neon-cyan" />,
+      icon: <Microscope size={24} className="text-slate-400" />,
       title: 'Lab Reports & Coursework',
       desc: 'Scientific lab reports, problem sets, case studies, and coursework assignments across all academic levels.',
       features: ['Scientific Method', 'Data Collection & Analysis', 'Proper Formatting', 'Diagrams & Tables'],
@@ -51,7 +51,7 @@ const ServicesPage: React.FC = () => {
       to: '/quote',
     },
     {
-      icon: <SearchCheck size={24} className="text-neon-cyan" />,
+      icon: <SearchCheck size={24} className="text-slate-400" />,
       title: 'Turnitin & AI Checking',
       desc: 'Submit your work for Turnitin similarity checking and AI content detection. Get a detailed report with revision suggestions.',
       features: ['Turnitin Similarity Report', 'AI Content Detection', 'Revision Suggestions', 'Guaranteed Under 10%'],
@@ -77,13 +77,13 @@ const ServicesPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
             All Academic Disciplines
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
             Services tailored for you
           </h1>
-          <p className="text-lg text-slate-400 leading-relaxed">
+          <p className="text-lg text-slate-500 leading-relaxed">
             From research papers and dissertations to data analysis and coursework — every subject,
             every level, every deadline. Turnitin-checked and AI-free.
           </p>
@@ -101,16 +101,16 @@ const ServicesPage: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25 + i * 0.08 }}
-              className="glass rounded-2xl p-8 border border-glass-border glow-card flex flex-col"
+              className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm flex flex-col"
             >
-              <div className="w-12 h-12 rounded-xl bg-neon-cyan/5 flex items-center justify-center mb-5">
+              <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5">
                 {service.icon}
               </div>
-              <h2 className="text-xl font-bold text-white mb-3">{service.title}</h2>
-              <p className="text-slate-400 text-sm mb-5 leading-relaxed">{service.desc}</p>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h2>
+              <p className="text-slate-500 text-sm mb-5 leading-relaxed">{service.desc}</p>
               <ul className="space-y-2.5 mb-6 flex-1">
                 {service.features.map((f, j) => (
-                  <li key={j} className="flex gap-2.5 text-slate-400 text-sm">
+                  <li key={j} className="flex gap-2.5 text-slate-500 text-sm">
                     <CheckCircle size={16} className="text-neon-cyan shrink-0 mt-0.5" />
                     {f}
                   </li>

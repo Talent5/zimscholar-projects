@@ -32,7 +32,7 @@ function ScrollProgress() {
       className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
       style={{
         scaleX: scrollYProgress,
-        background: '#0ea5e9',
+        background: '#0284c7',
       }}
     />
   );
@@ -71,7 +71,7 @@ function AppContent() {
         className={`relative font-medium text-sm tracking-wide transition-colors duration-300 py-1 ${
           isActive
             ? 'text-neon-cyan'
-            : 'text-slate-400 hover:text-white'
+            : 'text-slate-500 hover:text-slate-900'
         }`}
       >
         {label}
@@ -87,13 +87,13 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-void-950 text-white">
+    <div className="min-h-screen flex flex-col bg-surface-50 text-slate-900">
       <ScrollProgress />
 
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'glass-heavy'
+            ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200'
             : 'bg-transparent'
         }`}
         initial={{ y: -100 }}
@@ -106,14 +106,14 @@ function AppContent() {
               <img
                 src="/scholarxafrica-logo.png"
                 alt="ScholarXafrica Logo"
-                className="h-5 w-auto"
+                className="h-5 w-auto brightness-0 invert"
               />
             </div>
             <div>
-              <span className="text-lg sm:text-xl font-bold tracking-tight group-hover:text-neon-cyan transition-colors duration-300">
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 group-hover:text-neon-cyan transition-colors duration-300">
                 ScholarXafrica
               </span>
-              <span className="hidden sm:block text-[10px] text-slate-500 uppercase tracking-[0.2em] leading-none">
+              <span className="hidden sm:block text-[10px] text-slate-400 uppercase tracking-[0.2em] leading-none">
                 Academic Projects
               </span>
             </div>
@@ -140,7 +140,7 @@ function AppContent() {
           </div>
 
           <motion.button
-            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg glass text-slate-300 hover:text-white transition-colors"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
           >
@@ -173,7 +173,7 @@ function AppContent() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl bg-void-900/95 backdrop-blur-xl border border-glass-border shadow-2xl overflow-hidden"
+              className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl bg-white shadow-xl border border-slate-200 overflow-hidden"
               initial={{ opacity: 0, height: 0, scale: 0.98 }}
               animate={{ opacity: 1, height: 'auto', scale: 1 }}
               exit={{ opacity: 0, height: 0, scale: 0.98 }}
@@ -198,15 +198,15 @@ function AppContent() {
                       to={link.to}
                       className={`block py-3 px-4 rounded-lg text-sm transition-colors ${
                         location.pathname === link.to
-                          ? 'bg-glass-light text-neon-cyan'
-                          : 'text-slate-400 hover:text-white hover:bg-glass-light'
+                          ? 'bg-sky-50 text-neon-cyan font-medium'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                     >
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
-                <div className="flex gap-3 mt-3 pt-3 border-t border-glass-border">
+                <div className="flex gap-3 mt-3 pt-3 border-t border-slate-200">
                   <Link to="/project-request" className="flex-1">
                     <Button size="sm" variant="secondary" fullWidth>
                       Request Project

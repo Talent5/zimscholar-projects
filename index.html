@@ -53,35 +53,28 @@
       tailwind.config = {
         theme: {
           extend: {
-            colors: {
-              void: {
-                50: '#f0f0ff',
-                100: '#dcdcff',
-                200: '#b8b8ff',
-                300: '#8a8aff',
-                400: '#5c5cff',
-                500: '#2e2eff',
-                600: '#1a1a8a',
-                700: '#12125a',
-                800: '#0a0a2e',
-                900: '#060625',
-                950: '#020212',
-              },
-              neon: {
-                cyan: '#0ea5e9',
-                blue: '#0369a1',
-                purple: '#475569',
-                pink: '#94a3b8',
-                green: '#0ea5e9',
-              },
-              brand: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                200: '#bae6fd',
-                600: '#0284c7',
-                700: '#0369a1',
-                900: '#0c4a6e',
-              },
+             colors: {
+               surface: {
+                 50: '#f8fafc',
+                 100: '#f1f5f9',
+                 200: '#e2e8f0',
+                 300: '#cbd5e1',
+               },
+               neon: {
+                 cyan: '#0284c7',
+                 blue: '#0369a1',
+                 purple: '#475569',
+                 pink: '#94a3b8',
+                 green: '#0284c7',
+               },
+               brand: {
+                 50: '#f0f9ff',
+                 100: '#e0f2fe',
+                 200: '#bae6fd',
+                 600: '#0284c7',
+                 700: '#0369a1',
+                 900: '#0c4a6e',
+               },
               glass: {
                 light: 'rgba(255,255,255,0.05)',
                 medium: 'rgba(255,255,255,0.08)',
@@ -133,17 +126,20 @@
     <style>
       body {
         font-family: 'Space Grotesk', 'Inter', sans-serif;
-        background: #020212;
+        background: #f8fafc;
       }
       ::-webkit-scrollbar {
-        width: 6px;
+        width: 5px;
       }
       ::-webkit-scrollbar-track {
-        background: #060625;
+        background: #f1f5f9;
       }
       ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #6366f1, #0ea5e9);
+        background: #cbd5e1;
         border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
       }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -159,7 +155,7 @@
 </script>
 <link rel="stylesheet" href="/styles/forms.css">
 </head>
-  <body class="bg-void-950 text-white antialiased">
+  <body class="bg-surface-50 text-slate-900 antialiased">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   <script type="module" src="/index.tsx"></script>

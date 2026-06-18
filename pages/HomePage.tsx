@@ -78,9 +78,9 @@ const HomePage: React.FC = () => {
   return (
     <div className="relative">
       <SEO
-        title="Academic Projects & Research Writing Zimbabwe | Turnitin-Ready — All Disciplines"
-        description="Zimbabwe's trusted academic research service. Turnitin-checked, plagiarism-free research papers, dissertations, proposals, and projects across all disciplines — Humanities, Social Sciences, Engineering, IT, Business, Law, Medicine. AI content removal included."
-        keywords="academic research Zimbabwe, research papers Zimbabwe, dissertation help Zimbabwe, thesis writing Zimbabwe, Turnitin check Zimbabwe, plagiarism-free assignments, AI content removal, research proposal help, academic writing Zimbabwe, literature review, data analysis, all academic disciplines, student projects, assignment help Zimbabwe, final year projects, software development Zimbabwe, Harare academic services"
+        title="Academic Research & Projects Zimbabwe | Turnitin-Ready — All Disciplines"
+        description="Zimbabwe's trusted academic service. Research papers, dissertations, proposals, and projects across all disciplines. Turnitin-checked, plagiarism-free, AI content removed."
+        keywords="research papers Zimbabwe, dissertation help Zimbabwe, thesis writing, academic writing, Turnitin check, AI content removal, plagiarism-free, literature review, data analysis, SPSS, essay writing, all academic subjects"
         canonicalUrl="https://scholarxafrica.com/"
         structuredData={[organizationStructuredData, localBusinessStructuredData]}
       />
@@ -88,10 +88,10 @@ const HomePage: React.FC = () => {
       {/* ═══════ HERO ═══════ */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white"
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute inset-0 swiss-grid opacity-40" />
+          <div className="absolute inset-0 swiss-grid opacity-60" />
           <div className="orb orb-1" />
           <div className="orb orb-2" />
         </div>
@@ -106,23 +106,23 @@ const HomePage: React.FC = () => {
             animate="visible"
           >
             <motion.div variants={itemVariants} className="mb-10">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em]">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-[0.2em]">
                 Turnitin-Ready & Plagiarism-Free
               </span>
             </motion.div>
 
             <motion.h1 variants={itemVariants} className="mb-10">
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tighter leading-none text-slate-500">
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tighter leading-none text-slate-300">
                 Build The
               </span>
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none text-white text-overlap">
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none text-slate-900 text-overlap">
                 Future.
               </span>
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-balance font-light"
+              className="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed text-balance font-light"
             >
               Research papers, dissertations, proposals, and academic projects across all disciplines —
               from Humanities and Social Sciences to Engineering and IT. Every submission Turnitin-checked and AI-free before delivery.
@@ -143,7 +143,7 @@ const HomePage: React.FC = () => {
               </motion.button>
               <motion.button
                 onClick={() => navigate('/quote')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-white/10 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-white/20 hover:bg-white/[0.03]"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold tracking-wide transition-all duration-300 hover:border-slate-300 hover:bg-slate-50"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -167,11 +167,11 @@ const HomePage: React.FC = () => {
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                className="p-5 rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-colors duration-300"
+                className="p-5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors duration-300 bg-white"
                 whileHover={{ y: -2 }}
               >
-                <div className="text-2xl sm:text-3xl font-bold text-white mb-1 tracking-tight">{stat.value}</div>
-                <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">{stat.label}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-slate-900 mb-1 tracking-tight">{stat.value}</div>
+                <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -182,7 +182,7 @@ const HomePage: React.FC = () => {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         >
-          <div className="w-5 h-8 rounded-full border border-white/10 flex items-start justify-center p-1">
+          <div className="w-5 h-8 rounded-full border border-slate-200 flex items-start justify-center p-1">
             <motion.div
               className="w-1 h-1.5 rounded-full bg-neon-cyan"
               animate={{ y: [0, 10, 0] }}
@@ -193,20 +193,20 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ═══════ TRUST SIGNALS ═══════ */}
-      <section className="relative py-16 border-t border-white/[0.04]">
+      <section className="relative py-16 border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <TrustCard index={0} icon={<SearchCheck size={24} />} label="Turnitin Verified" />
             <TrustCard index={1} icon={<FileCheck size={24} />} label="AI Content Removed" />
             <TrustCard index={2} icon={<ShieldCheck size={24} />} label="Plagiarism Free" />
-            <TrustCard index={3} icon={<Award size={24} />} label="Documented Code" />
+            <TrustCard index={3} icon={<Award size={24} />} label="Documented Work" />
           </div>
         </div>
       </section>
 
       {/* ═══════ TURNITIN & AI INTEGRITY ═══════ */}
-      <section className="relative py-24 border-t border-white/[0.04] overflow-hidden">
-        <div className="absolute inset-0 swiss-grid opacity-30 pointer-events-none" />
+      <section className="relative py-24 border-t border-slate-100 overflow-hidden bg-white">
+        <div className="absolute inset-0 swiss-grid opacity-40 pointer-events-none" />
         <div className="relative max-w-5xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -215,15 +215,15 @@ const HomePage: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
               Academic Integrity
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
               Every Project. Checked Twice.
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto font-light text-lg">
+            <p className="text-slate-500 max-w-2xl mx-auto font-light text-lg">
               We run every submission through Turnitin similarity detection and AI content analysis before it reaches you. 
-              Research papers, theses, proposals, lab reports — zero tolerance for plagiarism or AI-generated passages, regardless of discipline.
+              Research papers, theses, proposals, lab reports — zero tolerance for plagiarism or AI-generated passages.
             </p>
           </motion.div>
 
@@ -237,12 +237,12 @@ const HomePage: React.FC = () => {
               {
                 icon: <GraduationCap size={28} className="text-neon-cyan" />,
                 title: 'AI Content Detection & Removal',
-                desc: 'We use advanced detection tools to identify and rewrite any AI-generated passages. Your work reads naturally and passes every AI content detector — GPTZero, Turnitin AI, Originality.ai.',
+                desc: 'We use advanced detection tools to identify and rewrite any AI-generated passages. Your work reads naturally and passes every AI content detector.',
               },
               {
                 icon: <FileCheck size={28} className="text-neon-cyan" />,
                 title: 'Plagiarism-Free Guarantee',
-                desc: 'Every project is built from scratch. For ready-made projects, we ensure unique code structure and provide detailed documentation so you can confidently customize the submission.',
+                desc: 'Every project is built from scratch. For ready-made projects, we ensure unique structure and provide documentation so you can confidently customize.',
               },
             ].map((item, i) => (
               <motion.div
@@ -251,13 +251,13 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.12, duration: 0.5 }}
-                className="p-8 rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-colors duration-300"
+                className="p-8 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors duration-300 bg-white"
               >
-                <div className="w-14 h-14 rounded-xl bg-neon-cyan/5 flex items-center justify-center mb-6">
+                <div className="w-14 h-14 rounded-xl bg-sky-50 flex items-center justify-center mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">{item.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -270,7 +270,7 @@ const HomePage: React.FC = () => {
       {/* ═══════ FEATURED PROJECTS ═══════ */}
       {featuredProjects.length > 0 && (
         <section className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0 swiss-grid opacity-30 pointer-events-none" />
+          <div className="absolute inset-0 swiss-grid opacity-40 pointer-events-none" />
           <div className="relative max-w-7xl mx-auto px-6">
             <SectionHeading
               badge="Portfolio"
@@ -287,7 +287,7 @@ const HomePage: React.FC = () => {
             <div className="text-center mt-14">
               <motion.button
                 onClick={() => navigate('/portfolio')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/10 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-white/20 hover:bg-white/[0.03]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold tracking-wide transition-all duration-300 hover:border-slate-300 hover:bg-slate-50"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -300,7 +300,7 @@ const HomePage: React.FC = () => {
       )}
 
       {/* ═══════ TESTIMONIALS ═══════ */}
-      <section className="relative py-24 border-t border-white/[0.04]">
+      <section className="relative py-24 border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-6">
           <SectionHeading
             badge="Testimonials"
@@ -317,9 +317,8 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ═══════ CTA ═══════ */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-32 overflow-hidden bg-white">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-void-950 via-void-900 to-void-950" />
           <div className="orb orb-1" />
           <div className="orb orb-2" />
         </div>
@@ -330,13 +329,13 @@ const HomePage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
               Ready to Start Your
               <span className="block text-neon-cyan">
                 Next Project?
               </span>
             </h2>
-            <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto font-light">
+            <p className="text-slate-500 text-lg mb-10 max-w-xl mx-auto font-light">
               From research proposals to final dissertations — every project checked, every time.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -351,7 +350,7 @@ const HomePage: React.FC = () => {
               </motion.button>
               <motion.button
                 onClick={() => navigate('/portfolio')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-white/10 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-white/20 hover:bg-white/[0.03]"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold tracking-wide transition-all duration-300 hover:border-slate-300 hover:bg-slate-50"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -377,15 +376,15 @@ const TrustCard: React.FC<{
   return (
     <motion.div
       ref={ref}
-      className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/[0.04]"
+      className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-100 bg-white"
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.5 }}
     >
-      <div className="w-12 h-12 rounded-xl bg-white/[0.03] flex items-center justify-center text-slate-400">
+      <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
         {icon}
       </div>
-      <span className="text-sm font-medium text-slate-300">{label}</span>
+      <span className="text-sm font-medium text-slate-600">{label}</span>
     </motion.div>
   );
 };
@@ -406,21 +405,21 @@ const SectionHeading: React.FC<{
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
     >
-      <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+      <span className="inline-block px-4 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
         {badge}
       </span>
-      <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">{title}</h2>
-      <p className="text-slate-400 max-w-xl mx-auto font-light">{subtitle}</p>
+      <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight">{title}</h2>
+      <p className="text-slate-500 max-w-xl mx-auto font-light">{subtitle}</p>
     </motion.div>
   );
 };
 
 /* ── Image Placeholder ── */
 const ImagePlaceholder: React.FC<{ title: string }> = ({ title }) => (
-  <div className="absolute inset-0 bg-void-800 flex items-center justify-center">
+  <div className="absolute inset-0 bg-slate-100 flex items-center justify-center">
     <div className="text-center">
-      <Star size={32} className="text-slate-700 mx-auto mb-2" />
-      <span className="text-slate-600 text-xs font-medium uppercase tracking-wider">{title.slice(0, 30)}</span>
+      <Star size={32} className="text-slate-300 mx-auto mb-2" />
+      <span className="text-slate-400 text-xs font-medium uppercase tracking-wider">{title.slice(0, 30)}</span>
     </div>
   </div>
 );
@@ -439,13 +438,13 @@ const ProjectCard: React.FC<{
   return (
     <motion.div
       ref={ref}
-      className="group rounded-2xl overflow-hidden border border-white/[0.04] glow-card cursor-pointer"
+      className="group rounded-2xl overflow-hidden border border-slate-100 bg-white glow-card cursor-pointer"
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.15, duration: 0.5 }}
       onClick={() => navigate('/portfolio')}
     >
-      <div className="relative h-52 bg-void-800 overflow-hidden">
+      <div className="relative h-52 bg-slate-100 overflow-hidden">
         {project.videoUrl && !videoError ? (
           <video
             src={getFileUrl(project.videoUrl)}
@@ -465,26 +464,26 @@ const ProjectCard: React.FC<{
           <ImagePlaceholder title={project.title} />
         )}
         <div className="absolute top-3 right-3">
-          <div className="w-9 h-9 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-lg bg-white/80 backdrop-blur-sm border border-slate-200 flex items-center justify-center">
             <Star size={16} className="text-neon-cyan" fill="currentColor" />
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-void-950 via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent opacity-60" />
       </div>
 
       <div className="p-6">
         <div className="flex gap-2 mb-3 flex-wrap">
-          <span className="px-3 py-1 rounded-full border border-white/[0.06] text-slate-400 text-[10px] font-semibold uppercase tracking-wider">
+          <span className="px-3 py-1 rounded-full border border-slate-200 text-slate-500 text-[10px] font-semibold uppercase tracking-wider">
             {project.category}
           </span>
           {project.projectId && (
-            <span className="px-3 py-1 rounded-full border border-white/[0.06] text-slate-500 text-[10px] font-mono">
+            <span className="px-3 py-1 rounded-full border border-slate-200 text-slate-400 text-[10px] font-mono">
               {project.projectId}
             </span>
           )}
         </div>
 
-        <h3 className="text-lg font-bold text-white mb-2 group-hover:text-neon-cyan transition-colors">
+        <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-neon-cyan transition-colors">
           {project.title}
         </h3>
 
@@ -493,12 +492,12 @@ const ProjectCard: React.FC<{
         {project.technologies && project.technologies.length > 0 && (
           <div className="flex gap-2 flex-wrap mb-4">
             {project.technologies.slice(0, 3).map((tech, idx) => (
-              <span key={idx} className="px-2 py-1 rounded-md bg-white/[0.03] text-slate-500 text-[10px] font-medium">
+              <span key={idx} className="px-2 py-1 rounded-md bg-slate-50 text-slate-500 text-[10px] font-medium">
                 {tech}
               </span>
             ))}
             {project.technologies.length > 3 && (
-              <span className="px-2 py-1 rounded-md bg-white/[0.03] text-slate-500 text-[10px] font-medium">
+              <span className="px-2 py-1 rounded-md bg-slate-50 text-slate-500 text-[10px] font-medium">
                 +{project.technologies.length - 3}
               </span>
             )}
@@ -506,13 +505,13 @@ const ProjectCard: React.FC<{
         )}
 
         {project.projectType === 'ready-made' && project.price && (
-          <div className="flex justify-between items-center p-3 rounded-xl bg-white/[0.02] mb-4">
-            <span className="text-xl font-bold text-white">${project.price}</span>
+          <div className="flex justify-between items-center p-3 rounded-xl bg-slate-50 mb-4">
+            <span className="text-xl font-bold text-slate-900">${project.price}</span>
             <span
               className={`px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
                 project.isAvailable
-                  ? 'bg-green-500/10 text-green-400 border border-green-500/20'
-                  : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                  ? 'bg-green-50 text-green-600 border border-green-200'
+                  : 'bg-red-50 text-red-500 border border-red-200'
               }`}
             >
               {project.isAvailable ? 'Available' : 'Sold'}
@@ -523,14 +522,14 @@ const ProjectCard: React.FC<{
         <div className="flex gap-3">
           <button
             onClick={(e) => { e.stopPropagation(); navigate('/portfolio'); }}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-neon-cyan text-white text-sm font-semibold hover:shadow-lg hover:shadow-neon-cyan/15 transition-all"
+            className="flex-1 px-4 py-2.5 rounded-xl bg-neon-cyan text-white text-sm font-semibold hover:shadow-lg hover:shadow-neon-cyan/20 transition-all"
           >
             View Details
           </button>
           {project.demoUrl && (
             <button
               onClick={(e) => { e.stopPropagation(); window.open(project.demoUrl, '_blank'); }}
-              className="p-2.5 rounded-xl border border-white/[0.06] text-slate-400 hover:text-neon-cyan hover:border-white/[0.12] transition-all"
+              className="p-2.5 rounded-xl border border-slate-200 text-slate-400 hover:text-neon-cyan hover:border-slate-300 transition-all"
             >
               <ExternalLink size={16} />
             </button>
@@ -552,25 +551,25 @@ const TestimonialCard: React.FC<{
   return (
     <motion.div
       ref={ref}
-      className="p-6 rounded-2xl border border-white/[0.04]"
+      className="p-6 rounded-2xl border border-slate-100 bg-white"
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.15, duration: 0.5 }}
-      whileHover={{ y: -2, borderColor: 'rgba(255,255,255,0.08)' }}
+      whileHover={{ y: -2, borderColor: '#cbd5e1' }}
     >
       <div className="flex text-neon-cyan mb-4 gap-0.5">
         {[...Array(5)].map((_, i) => (
           <Star key={i} size={14} fill="currentColor" />
         ))}
       </div>
-      <p className="text-slate-400 text-sm italic mb-4 leading-relaxed">"{testimonial.content}"</p>
-      <div className="flex items-center gap-3 pt-4 border-t border-white/[0.04]">
+      <p className="text-slate-600 text-sm italic mb-4 leading-relaxed">"{testimonial.content}"</p>
+      <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
         <div className="w-8 h-8 rounded-full bg-neon-cyan flex items-center justify-center text-xs font-bold text-white">
           {testimonial.name[0]}
         </div>
         <div>
-          <p className="text-white text-sm font-semibold">{testimonial.name}</p>
-          <p className="text-slate-500 text-xs">{testimonial.role}, {testimonial.institution}</p>
+          <p className="text-slate-900 text-sm font-semibold">{testimonial.name}</p>
+          <p className="text-slate-400 text-xs">{testimonial.role}, {testimonial.institution}</p>
         </div>
       </div>
     </motion.div>

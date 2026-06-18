@@ -1,4 +1,4 @@
-/* ScholarXafrica — Swiss Typography First Design System */
+/* ScholarXafrica — Swiss Light Design System */
 * {
   margin: 0;
   padding: 0;
@@ -15,42 +15,42 @@ body {
   min-height: 100vh;
 }
 
-/* ═══════ Glass — used sparingly ═══════ */
+/* ═══════ Glass — light variant ═══════ */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .glass-heavy {
-  background: rgba(2, 2, 18, 0.85);
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* ═══════ Subtle grid background ═══════ */
 .swiss-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
   background-size: 80px 80px;
 }
 
-/* ═══════ Subtle ambient orbs — barely visible ═══════ */
+/* ═══════ Subtle ambient orbs ═══════ */
 .orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(140px);
-  opacity: 0.08;
+  opacity: 0.25;
   pointer-events: none;
 }
 
 .orb-1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.5), transparent);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.15), transparent);
   top: -20%;
   right: -15%;
 }
@@ -58,19 +58,19 @@ body {
 .orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.3), transparent);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.1), transparent);
   bottom: -15%;
   left: -10%;
 }
 
-/* ═══════ Hover card — restrained ═══════ */
+/* ═══════ Hover card ═══════ */
 .glow-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glow-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(14, 165, 233, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
 
 /* ═══════ Swiss Typography ═══════ */
@@ -101,7 +101,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 24px rgba(14, 165, 233, 0.15);
+  box-shadow: 0 4px 24px rgba(2, 132, 199, 0.2);
 }
 
 /* ═══════ Page transition ═══════ */
@@ -118,19 +118,4 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* ═══════ Scrollbar ═══════ */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: #020212;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
 }

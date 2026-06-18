@@ -24,10 +24,10 @@ interface PortfolioProject {
 }
 
 const ImagePlaceholder: React.FC<{ title: string }> = ({ title }) => (
-  <div className="absolute inset-0 bg-void-800 flex items-center justify-center">
+  <div className="absolute inset-0 bg-slate-100 flex items-center justify-center">
     <div className="text-center">
-      <Star size={28} className="text-slate-700 mx-auto mb-2" />
-      <span className="text-slate-600 text-xs font-medium uppercase tracking-wider">{title.slice(0, 25)}</span>
+      <Star size={28} className="text-slate-300 mx-auto mb-2" />
+      <span className="text-slate-400 text-xs font-medium uppercase tracking-wider">{title.slice(0, 25)}</span>
     </div>
   </div>
 );
@@ -84,7 +84,7 @@ const Portfolio: React.FC = () => {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-slate-400"
+          className="text-slate-500"
         >
           Loading projects...
         </motion.p>
@@ -119,10 +119,10 @@ const Portfolio: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-4xl font-bold text-slate-900 mb-4">
             Our Portfolio
           </h2>
-          <p className="text-lg text-slate-400 max-w-[600px] mx-auto">
+          <p className="text-lg text-slate-500 max-w-[600px] mx-auto">
             Explore our completed projects and ready-made solutions
           </p>
         </motion.div>
@@ -141,7 +141,7 @@ const Portfolio: React.FC = () => {
                 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border
                 ${categoryFilter === cat
                   ? 'bg-neon-cyan text-white border-neon-cyan'
-                  : 'border-white/[0.06] text-slate-400 hover:text-white hover:border-white/15'
+                  : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'
                 }
               `}
             >
@@ -164,10 +164,10 @@ const Portfolio: React.FC = () => {
                 key={project._id}
                 variants={cardVariants}
                 layout
-                className="rounded-2xl glass border border-glass-border glow-card overflow-hidden cursor-pointer group"
+                className="rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden cursor-pointer group hover:border-neon-cyan/20 hover:shadow-md transition-all"
                 onClick={() => navigate(`/portfolio/${project.slug}`)}
               >
-                <div className="relative w-full h-[200px] bg-void-800 overflow-hidden">
+                <div className="relative w-full h-[200px] bg-slate-100 overflow-hidden">
                   {project.videoUrl && !videoErrors.has(project._id) ? (
                     <video
                       src={getFileUrl(project.videoUrl)}
@@ -187,39 +187,39 @@ const Portfolio: React.FC = () => {
                     <ImagePlaceholder title={project.title} />
                   )}
                   {project.isFeatured && (
-                    <div className="absolute top-3 right-3 w-9 h-9 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center z-10">
-                      <Star size={16} className="text-neon-cyan" fill="currentColor" />
+                    <div className="absolute top-3 right-3 w-9 h-9 rounded-lg bg-white/60 backdrop-blur-sm border border-slate-200 flex items-center justify-center z-10">
+                      <Star size={16} className="text-amber-500" fill="currentColor" />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-void-950 via-transparent to-transparent opacity-60 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent opacity-60 pointer-events-none" />
                 </div>
 
                 <div className="p-6">
                   <div className="flex gap-2 mb-3 flex-wrap">
-                    <span className="px-3 py-1 rounded-full glass border border-glass-border text-neon-cyan text-xs font-semibold">
+                    <span className="px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-neon-cyan text-xs font-semibold">
                       {project.category}
                     </span>
                     <span className={`
                       px-3 py-1 rounded-full border text-xs font-semibold
                       ${project.projectType === 'ready-made'
-                        ? 'border-neon-cyan/20 text-neon-cyan'
-                        : 'border-white/[0.06] text-slate-400'
+                        ? 'border-sky-200 text-neon-cyan'
+                        : 'border-slate-200 text-slate-500'
                       }
                     `}>
                       {project.projectType === 'ready-made' ? 'Ready-Made' : 'Showcase'}
                     </span>
                     {project.projectId && (
-                      <span className="px-3 py-1 rounded-full glass border border-glass-border text-slate-400 text-xs font-mono">
+                      <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-500 text-xs font-mono">
                         {project.projectId}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-neon-cyan transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-neon-cyan transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-slate-400 text-[0.9375rem] leading-relaxed mb-4">
+                  <p className="text-slate-500 text-[0.9375rem] leading-relaxed mb-4">
                     {project.description.length > 120
                       ? `${project.description.substring(0, 120)}...`
                       : project.description
@@ -231,13 +231,13 @@ const Portfolio: React.FC = () => {
                       {project.technologies.slice(0, 4).map((tech, idx) => (
                         <span
                           key={idx}
-                          className="px-2 py-1 rounded-md bg-glass-light text-slate-400 text-xs font-medium"
+                          className="px-2 py-1 rounded-md bg-slate-100 text-slate-500 text-xs font-medium"
                         >
                           {tech}
                         </span>
                       ))}
                       {project.technologies.length > 4 && (
-                        <span className="px-2 py-1 rounded-md bg-glass-light text-slate-400 text-xs font-medium">
+                        <span className="px-2 py-1 rounded-md bg-slate-100 text-slate-500 text-xs font-medium">
                           +{project.technologies.length - 4}
                         </span>
                       )}
@@ -245,15 +245,15 @@ const Portfolio: React.FC = () => {
                   )}
 
                   {project.projectType === 'ready-made' && project.price && (
-                    <div className="flex justify-between items-center p-3 rounded-xl bg-glass-light mb-4">
-                      <span className="text-2xl font-bold text-white">
+                    <div className="flex justify-between items-center p-3 rounded-xl bg-slate-50 mb-4">
+                      <span className="text-2xl font-bold text-slate-900">
                         ${project.price}
                       </span>
                       <span className={`
                         px-3 py-1 rounded-full text-xs font-semibold
                         ${project.isAvailable
-                          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
-                          : 'bg-red-500/10 border border-red-500/20 text-red-400'
+                          ? 'bg-green-50 border border-green-200 text-green-600'
+                          : 'bg-red-50 border border-red-200 text-red-500'
                         }
                       `}>
                         {project.isAvailable ? 'Available' : 'Sold'}
@@ -292,7 +292,7 @@ const Portfolio: React.FC = () => {
                             window.open(ensureHttps(project.demoUrl!), '_blank', 'noopener,noreferrer');
                           }}
                           title="View Demo"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass border border-glass-border text-slate-400 hover:text-neon-cyan hover:border-neon-cyan/30 text-sm font-medium transition-all"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 hover:text-neon-cyan hover:border-sky-200 text-sm font-medium transition-all"
                         >
                           <ExternalLink size={16} />
                           Demo
@@ -305,7 +305,7 @@ const Portfolio: React.FC = () => {
                             window.open(ensureHttps(project.githubRepo!), '_blank', 'noopener,noreferrer');
                           }}
                           title="View on GitHub"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 border border-glass-border text-white hover:bg-white/15 hover:border-white/20 text-sm font-medium transition-all"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white hover:bg-slate-700 text-sm font-medium transition-all"
                         >
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
@@ -327,7 +327,7 @@ const Portfolio: React.FC = () => {
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
-            <p className="text-slate-500">No projects found in this category.</p>
+            <p className="text-slate-400">No projects found in this category.</p>
           </motion.div>
         )}
       </div>

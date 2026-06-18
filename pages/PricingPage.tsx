@@ -56,7 +56,7 @@ const PricingPage: React.FC = () => {
     return (
       <div className="fade-in py-24">
         <div className="flex flex-col items-center justify-center gap-4">
-          <p className="text-red-400 text-sm">{error}</p>
+          <p className="text-red-500 text-sm">{error}</p>
         </div>
       </div>
     );
@@ -78,13 +78,13 @@ const PricingPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full glass border border-neon-cyan/20 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
             Pricing
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
             Transparent Pricing
           </h1>
-          <p className="text-lg text-slate-400">
+          <p className="text-lg text-slate-500">
             Choose a package that fits your needs. No hidden fees.
           </p>
         </motion.div>
@@ -100,23 +100,23 @@ const PricingPage: React.FC = () => {
               key={tier._id}
               className={`relative rounded-2xl p-8 transition-all duration-300 ${
                 tier.recommended
-                  ? 'glass neon-border scale-105 md:-mt-4 z-10 glow-card'
-                  : 'glass border border-glass-border glow-card'
+                  ? 'bg-white border-2 border-neon-cyan shadow-md scale-105 md:-mt-4 z-10'
+                  : 'bg-white border border-slate-100 shadow-sm'
               }`}
             >
               {tier.recommended && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-[11px] font-bold uppercase tracking-wider">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-neon-cyan text-white text-[11px] font-bold uppercase tracking-wider">
                   Most Popular
                 </div>
               )}
 
-              <h3 className="text-xl font-bold text-white mb-2 mt-2">{tier.name}</h3>
-              <div className="text-3xl font-bold text-white mb-2">{tier.price}</div>
-              <p className="text-sm text-slate-500 mb-6 min-h-[2.5rem]">{tier.description}</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2 mt-2">{tier.name}</h3>
+              <div className="text-3xl font-bold text-slate-900 mb-2">{tier.price}</div>
+              <p className="text-sm text-slate-400 mb-6 min-h-[2.5rem]">{tier.description}</p>
 
               <ul className="space-y-4 mb-8">
                 {tier.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3 text-sm text-slate-400">
+                  <li key={index} className="flex items-start gap-3 text-sm text-slate-500">
                     <CheckCircle size={16} className="text-neon-cyan shrink-0 mt-0.5" />
                     <span>{feature}</span>
                   </li>
@@ -138,7 +138,7 @@ const PricingPage: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-16 text-center text-sm text-slate-500 max-w-2xl mx-auto"
+          className="mt-16 text-center text-sm text-slate-400 max-w-2xl mx-auto"
         >
           * Prices may vary based on specific hardware requirements (for IoT) or extreme complexity. Contact us for an exact quote.
         </motion.p>

@@ -27,12 +27,9 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer ref={ref} className="relative bg-void-900 border-t border-glass-border overflow-hidden">
-      {/* Cyber grid background */}
-      <div className="absolute inset-0 cyber-grid opacity-40 pointer-events-none" />
-
-      {/* Top glow line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-50" />
+    <footer ref={ref} className="relative bg-slate-900 border-t border-slate-800 overflow-hidden">
+      {/* Top highlight line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-40" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
@@ -44,7 +41,7 @@ export const Footer: React.FC = () => {
             custom={0}
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-neon-cyan flex items-center justify-center">
                 <img
                   src="/scholarxafrica-logo.png"
                   alt="ScholarXafrica"
@@ -70,7 +67,7 @@ export const Footer: React.FC = () => {
             custom={1}
           >
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
-              <span className="w-1 h-1 rounded-full bg-neon-cyan animate-pulse-glow" />
+              <span className="w-1 h-1 rounded-full bg-neon-cyan" />
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -96,16 +93,16 @@ export const Footer: React.FC = () => {
             custom={2}
           >
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
-              <span className="w-1 h-1 rounded-full bg-neon-purple animate-pulse-glow" />
+              <span className="w-1 h-1 rounded-full bg-neon-cyan" />
               Contact
             </h4>
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-slate-400 text-sm">
-                <Clock size={14} className="text-neon-cyan" />
+                <Clock size={14} className="text-slate-400" />
                 <span>Mon - Fri: 9am - 6pm (GMT+2)</span>
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
-                <Send size={14} className="text-neon-purple" />
+                <Send size={14} className="text-slate-400" />
                 <a href="mailto:support@zimscholar.dev" className="hover:text-neon-cyan transition-colors">
                   support@zimscholar.dev
                 </a>
@@ -113,7 +110,7 @@ export const Footer: React.FC = () => {
               <li>
                 <a
                   href="https://wa.me/26784286089"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-glass-light border border-glass-border text-neon-green hover:bg-glass-heavy hover:border-neon-green/30 transition-all text-sm font-medium"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-green-400 hover:bg-slate-700 hover:border-green-400/30 transition-all text-sm font-medium"
                 >
                   <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                   Chat on WhatsApp
@@ -125,7 +122,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <motion.div
-          className="border-t border-glass-border pt-8 text-center"
+          className="border-t border-slate-800 pt-8 text-center"
           variants={footerVariants}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}

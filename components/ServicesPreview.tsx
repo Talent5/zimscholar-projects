@@ -46,18 +46,18 @@ const ServicesPreview: React.FC = () => {
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Our Expertise</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Our Expertise</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">
               We cover the most in-demand technical domains for diploma and undergraduate degrees.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="glass rounded-2xl p-8 border border-glass-border animate-pulse">
-                <div className="w-14 h-14 bg-glass-light rounded-xl mb-6" />
-                <div className="h-6 bg-glass-light rounded mb-3 w-3/4" />
-                <div className="h-4 bg-glass-light rounded mb-2" />
-                <div className="h-4 bg-glass-light rounded w-1/2" />
+              <div key={i} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm animate-pulse">
+                <div className="w-14 h-14 bg-slate-100 rounded-xl mb-6" />
+                <div className="h-6 bg-slate-100 rounded mb-3 w-3/4" />
+                <div className="h-4 bg-slate-100 rounded mb-2" />
+                <div className="h-4 bg-slate-100 rounded w-1/2" />
               </div>
             ))}
           </div>
@@ -72,11 +72,11 @@ const ServicesPreview: React.FC = () => {
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      'Machine Learning': 'text-neon-purple border-neon-purple/20',
-      'Data Science': 'text-neon-cyan border-neon-cyan/20',
-      'Software Engineering': 'text-neon-blue border-neon-blue/20',
-      'IoT': 'text-amber-400 border-amber-400/20',
-      'Other': 'text-slate-400 border-slate-400/20',
+      'Machine Learning': 'text-purple-600 border-purple-200',
+      'Data Science': 'text-neon-cyan border-sky-200',
+      'Software Engineering': 'text-blue-600 border-blue-200',
+      'IoT': 'text-amber-600 border-amber-200',
+      'Other': 'text-slate-500 border-slate-200',
     };
     return colors[category] || colors['Other'];
   };
@@ -84,8 +84,7 @@ const ServicesPreview: React.FC = () => {
   const previewServices = services.slice(0, 6);
 
   return (
-    <section className="relative py-16 sm:py-24 border-t border-glass-border">
-      <div className="absolute inset-0 cyber-grid opacity-10 pointer-events-none" />
+    <section className="relative py-16 sm:py-24 border-t border-slate-100">
       <div className="relative max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -94,13 +93,13 @@ const ServicesPreview: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full glass border border-neon-cyan/20 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
             Capabilities
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
             Our Expertise
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <p className="text-slate-500 max-w-2xl mx-auto">
             We cover the most in-demand technical domains for diploma and undergraduate degrees.
           </p>
         </motion.div>
@@ -116,7 +115,7 @@ const ServicesPreview: React.FC = () => {
             <motion.div
               key={service._id}
               variants={cardVariants}
-              className="glass rounded-2xl p-8 border border-glass-border glow-card cursor-pointer group"
+              className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm cursor-pointer group hover:border-neon-cyan/20 hover:shadow-md transition-all"
               onClick={() => navigate('/services')}
             >
               <span
@@ -124,14 +123,14 @@ const ServicesPreview: React.FC = () => {
               >
                 {service.category}
               </span>
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-neon-cyan transition-colors duration-300">
+              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-neon-cyan transition-colors duration-300">
                 {service.title}
               </h3>
-              <p className="text-slate-400 mb-4 line-clamp-2 leading-relaxed">
+              <p className="text-slate-500 mb-4 line-clamp-2 leading-relaxed">
                 {service.description}
               </p>
               {service.pricing && Object.keys(service.pricing).length > 0 && (
-                <div className="text-sm text-slate-500 mb-4">
+                <div className="text-sm text-slate-400 mb-4">
                   Starting from{' '}
                   <span className="font-bold text-neon-cyan">
                     ${Math.min(...Object.values(service.pricing).filter((v) => v !== undefined) as number[])}
@@ -148,7 +147,7 @@ const ServicesPreview: React.FC = () => {
         <div className="text-center mt-12">
           <motion.button
             onClick={() => navigate('/services')}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-white text-sm font-semibold tracking-wide btn-glow"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-neon-cyan text-white text-sm font-semibold tracking-wide hover:bg-neon-cyan/90 transition-all shadow-sm"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
