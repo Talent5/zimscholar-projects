@@ -21,13 +21,13 @@ const ContactPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 border border-stone-200 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
               Contact
             </span>
-            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl font-bold text-stone-800 mb-6 tracking-tight">
               Get In Touch
             </h1>
-            <p className="text-lg text-slate-500 mb-8 leading-relaxed">
+            <p className="text-lg text-stone-500 mb-8 leading-relaxed">
               Ready to start? Have a question? We typically reply within 1 hour during business hours.
             </p>
 
@@ -39,16 +39,16 @@ const ContactPage: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15 }}
-                className="flex items-center gap-4 p-6 bg-white rounded-xl border border-slate-100 shadow-sm hover:border-sky-200 transition-all group"
+                className="flex items-center gap-4 p-6 bg-white rounded-xl border border-stone-200 shadow-sm hover:border-stone-300 transition-all group dash-card"
               >
                 <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                   <MessageCircle size={22} className="text-green-500" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900 group-hover:text-neon-cyan transition-colors">
+                  <h3 className="font-semibold text-stone-800 group-hover:text-neon-cyan transition-colors">
                     WhatsApp Us (Fastest)
                   </h3>
-                  <p className="text-sm text-slate-400">Click to chat instantly</p>
+                  <p className="text-sm text-stone-400">Click to chat instantly</p>
                 </div>
               </motion.a>
 
@@ -56,14 +56,14 @@ const ContactPage: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.25 }}
-                className="flex items-center gap-4 p-6 bg-white rounded-xl border border-slate-100 shadow-sm"
+                className="flex items-center gap-4 p-6 bg-white rounded-xl border border-stone-200 shadow-sm dash-card"
               >
-                <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center shrink-0">
-                  <Clock size={22} className="text-slate-400" />
+                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+                  <Clock size={22} className="text-neon-cyan" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900">Business Hours</h3>
-                  <p className="text-sm text-slate-400">Mon – Fri: 09:00 – 18:00</p>
+                  <h3 className="font-semibold text-stone-800">Business Hours</h3>
+                  <p className="text-sm text-stone-400">Mon – Fri: 09:00 – 18:00</p>
                 </div>
               </motion.div>
             </div>
@@ -73,9 +73,9 @@ const ContactPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm"
+            className="bg-white rounded-2xl p-8 border border-stone-200 shadow-sm dash-card"
           >
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">Send a Message</h2>
+            <h2 className="text-2xl font-bold text-stone-800 mb-6">Send a Message</h2>
             <ContactForm />
           </motion.div>
         </div>

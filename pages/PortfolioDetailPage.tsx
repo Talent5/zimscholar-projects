@@ -62,8 +62,8 @@ const PortfolioDetailPage: React.FC = () => {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-200 rounded w-1/3 mx-auto mb-4"></div>
-          <div className="h-4 bg-slate-200 rounded w-1/4 mx-auto"></div>
+          <div className="h-8 bg-stone-200 rounded w-1/3 mx-auto mb-4"></div>
+          <div className="h-4 bg-stone-200 rounded w-1/4 mx-auto"></div>
         </div>
       </div>
     );
@@ -72,8 +72,8 @@ const PortfolioDetailPage: React.FC = () => {
   if (error || !project) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
-        <h1 className="text-3xl font-bold text-slate-900 mb-4">Project Not Found</h1>
-        <p className="text-slate-500 mb-8">{error || 'The project you are looking for does not exist.'}</p>
+        <h1 className="text-3xl font-bold text-stone-800 mb-4">Project Not Found</h1>
+        <p className="text-stone-500 mb-8">{error || 'The project you are looking for does not exist.'}</p>
         <Button onClick={() => navigate('/portfolio')}>
           <ArrowLeft size={18} />
           Back to Portfolio
@@ -84,8 +84,7 @@ const PortfolioDetailPage: React.FC = () => {
 
   return (
     <div className="fade-in">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-sky-50 to-purple-50 py-12">
+      <div className="bg-gradient-to-br from-blue-50 to-stone-50 py-12">
         <div className="container mx-auto px-4">
           <button
             onClick={() => navigate('/portfolio')}
@@ -98,10 +97,10 @@ const PortfolioDetailPage: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-8 items-start">
             <div>
               <div className="flex gap-2 mb-4 flex-wrap">
-                <span className="px-3 py-1 bg-white border border-slate-200 text-neon-cyan rounded-full text-xs font-semibold">
+                <span className="px-3 py-1 bg-white/60 border border-stone-200 text-neon-cyan rounded-full text-xs font-semibold">
                   {project.category}
                 </span>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 ${
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-white/60 border border-stone-200 ${
                   project.projectType === 'ready-made' 
                     ? 'text-green-600' 
                     : 'text-blue-600'
@@ -109,17 +108,17 @@ const PortfolioDetailPage: React.FC = () => {
                   {project.projectType === 'ready-made' ? 'Ready-Made' : 'Showcase'}
                 </span>
                 {project.projectId && (
-                  <span className="px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full text-xs font-mono font-semibold">
+                  <span className="px-3 py-1 bg-white/60 border border-stone-200 text-stone-500 rounded-full text-xs font-mono font-semibold">
                     {project.projectId}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+              <h1 className="text-4xl md:text-5xl font-bold text-stone-800 mb-4">
                 {project.title}
               </h1>
 
-              <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+              <p className="text-lg text-stone-500 mb-6 leading-relaxed">
                 {project.description}
               </p>
 
@@ -165,10 +164,10 @@ const PortfolioDetailPage: React.FC = () => {
               </div>
 
               {project.projectType === 'ready-made' && project.price && (
-                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm dash-card">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-400 text-sm font-medium mb-1">Price</p>
+                      <p className="text-stone-400 text-sm font-medium mb-1">Price</p>
                       <p className="text-4xl font-bold text-neon-cyan">${project.price}</p>
                     </div>
                     <div className="text-right">
@@ -189,10 +188,9 @@ const PortfolioDetailPage: React.FC = () => {
               )}
             </div>
 
-            {/* Media Section */}
             <div>
               {project.videoUrl ? (
-                <div className="rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm bg-black">
+                <div className="rounded-2xl overflow-hidden bg-white border border-stone-200 shadow-sm bg-black dash-card">
                   <video
                     src={getFileUrl(project.videoUrl)}
                     controls
@@ -201,7 +199,7 @@ const PortfolioDetailPage: React.FC = () => {
                   />
                 </div>
               ) : project.thumbnail ? (
-                <div className="rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm">
+                <div className="rounded-2xl overflow-hidden bg-white border border-stone-200 shadow-sm dash-card">
                   <img
                     src={getFileUrl(project.thumbnail)}
                     alt={project.title}
@@ -214,35 +212,31 @@ const PortfolioDetailPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Details Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Features */}
             {project.features && project.features.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Features</h2>
+              <div className="bg-white rounded-2xl p-8 border border-stone-200 shadow-sm dash-card">
+                <h2 className="text-2xl font-bold text-stone-800 mb-6">Features</h2>
                 <ul className="grid md:grid-cols-2 gap-4">
                   {project.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <CheckCircle size={20} className="text-neon-cyan flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-500">{feature}</span>
+                      <span className="text-stone-500">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
 
-            {/* Technologies */}
             {project.technologies && project.technologies.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Technologies Used</h2>
+              <div className="bg-white rounded-2xl p-8 border border-stone-200 shadow-sm dash-card">
+                <h2 className="text-2xl font-bold text-stone-800 mb-6">Technologies Used</h2>
                 <div className="flex flex-wrap gap-3">
                   {project.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-4 py-2 bg-slate-50 border border-slate-200 text-slate-500 rounded-lg font-medium text-sm"
+                      className="px-4 py-2 bg-stone-50 border border-stone-200 text-stone-500 rounded-lg font-medium text-sm"
                     >
                       {tech}
                     </span>
@@ -252,49 +246,46 @@ const PortfolioDetailPage: React.FC = () => {
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Project Info */}
-            <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-900 mb-4">Project Information</h3>
+            <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm dash-card">
+              <h3 className="text-lg font-bold text-stone-800 mb-4">Project Information</h3>
               <div className="space-y-4">
                 {project.university && (
                   <div className="flex items-start gap-3">
-                    <GraduationCap size={20} className="text-slate-400 flex-shrink-0 mt-0.5" />
+                    <GraduationCap size={20} className="text-stone-400 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs text-slate-400 uppercase font-semibold">University</p>
-                      <p className="text-slate-900 font-medium">{project.university}</p>
+                      <p className="text-xs text-stone-400 uppercase font-semibold">University</p>
+                      <p className="text-stone-800 font-medium">{project.university}</p>
                     </div>
                   </div>
                 )}
                 {project.yearCompleted && (
                   <div className="flex items-start gap-3">
-                    <Calendar size={20} className="text-slate-400 flex-shrink-0 mt-0.5" />
+                    <Calendar size={20} className="text-stone-400 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs text-slate-400 uppercase font-semibold">Year</p>
-                      <p className="text-slate-900 font-medium">{project.yearCompleted}</p>
+                      <p className="text-xs text-stone-400 uppercase font-semibold">Year</p>
+                      <p className="text-stone-800 font-medium">{project.yearCompleted}</p>
                     </div>
                   </div>
                 )}
                 {project.grade && (
                   <div className="flex items-start gap-3">
-                    <Award size={20} className="text-slate-400 flex-shrink-0 mt-0.5" />
+                    <Award size={20} className="text-stone-400 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs text-slate-400 uppercase font-semibold">Grade</p>
-                      <p className="text-slate-900 font-medium">{project.grade}</p>
+                      <p className="text-xs text-stone-400 uppercase font-semibold">Grade</p>
+                      <p className="text-stone-800 font-medium">{project.grade}</p>
                     </div>
                   </div>
                 )}
-                <div className="pt-4 border-t border-slate-100">
-                  <p className="text-xs text-slate-400">Views: <span className="font-semibold text-slate-500">{project.viewCount}</span></p>
+                <div className="pt-4 border-t border-stone-200">
+                  <p className="text-xs text-stone-400">Views: <span className="font-semibold text-stone-500">{project.viewCount}</span></p>
                 </div>
               </div>
             </div>
 
-            {/* CTA Box */}
-            <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Interested in this project?</h3>
-              <p className="text-slate-500 mb-6 text-sm">
+            <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm dash-card">
+              <h3 className="text-xl font-bold text-stone-800 mb-3">Interested in this project?</h3>
+              <p className="text-stone-500 mb-6 text-sm">
                 Get a custom quote or purchase this ready-made solution for your academic needs.
               </p>
               <Button

@@ -1,4 +1,4 @@
-/* ScholarXafrica — Swiss Light Design System */
+/* ScholarXafrica — Cream Dashboard Design System */
 * {
   margin: 0;
   padding: 0;
@@ -9,113 +9,113 @@ body {
   font-family: 'Space Grotesk', 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #faf7f3;
+  color: #1b1a2a;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* ═══════ Glass — light variant ═══════ */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
+/* ═══════ Dashboard Card ═══════ */
+.dash-card {
+  background: #ffffff;
+  border: 1px solid #ebe7e0;
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-card:hover {
+  border-color: #d9d4cc;
+  box-shadow: 0 4px 24px rgba(27, 26, 42, 0.05), 0 1px 3px rgba(27, 26, 42, 0.03);
+  transform: translateY(-1px);
+}
+
+/* ═══════ Glass navbar ═══════ */
+.glass-heavy {
+  background: rgba(250, 247, 243, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid #ebe7e0;
 }
 
-.glass-heavy {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-/* ═══════ Subtle grid background ═══════ */
+/* ═══════ Subtle grid ═══════ */
 .swiss-grid {
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
-  background-size: 80px 80px;
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
 }
 
-/* ═══════ Subtle ambient orbs ═══════ */
+/* ═══════ Ambient orbs ═══════ */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.25;
+  filter: blur(160px);
+  opacity: 0.2;
   pointer-events: none;
 }
 
 .orb-1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.15), transparent);
-  top: -20%;
-  right: -15%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.12), transparent);
+  top: -25%;
+  right: -20%;
 }
 
 .orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.1), transparent);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent);
   bottom: -15%;
   left: -10%;
 }
 
-/* ═══════ Hover card ═══════ */
-.glow-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* ═══════ Metric number ═══════ */
+.metric-value {
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
 }
 
-.glow-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-}
-
-/* ═══════ Swiss Typography ═══════ */
+/* ═══════ Typography ═══════ */
 .text-overlap {
-  margin-top: -12px;
+  margin-top: -14px;
 }
 
 @media (min-width: 768px) {
-  .text-overlap {
-    margin-top: -16px;
-  }
+  .text-overlap { margin-top: -18px; }
 }
 
 @media (min-width: 1024px) {
-  .text-overlap {
-    margin-top: -20px;
-  }
+  .text-overlap { margin-top: -22px; }
 }
 
 .text-balance {
   text-wrap: balance;
 }
 
-/* ═══════ Clean button ═══════ */
+/* ═══════ Primary button ═══════ */
 .btn-primary {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 24px rgba(2, 132, 199, 0.2);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+}
+
+/* ═══════ Section divider ═══════ */
+.section-divider {
+  border-top: 1px solid #ebe7e0;
 }
 
 /* ═══════ Page transition ═══════ */
 .page-transition {
-  animation: pageIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pageIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes pageIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }

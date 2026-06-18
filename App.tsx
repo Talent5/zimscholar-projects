@@ -19,9 +19,7 @@ import ProjectRequestPage from './pages/ProjectRequestPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
 
@@ -30,24 +28,18 @@ function ScrollProgress() {
   return (
     <motion.div
       className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
-      style={{
-        scaleX: scrollYProgress,
-        background: '#0284c7',
-      }}
+      style={{ scaleX: scrollYProgress, background: '#2563eb' }}
     />
   );
 }
 
 const pageVariants = {
-  initial: { opacity: 0, y: 16 },
+  initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -16 },
+  exit: { opacity: 0, y: -12 },
 };
 
-const pageTransition = {
-  duration: 0.35,
-  ease: [0.4, 0, 0.2, 1],
-};
+const pageTransition = { duration: 0.3, ease: [0.4, 0, 0.2, 1] };
 
 function AppContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -55,13 +47,8 @@ function AppContent() {
   const location = useLocation();
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    setScrolled(latest > 20);
-  });
-
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location]);
+  useMotionValueEvent(scrollY, 'change', (latest) => setScrolled(latest > 20));
+  useEffect(() => { setMobileMenuOpen(false); }, [location]);
 
   const NavLink = ({ to, label }: { to: string; label: string }) => {
     const isActive = location.pathname === to;
@@ -69,9 +56,7 @@ function AppContent() {
       <Link
         to={to}
         className={`relative font-medium text-sm tracking-wide transition-colors duration-300 py-1 ${
-          isActive
-            ? 'text-neon-cyan'
-            : 'text-slate-500 hover:text-slate-900'
+          isActive ? 'text-neon-cyan' : 'text-stone-500 hover:text-stone-800'
         }`}
       >
         {label}
@@ -87,14 +72,12 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface-50 text-slate-900">
+    <div className="min-h-screen flex flex-col" style={{ background: '#faf7f3', color: '#1b1a2a' }}>
       <ScrollProgress />
 
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200'
-            : 'bg-transparent'
+          scrolled ? 'glass-heavy' : 'bg-transparent'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -102,18 +85,14 @@ function AppContent() {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 sm:h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-neon-cyan flex items-center justify-center">
-              <img
-                src="/scholarxafrica-logo.png"
-                alt="ScholarXafrica Logo"
-                className="h-5 w-auto brightness-0 invert"
-              />
+            <div className="w-9 h-9 rounded-lg bg-neon-cyan flex items-center justify-center shadow-sm shadow-neon-cyan/20">
+              <img src="/scholarxafrica-logo.png" alt="ScholarXafrica" className="h-5 w-auto brightness-0 invert" />
             </div>
             <div>
-              <span className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 group-hover:text-neon-cyan transition-colors duration-300">
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-stone-800 group-hover:text-neon-cyan transition-colors duration-300">
                 ScholarXafrica
               </span>
-              <span className="hidden sm:block text-[10px] text-slate-400 uppercase tracking-[0.2em] leading-none">
+              <span className="hidden sm:block text-[10px] text-stone-400 uppercase tracking-[0.2em] leading-none">
                 Academic Projects
               </span>
             </div>
@@ -127,42 +106,26 @@ function AppContent() {
             <NavLink to="/faq" label="FAQ" />
             <Link to="/project-request">
               <Button size="sm" variant="secondary">
-                <Sparkles size={14} className="mr-1" />
-                Request Project
+                <Sparkles size={14} className="mr-1" /> Request Project
               </Button>
             </Link>
             <Link to="/quote">
-              <Button size="sm">
-                Get Quote
-                <ArrowRight size={14} className="ml-1" />
-              </Button>
+              <Button size="sm">Get Quote <ArrowRight size={14} className="ml-1" /></Button>
             </Link>
           </div>
 
           <motion.button
-            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/80 text-stone-500 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
           >
             <AnimatePresence mode="wait" initial={false}>
               {mobileMenuOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
                   <X size={20} />
                 </motion.div>
               ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
                   <Menu size={20} />
                 </motion.div>
               )}
@@ -173,7 +136,7 @@ function AppContent() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl bg-white shadow-xl border border-slate-200 overflow-hidden"
+              className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl bg-white shadow-xl border border-stone-200 overflow-hidden"
               initial={{ opacity: 0, height: 0, scale: 0.98 }}
               animate={{ opacity: 1, height: 'auto', scale: 1 }}
               exit={{ opacity: 0, height: 0, scale: 0.98 }}
@@ -188,33 +151,22 @@ function AppContent() {
                   { to: '/faq', label: 'FAQ' },
                   { to: '/contact', label: 'Contact' },
                 ].map((link, i) => (
-                  <motion.div
-                    key={link.to}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
+                  <motion.div key={link.to} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
                     <Link
                       to={link.to}
                       className={`block py-3 px-4 rounded-lg text-sm transition-colors ${
                         location.pathname === link.to
-                          ? 'bg-sky-50 text-neon-cyan font-medium'
-                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                          ? 'bg-blue-50 text-neon-cyan font-medium'
+                          : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
                       }`}
                     >
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
-                <div className="flex gap-3 mt-3 pt-3 border-t border-slate-200">
-                  <Link to="/project-request" className="flex-1">
-                    <Button size="sm" variant="secondary" fullWidth>
-                      Request Project
-                    </Button>
-                  </Link>
-                  <Link to="/quote" className="flex-1">
-                    <Button size="sm" fullWidth>Get Quote</Button>
-                  </Link>
+                <div className="flex gap-3 mt-3 pt-3 border-t border-stone-200">
+                  <Link to="/project-request" className="flex-1"><Button size="sm" variant="secondary" fullWidth>Request Project</Button></Link>
+                  <Link to="/quote" className="flex-1"><Button size="sm" fullWidth>Get Quote</Button></Link>
                 </div>
               </div>
             </motion.div>
@@ -224,14 +176,7 @@ function AppContent() {
 
       <main className="flex-grow pt-16 sm:pt-20">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={pageTransition}
-          >
+          <motion.div key={location.pathname} variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={pageTransition}>
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
               <Route path="/services" element={<ServicesPage />} />

@@ -53,28 +53,28 @@
       tailwind.config = {
         theme: {
           extend: {
-             colors: {
-               surface: {
-                 50: '#f8fafc',
-                 100: '#f1f5f9',
-                 200: '#e2e8f0',
-                 300: '#cbd5e1',
-               },
-               neon: {
-                 cyan: '#0284c7',
-                 blue: '#0369a1',
-                 purple: '#475569',
-                 pink: '#94a3b8',
-                 green: '#0284c7',
-               },
-               brand: {
-                 50: '#f0f9ff',
-                 100: '#e0f2fe',
-                 200: '#bae6fd',
-                 600: '#0284c7',
-                 700: '#0369a1',
-                 900: '#0c4a6e',
-               },
+            colors: {
+              surface: {
+                50: '#faf7f3',
+                100: '#f5f1ec',
+                200: '#ebe7e0',
+                300: '#d9d4cc',
+              },
+              neon: {
+                cyan: '#2563eb',
+                blue: '#1d4ed8',
+                purple: '#5b586a',
+                pink: '#9491a2',
+                green: '#2563eb',
+              },
+              brand: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                900: '#1e3a5f',
+              },
               glass: {
                 light: 'rgba(255,255,255,0.05)',
                 medium: 'rgba(255,255,255,0.08)',
@@ -126,20 +126,21 @@
     <style>
       body {
         font-family: 'Space Grotesk', 'Inter', sans-serif;
-        background: #f8fafc;
+        background: #faf7f3;
+        color: #1b1a2a;
       }
       ::-webkit-scrollbar {
         width: 5px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f5f9;
+        background: #f5f1ec;
       }
       ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
+        background: #d9d4cc;
         border-radius: 3px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
+        background: #b8b2a8;
       }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -155,7 +156,7 @@
 </script>
 <link rel="stylesheet" href="/styles/forms.css">
 </head>
-  <body class="bg-surface-50 text-slate-900 antialiased">
+  <body class="antialiased" style="background:#faf7f3;color:#1b1a2a">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   <script type="module" src="/index.tsx"></script>

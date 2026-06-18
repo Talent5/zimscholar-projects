@@ -18,14 +18,14 @@ const PortfolioPage: React.FC = () => {
       <Portfolio />
         
       <div className="container mx-auto px-4">
-        <div className="mt-16 bg-white rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-slate-100 shadow-sm">
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-50 to-purple-50 pointer-events-none" />
+        <div className="mt-16 bg-white rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-stone-200 shadow-sm dash-card">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-stone-50 pointer-events-none" />
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Can't find what you're looking for?</h2>
-            <p className="mb-8 text-slate-500 max-w-xl mx-auto">We build custom projects based on your specific university requirements and topics.</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-stone-800 mb-4">Can't find what you're looking for?</h2>
+            <p className="mb-8 text-stone-500 max-w-xl mx-auto">We build custom projects based on your specific university requirements and topics.</p>
             <motion.button
               onClick={() => navigate('/quote')}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-neon-cyan text-white text-sm font-semibold tracking-wide hover:bg-neon-cyan/90 transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-neon-cyan text-white text-sm font-semibold tracking-wide hover:bg-neon-cyan/90 transition-all shadow-sm"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
