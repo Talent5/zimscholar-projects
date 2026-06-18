@@ -12,9 +12,9 @@ const ServicesPage: React.FC = () => {
   return (
     <div className="fade-in py-12">
       <SEO
-        title="Services - Ready-Made & Custom Academic Projects in Zimbabwe"
-        description="Choose between ready-made projects for quick delivery or custom-built solutions tailored to your needs. Data Science, Machine Learning, Web Development, IoT, and more. Serving students across Zimbabwe including Harare, Bulawayo, and Gweru."
-        keywords="academic services Zimbabwe, custom software development Harare, ready-made projects Zimbabwe, data science services, ML development Zimbabwe, web application development, IoT solutions Zimbabwe, university project help, software engineering Zimbabwe"
+        title="Services — Turnitin-Checked Academic Projects & AI Content Removal Zimbabwe"
+        description="Turnitin-verified, plagiarism-free academic projects for Zimbabwean students. AI content detection and removal, custom and ready-made solutions in Data Science, ML, Web Dev, and IoT."
+        keywords="Turnitin checked projects Zimbabwe, AI content removal service, plagiarism-free academic projects, custom software development Harare, ready-made projects Zimbabwe, data science services, ML development Zimbabwe, web application development, IoT solutions Zimbabwe, academic writing check, similarity detection"
         canonicalUrl="https://scholarxafrica.com/services"
         structuredData={servicesStructuredData}
       />

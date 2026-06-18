@@ -12,6 +12,9 @@ import {
   Sparkles,
   Zap,
   Cpu,
+  SearchCheck,
+  FileCheck,
+  GraduationCap,
 } from 'lucide-react';
 import { TESTIMONIALS } from '../constants';
 import { Button } from '../components/Button';
@@ -75,9 +78,9 @@ const HomePage: React.FC = () => {
   return (
     <div className="relative">
       <SEO
-        title="Academic Projects & Software Development Services in Zimbabwe"
-        description="Leading academic project assistance and custom software development in Zimbabwe. Get ready-made or custom projects in Data Science, Machine Learning, Web Development, IoT & Software Engineering. Fast delivery, plagiarism-free work tailored for Zimbabwean students."
-        keywords="academic projects Zimbabwe, software development Zimbabwe, data science projects, machine learning projects, web development Harare, IoT projects Zimbabwe, custom software Zimbabwe, student projects, final year projects Zimbabwe, Harare software developer, Zimbabwe tech services, programming projects Zimbabwe"
+        title="Academic Projects Zimbabwe | Turnitin-Ready & Plagiarism-Free Assignments"
+        description="Zimbabwe's trusted academic project service. Turnitin-checked, plagiarism-free assignments and software projects. AI content removal, similarity checking, and custom development for students. Data Science, ML, Web Dev, IoT."
+        keywords="academic projects Zimbabwe, plagiarism-free projects Zimbabwe, Turnitin check Zimbabwe, AI content removal, remove AI from assignments, similarity checker, academic integrity Zimbabwe, software development Zimbabwe, data science projects, machine learning projects, web development Harare, IoT projects Zimbabwe, student projects, final year projects, assignment help Zimbabwe, plagiarism checker"
         canonicalUrl="https://scholarxafrica.com/"
         structuredData={[organizationStructuredData, localBusinessStructuredData]}
       />
@@ -104,7 +107,7 @@ const HomePage: React.FC = () => {
           >
             <motion.div variants={itemVariants} className="mb-10">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em]">
-                Academic Solutions
+                Turnitin-Ready & Plagiarism-Free
               </span>
             </motion.div>
 
@@ -122,7 +125,7 @@ const HomePage: React.FC = () => {
               className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-balance font-light"
             >
               Ready-made & custom academic projects in Data Science, Machine Learning,
-              Software Engineering & IoT — built for students in Zimbabwe.
+              Software Engineering & IoT — every submission checked for AI traces and plagiarism before delivery.
             </motion.p>
 
             <motion.div
@@ -193,10 +196,69 @@ const HomePage: React.FC = () => {
       <section className="relative py-16 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <TrustCard index={0} icon={<ShieldCheck size={24} />} label="Plagiarism Free" />
-            <TrustCard index={1} icon={<Clock size={24} />} label="On-Time Delivery" />
-            <TrustCard index={2} icon={<Award size={24} />} label="Expert Developers" />
-            <TrustCard index={3} icon={<CheckCircle size={24} />} label="Documented Code" />
+            <TrustCard index={0} icon={<SearchCheck size={24} />} label="Turnitin Verified" />
+            <TrustCard index={1} icon={<FileCheck size={24} />} label="AI Content Removed" />
+            <TrustCard index={2} icon={<ShieldCheck size={24} />} label="Plagiarism Free" />
+            <TrustCard index={3} icon={<Award size={24} />} label="Documented Code" />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ TURNITIN & AI INTEGRITY ═══════ */}
+      <section className="relative py-24 border-t border-white/[0.04] overflow-hidden">
+        <div className="absolute inset-0 swiss-grid opacity-30 pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+              Academic Integrity
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">
+              Every Project. Checked Twice.
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto font-light text-lg">
+              We run every assignment through Turnitin similarity detection and AI content analysis before it reaches you. Zero tolerance for plagiarism or AI-generated passages.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <SearchCheck size={28} className="text-neon-cyan" />,
+                title: 'Turnitin Similarity Check',
+                desc: 'Every document is scanned through Turnitin before delivery. We guarantee similarity scores well below your institution\'s threshold — typically under 10%.',
+              },
+              {
+                icon: <GraduationCap size={28} className="text-neon-cyan" />,
+                title: 'AI Content Detection & Removal',
+                desc: 'We use advanced detection tools to identify and rewrite any AI-generated passages. Your work reads naturally and passes every AI content detector — GPTZero, Turnitin AI, Originality.ai.',
+              },
+              {
+                icon: <FileCheck size={28} className="text-neon-cyan" />,
+                title: 'Plagiarism-Free Guarantee',
+                desc: 'Every project is built from scratch. For ready-made projects, we ensure unique code structure and provide detailed documentation so you can confidently customize the submission.',
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.12, duration: 0.5 }}
+                className="p-8 rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-colors duration-300"
+              >
+                <div className="w-14 h-14 rounded-xl bg-neon-cyan/5 flex items-center justify-center mb-6">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -212,7 +274,7 @@ const HomePage: React.FC = () => {
             <SectionHeading
               badge="Portfolio"
               title="Featured Projects"
-              subtitle="Check out some of our best work — ready-made projects and custom showcases"
+              subtitle="Turnitin-checked, AI-free projects — ready-made and custom showcases"
             />
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -274,7 +336,7 @@ const HomePage: React.FC = () => {
               </span>
             </h2>
             <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto font-light">
-              Get in touch today and let us help you deliver an outstanding academic project.
+              Get a Turnitin-ready, AI-free academic project. Every submission checked — every time.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <motion.button
@@ -352,6 +414,16 @@ const SectionHeading: React.FC<{
   );
 };
 
+/* ── Image Placeholder ── */
+const ImagePlaceholder: React.FC<{ title: string }> = ({ title }) => (
+  <div className="absolute inset-0 bg-void-800 flex items-center justify-center">
+    <div className="text-center">
+      <Star size={32} className="text-slate-700 mx-auto mb-2" />
+      <span className="text-slate-600 text-xs font-medium uppercase tracking-wider">{title.slice(0, 30)}</span>
+    </div>
+  </div>
+);
+
 /* ── Project Card ── */
 const ProjectCard: React.FC<{
   project: PortfolioProject;
@@ -360,6 +432,8 @@ const ProjectCard: React.FC<{
 }> = ({ project, index, navigate }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [imgError, setImgError] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   return (
     <motion.div
@@ -371,20 +445,24 @@ const ProjectCard: React.FC<{
       onClick={() => navigate('/portfolio')}
     >
       <div className="relative h-52 bg-void-800 overflow-hidden">
-        {project.videoUrl ? (
+        {project.videoUrl && !videoError ? (
           <video
             src={getFileUrl(project.videoUrl)}
             controls
             className="w-full h-full object-cover"
-            poster={project.thumbnail ? getFileUrl(project.thumbnail) : undefined}
+            poster={project.thumbnail && !imgError ? getFileUrl(project.thumbnail) : undefined}
+            onError={() => setVideoError(true)}
           />
-        ) : project.thumbnail ? (
+        ) : project.thumbnail && !imgError ? (
           <img
             src={getFileUrl(project.thumbnail)}
             alt={project.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            onError={() => setImgError(true)}
           />
-        ) : null}
+        ) : (
+          <ImagePlaceholder title={project.title} />
+        )}
         <div className="absolute top-3 right-3">
           <div className="w-9 h-9 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center">
             <Star size={16} className="text-neon-cyan" fill="currentColor" />

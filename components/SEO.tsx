@@ -155,6 +155,22 @@ export const servicesStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
+          "name": "Turnitin Plagiarism Checking",
+          "description": "Academic similarity detection and plagiarism checking using Turnitin"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI Content Detection & Removal",
+          "description": "Identify and rewrite AI-generated content to pass all major AI detectors"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
           "name": "Data Science Projects",
           "description": "Custom and ready-made data science projects for academic purposes"
         }
@@ -186,6 +202,19 @@ export const servicesStructuredData = {
     ]
   }
 };
+
+export const faqStructuredData = (faqs: { question: string; answer: string }[]) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+});
 
 export const breadcrumbStructuredData = (items: { name: string; url: string }[]) => ({
   "@context": "https://schema.org",

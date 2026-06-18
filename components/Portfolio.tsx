@@ -23,11 +23,22 @@ interface PortfolioProject {
   githubRepo?: string;
 }
 
+const ImagePlaceholder: React.FC<{ title: string }> = ({ title }) => (
+  <div className="absolute inset-0 bg-void-800 flex items-center justify-center">
+    <div className="text-center">
+      <Star size={28} className="text-slate-700 mx-auto mb-2" />
+      <span className="text-slate-600 text-xs font-medium uppercase tracking-wider">{title.slice(0, 25)}</span>
+    </div>
+  </div>
+);
+
 const Portfolio: React.FC = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState('all');
+  const [imgErrors, setImgErrors] = useState<Set<string>>(new Set());
+  const [videoErrors, setVideoErrors] = useState<Set<string>>(new Set());
 
   const ensureHttps = (url: string) => {
     if (!url) return url;
@@ -156,36 +167,32 @@ const Portfolio: React.FC = () => {
                 className="rounded-2xl glass border border-glass-border glow-card overflow-hidden cursor-pointer group"
                 onClick={() => navigate(`/portfolio/${project.slug}`)}
               >
-                {project.thumbnail && !project.videoUrl && (
-                  <div className="relative w-full h-[200px] bg-glass-light overflow-hidden">
-                    <img
-                      src={getFileUrl(project.thumbnail)}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {project.isFeatured && (
-                      <div className="absolute top-3 right-3 w-9 h-9 rounded-lg bg-glass-heavy border border-glass-border flex items-center justify-center">
-                        <Star size={16} className="text-neon-cyan" fill="currentColor" />
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {project.videoUrl && (
-                  <div className="relative w-full h-[200px] bg-black overflow-hidden">
+                <div className="relative w-full h-[200px] bg-void-800 overflow-hidden">
+                  {project.videoUrl && !videoErrors.has(project._id) ? (
                     <video
                       src={getFileUrl(project.videoUrl)}
                       controls
                       className="w-full h-full object-cover"
-                      poster={project.thumbnail ? getFileUrl(project.thumbnail) : undefined}
+                      poster={project.thumbnail && !imgErrors.has(project._id) ? getFileUrl(project.thumbnail) : undefined}
+                      onError={() => setVideoErrors(prev => new Set(prev).add(project._id))}
                     />
-                    {project.isFeatured && (
-                      <div className="absolute top-3 right-3 w-9 h-9 rounded-lg bg-glass-heavy border border-glass-border flex items-center justify-center z-10">
-                        <Star size={16} className="text-neon-cyan" fill="currentColor" />
-                      </div>
-                    )}
-                  </div>
-                )}
+                  ) : project.thumbnail && !imgErrors.has(project._id) ? (
+                    <img
+                      src={getFileUrl(project.thumbnail)}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={() => setImgErrors(prev => new Set(prev).add(project._id))}
+                    />
+                  ) : (
+                    <ImagePlaceholder title={project.title} />
+                  )}
+                  {project.isFeatured && (
+                    <div className="absolute top-3 right-3 w-9 h-9 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center z-10">
+                      <Star size={16} className="text-neon-cyan" fill="currentColor" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-void-950 via-transparent to-transparent opacity-60 pointer-events-none" />
+                </div>
 
                 <div className="p-6">
                   <div className="flex gap-2 mb-3 flex-wrap">

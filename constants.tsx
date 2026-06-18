@@ -132,16 +132,28 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const FAQS: FaqItem[] = [
   {
+    question: "Do you check projects for AI-generated content?",
+    answer: "Yes. Every project we deliver is scanned using AI detection tools (GPTZero, Turnitin AI detection, Originality.ai) before delivery. If any AI-generated passages are detected, we rewrite them to ensure your work reads naturally and passes all AI content detectors."
+  },
+  {
+    question: "Is the work checked for plagiarism and Turnitin similarity?",
+    answer: "Absolutely. We run every document through Turnitin similarity detection before delivery. We guarantee similarity scores well below your institution's threshold — typically under 10%. You receive the Turnitin report alongside your project for complete transparency."
+  },
+  {
     question: "Is this service legal/allowed?",
     answer: "Yes, our service provides educational assistance and reference materials. We act as professional tutors/consultants. It is your responsibility to use the materials ethically as a study aid or starting point, in accordance with your institution's academic integrity policies."
   },
   {
     question: "Are the projects plagiarism-free?",
-    answer: "Absolutely. All custom projects are built from scratch. For ready-made projects, we ensure uniqueness in code structure and provide guidance on how to customize the documentation to make it your own."
+    answer: "Absolutely. All custom projects are built from scratch. For ready-made projects, we ensure uniqueness in code structure and provide guidance on how to customize the documentation to make it your own. Every submission is checked through Turnitin before delivery."
+  },
+  {
+    question: "How do you remove AI-generated content from assignments?",
+    answer: "We use advanced AI detection tools to identify machine-generated text, then manually rewrite flagged passages to sound authentically human while preserving the original meaning and academic rigor. This ensures your work passes all major AI detectors."
   },
   {
     question: "How long does a custom project take?",
-    answer: "Simple projects can be done in roughly 1 week. Complex engineering or research projects typically take 3-4 weeks. We recommend starting early!"
+    answer: "Simple projects can be done in roughly 1 week. Complex engineering or research projects typically take 3-4 weeks. Every project includes Turnitin checking and AI content review in the timeline."
   },
   {
     question: "How do I pay?",

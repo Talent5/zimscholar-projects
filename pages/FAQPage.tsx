@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FAQS } from '../constants';
-import { SEO } from '../components/SEO';
+import { SEO, faqStructuredData } from '../components/SEO';
 
 const FAQPage: React.FC = () => {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -14,10 +14,11 @@ const FAQPage: React.FC = () => {
   return (
     <div className="fade-in py-12">
       <SEO
-        title="FAQ & About - ScholarXafrica Academic Services Zimbabwe"
-        description="Frequently asked questions about ScholarXafrica's academic project services. Learn about our plagiarism-free approach, delivery times, and services. Based in Harare, serving students across Zimbabwe with quality software projects."
-        keywords="ScholarXafrica FAQ, about ScholarXafrica, academic integrity Zimbabwe, Harare software services, Zimbabwe student services, academic questions, project help FAQ, ScholarXafrica about"
+        title="FAQ — Turnitin Checking, AI Detection & Academic Project Help Zimbabwe"
+        description="Get answers about ScholarXafrica's Turnitin plagiarism checking, AI content removal, delivery times, pricing, and academic integrity. Serving students across Zimbabwe with quality software projects."
+        keywords="Turnitin check Zimbabwe, AI detection academic, plagiarism-free projects, academic integrity Zimbabwe, Harare software services, Zimbabwe student services, AI content removal, Turnitin report, project help FAQ, ScholarXafrica about"
         canonicalUrl="https://scholarxafrica.com/faq"
+        structuredData={faqStructuredData(FAQS)}
       />
 
       <div className="max-w-3xl mx-auto px-6">
