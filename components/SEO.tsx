@@ -13,9 +13,9 @@ interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'ScholarXafrica | Academic Projects & Software Development Services in Zimbabwe',
-  description: 'Leading academic project assistance and custom software development in Zimbabwe. Get ready-made or custom projects in Data Science, Machine Learning, Web Development, IoT & Software Engineering. Fast delivery, plagiarism-free work.',
-  keywords: 'academic projects Zimbabwe, software development Zimbabwe, data science projects, machine learning projects, web development Harare, IoT projects Zimbabwe, custom software Zimbabwe, student projects, final year projects Zimbabwe, Harare software developer, Zimbabwe tech services',
+  title: 'ScholarXafrica | Research Papers & Academic Projects Zimbabwe — All Disciplines',
+  description: 'Zimbabwe\'s trusted academic research service. Turnitin-checked, plagiarism-free research papers, dissertations, proposals, and projects across all disciplines — Humanities, Sciences, Engineering, Business, Law, Medicine. AI content removal included.',
+  keywords: 'research papers Zimbabwe, dissertation help Zimbabwe, thesis writing, academic writing, Turnitin check, AI content removal, plagiarism-free, literature review, data analysis, SPSS, essay writing, all academic subjects, student assignments, coursework help, research proposals, academic projects',
   ogImage: 'https://scholarxafrica.com/scholarxafrica-logo.png',
   siteName: 'ScholarXafrica',
   url: 'https://scholarxafrica.com'
@@ -79,7 +79,7 @@ export const organizationStructuredData = {
   "name": "ScholarXafrica",
   "url": "https://scholarxafrica.com",
   "logo": "https://scholarxafrica.com/scholarxafrica-logo.png",
-  "description": "Academic projects and custom software development services in Zimbabwe",
+  "description": "Research papers, dissertations, theses, proposals, and academic projects across all disciplines. Turnitin-checked, plagiarism-free, AI-free. Serving students across Zimbabwe.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "ZW",
@@ -149,8 +149,24 @@ export const servicesStructuredData = {
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Academic and Software Services",
+    "name": "Academic Research and Project Services",
     "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Research Paper Writing",
+          "description": "Research papers, essays, and academic writing across all disciplines with proper referencing"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Dissertation & Thesis Support",
+          "description": "Full dissertation and thesis writing from proposal to final chapter"
+        }
+      },
       {
         "@type": "Offer",
         "itemOffered": {
@@ -171,32 +187,16 @@ export const servicesStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Data Science Projects",
-          "description": "Custom and ready-made data science projects for academic purposes"
+          "name": "Data Analysis & Statistics",
+          "description": "SPSS, Stata, R, Python analysis with interpretation and visualization"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Machine Learning Projects",
-          "description": "ML projects with implementation and documentation"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Web Development",
-          "description": "Custom web applications and websites"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "IoT Projects",
-          "description": "Internet of Things projects and solutions"
+          "name": "Software & Engineering Projects",
+          "description": "Custom and ready-made software, IoT, and engineering projects"
         }
       }
     ]

@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
               <h3 className="text-xl font-bold text-white">ScholarXafrica</h3>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-4">
-              Empowering students with professional academic project support in Data Science, IoT, and Software Engineering.
+              Empowering students across all academic disciplines — from research papers and dissertations to software and engineering projects. Turnitin-checked, plagiarism-free, AI-free. Every time.
             </p>
             <div className="flex items-center gap-2 text-slate-500 text-sm">
               <MapPin size={14} />

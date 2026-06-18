@@ -2,6 +2,8 @@ import {
   Cpu, 
   Database, 
   Code, 
+  BookOpen,
+  FileText,
   BarChart, 
   Layers, 
   Zap 
@@ -10,22 +12,34 @@ import { ServiceItem, ProjectItem, PricingTier, Testimonial, FaqItem } from './t
 
 export const SERVICES: ServiceItem[] = [
   {
-    title: "Data Science & AI",
-    description: "From data cleaning to complex ML models. We handle Python, R, Jupyter Notebooks, and comprehensive analysis reports.",
-    icon: Database,
-    features: ["Machine Learning Models", "Data Visualization", "Deep Learning", "Thesis Analysis"]
+    title: "Research Writing & Essays",
+    description: "In-depth research papers, essays, and academic writing across all disciplines. Properly cited with APA, MLA, or Harvard referencing.",
+    icon: FileText,
+    features: ["Research Papers", "Literature Reviews", "Essay Writing", "Proper Referencing"]
   },
   {
-    title: "IoT Systems",
+    title: "Dissertations & Theses",
+    description: "Full dissertation and thesis support from proposal to final chapter. Research methodology, data analysis, discussion, and conclusions.",
+    icon: BookOpen,
+    features: ["Full Dissertations", "Thesis Chapters", "Methodology Design", "Data Analysis"]
+  },
+  {
+    title: "Data Science & AI",
+    description: "From data cleaning to complex ML models. Python, R, Jupyter Notebooks, SPSS, Stata with comprehensive analysis reports.",
+    icon: Database,
+    features: ["Machine Learning", "Statistical Analysis", "Data Visualization", "SPSS & Stata"]
+  },
+  {
+    title: "IoT & Engineering",
     description: "Hardware and software integration. Arduino, Raspberry Pi, ESP32, and cloud connectivity prototyping.",
     icon: Cpu,
-    features: ["Circuit Design", "Embedded Code", "Smart Home Systems", "IoT Dashboards"]
+    features: ["Circuit Design", "Embedded Code", "Smart Systems", "IoT Dashboards"]
   },
   {
-    title: "Software Engineering",
+    title: "Software Development",
     description: "Full-stack web and mobile applications tailored to your specific requirements using modern tech stacks.",
     icon: Code,
-    features: ["Web Applications", "Mobile Apps (Flutter/React)", "System Design", "API Development"]
+    features: ["Web Applications", "Mobile Apps", "System Design", "API Development"]
   }
 ];
 
@@ -132,6 +146,10 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const FAQS: FaqItem[] = [
   {
+    question: "What academic disciplines do you cover?",
+    answer: "All of them. We handle research papers, dissertations, proposals, essays, lab reports, and coursework across every discipline — Humanities, Social Sciences, Business, Law, Engineering, IT, Medicine, Natural Sciences, Education, and more. If it requires research and writing, we can help."
+  },
+  {
     question: "Do you check projects for AI-generated content?",
     answer: "Yes. Every project we deliver is scanned using AI detection tools (GPTZero, Turnitin AI detection, Originality.ai) before delivery. If any AI-generated passages are detected, we rewrite them to ensure your work reads naturally and passes all AI content detectors."
   },
@@ -140,12 +158,8 @@ export const FAQS: FaqItem[] = [
     answer: "Absolutely. We run every document through Turnitin similarity detection before delivery. We guarantee similarity scores well below your institution's threshold — typically under 10%. You receive the Turnitin report alongside your project for complete transparency."
   },
   {
-    question: "Is this service legal/allowed?",
-    answer: "Yes, our service provides educational assistance and reference materials. We act as professional tutors/consultants. It is your responsibility to use the materials ethically as a study aid or starting point, in accordance with your institution's academic integrity policies."
-  },
-  {
-    question: "Are the projects plagiarism-free?",
-    answer: "Absolutely. All custom projects are built from scratch. For ready-made projects, we ensure uniqueness in code structure and provide guidance on how to customize the documentation to make it your own. Every submission is checked through Turnitin before delivery."
+    question: "What types of documents do you handle?",
+    answer: "Everything: research papers, full dissertations and theses, research proposals, literature reviews, data analysis (SPSS, Stata, R, Python), lab reports, case studies, essays, problem sets, coursework assignments, and software/engineering projects. Any academic document, any level — undergraduate to PhD."
   },
   {
     question: "How do you remove AI-generated content from assignments?",
@@ -153,10 +167,10 @@ export const FAQS: FaqItem[] = [
   },
   {
     question: "How long does a custom project take?",
-    answer: "Simple projects can be done in roughly 1 week. Complex engineering or research projects typically take 3-4 weeks. Every project includes Turnitin checking and AI content review in the timeline."
+    answer: "Simple papers and essays: 2–4 days. Research proposals and literature reviews: 5–7 days. Full dissertations and complex projects: 2–4 weeks. Every submission includes Turnitin checking and AI content review within the timeline."
   },
   {
     question: "How do I pay?",
-    answer: "We accept EcoCash, Zipit, USD Cash (local), and international transfers for students outside Zimbabwe. Payment is typically split: 50% deposit to start, 50% upon completion."
+    answer: "We accept EcoCash, Zipit, USD Cash (local), and international transfers for students outside Zimbabwe. Payment is typically split: 50% deposit to start, 50% upon completion. We also accept payments via Mukuru and WorldRemit for international students."
   }
 ];

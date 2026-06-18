@@ -78,9 +78,9 @@ const HomePage: React.FC = () => {
   return (
     <div className="relative">
       <SEO
-        title="Academic Projects Zimbabwe | Turnitin-Ready & Plagiarism-Free Assignments"
-        description="Zimbabwe's trusted academic project service. Turnitin-checked, plagiarism-free assignments and software projects. AI content removal, similarity checking, and custom development for students. Data Science, ML, Web Dev, IoT."
-        keywords="academic projects Zimbabwe, plagiarism-free projects Zimbabwe, Turnitin check Zimbabwe, AI content removal, remove AI from assignments, similarity checker, academic integrity Zimbabwe, software development Zimbabwe, data science projects, machine learning projects, web development Harare, IoT projects Zimbabwe, student projects, final year projects, assignment help Zimbabwe, plagiarism checker"
+        title="Academic Projects & Research Writing Zimbabwe | Turnitin-Ready — All Disciplines"
+        description="Zimbabwe's trusted academic research service. Turnitin-checked, plagiarism-free research papers, dissertations, proposals, and projects across all disciplines — Humanities, Social Sciences, Engineering, IT, Business, Law, Medicine. AI content removal included."
+        keywords="academic research Zimbabwe, research papers Zimbabwe, dissertation help Zimbabwe, thesis writing Zimbabwe, Turnitin check Zimbabwe, plagiarism-free assignments, AI content removal, research proposal help, academic writing Zimbabwe, literature review, data analysis, all academic disciplines, student projects, assignment help Zimbabwe, final year projects, software development Zimbabwe, Harare academic services"
         canonicalUrl="https://scholarxafrica.com/"
         structuredData={[organizationStructuredData, localBusinessStructuredData]}
       />
@@ -124,8 +124,8 @@ const HomePage: React.FC = () => {
               variants={itemVariants}
               className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-balance font-light"
             >
-              Ready-made & custom academic projects in Data Science, Machine Learning,
-              Software Engineering & IoT — every submission checked for AI traces and plagiarism before delivery.
+              Research papers, dissertations, proposals, and academic projects across all disciplines —
+              from Humanities and Social Sciences to Engineering and IT. Every submission Turnitin-checked and AI-free before delivery.
             </motion.p>
 
             <motion.div
@@ -222,7 +222,8 @@ const HomePage: React.FC = () => {
               Every Project. Checked Twice.
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto font-light text-lg">
-              We run every assignment through Turnitin similarity detection and AI content analysis before it reaches you. Zero tolerance for plagiarism or AI-generated passages.
+              We run every submission through Turnitin similarity detection and AI content analysis before it reaches you. 
+              Research papers, theses, proposals, lab reports — zero tolerance for plagiarism or AI-generated passages, regardless of discipline.
             </p>
           </motion.div>
 
@@ -274,7 +275,7 @@ const HomePage: React.FC = () => {
             <SectionHeading
               badge="Portfolio"
               title="Featured Projects"
-              subtitle="Turnitin-checked, AI-free projects — ready-made and custom showcases"
+              subtitle="Turnitin-checked, AI-free projects — ready-made and custom showcases across all disciplines"
             />
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -336,7 +337,7 @@ const HomePage: React.FC = () => {
               </span>
             </h2>
             <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto font-light">
-              Get a Turnitin-ready, AI-free academic project. Every submission checked — every time.
+              From research proposals to final dissertations — every project checked, every time.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <motion.button
