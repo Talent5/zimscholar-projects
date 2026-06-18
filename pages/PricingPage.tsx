@@ -1,7 +1,7 @@
-// === C:\Users\Takunda Mundwa\Desktop\zimscholar-projects\pages\PricingPage.tsx ===
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '../components/Button';
 import { getApiUrl } from '../config/api.config';
 import { SEO } from '../components/SEO';
@@ -43,10 +43,10 @@ const PricingPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="fade-in py-12">
-        <div className="container mx-auto px-4 text-center">
-          <Loader2 className="inline-block spin text-neon-cyan" size={48} />
-          <p className="mt-4 text-slate-400">Loading pricing...</p>
+      <div className="fade-in py-24">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <Loader2 className="animate-spin text-neon-cyan" size={48} />
+          <p className="text-slate-400 text-sm tracking-wide">Loading pricing...</p>
         </div>
       </div>
     );
@@ -54,9 +54,9 @@ const PricingPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="fade-in py-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-red-400">{error}</p>
+      <div className="fade-in py-24">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <p className="text-red-400 text-sm">{error}</p>
         </div>
       </div>
     );
@@ -70,44 +70,61 @@ const PricingPage: React.FC = () => {
         keywords="academic project pricing Zimbabwe, affordable software development, project prices Zimbabwe, student pricing, custom project cost Zimbabwe, ready-made project pricing, Zimbabwe student services, affordable tech services Harare"
         canonicalUrl="https://scholarxafrica.com/pricing"
       />
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-4xl font-bold text-white mb-4">Transparent Pricing</h1>
+
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full glass border border-neon-cyan/20 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
+            Pricing
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
+            Transparent Pricing
+          </h1>
           <p className="text-lg text-slate-400">
             Choose a package that fits your needs. No hidden fees.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start"
+        >
           {pricingTiers.map((tier) => (
-            <div 
-              key={tier._id} 
-              className={`relative rounded-2xl p-8 transition-transform ${
-                tier.recommended 
-                  ? 'glass neon-border scale-105 md:-mt-4 z-10' 
-                  : 'glass'
+            <div
+              key={tier._id}
+              className={`relative rounded-2xl p-8 transition-all duration-300 ${
+                tier.recommended
+                  ? 'glass neon-border scale-105 md:-mt-4 z-10 glow-card'
+                  : 'glass border border-glass-border glow-card'
               }`}
             >
               {tier.recommended && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass border border-glass-border px-4 py-1 rounded-full text-xs font-bold tracking-wide text-neon-cyan">
-                  MOST POPULAR
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-[11px] font-bold uppercase tracking-wider">
+                  Most Popular
                 </div>
               )}
-              <h3 className="text-xl font-bold text-white mb-2">{tier.name}</h3>
-              <div className="text-3xl font-black text-white mb-2">{tier.price}</div>
-              <p className="text-sm text-slate-500 mb-6 h-10">{tier.description}</p>
-              
+
+              <h3 className="text-xl font-bold text-white mb-2 mt-2">{tier.name}</h3>
+              <div className="text-3xl font-bold text-white mb-2">{tier.price}</div>
+              <p className="text-sm text-slate-500 mb-6 min-h-[2.5rem]">{tier.description}</p>
+
               <ul className="space-y-4 mb-8">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-3 text-sm text-slate-400">
-                    <CheckCircle size={18} className="text-neon-cyan shrink-0 mt-0.5" />
+                    <CheckCircle size={16} className="text-neon-cyan shrink-0 mt-0.5" />
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
-              
-              <Button 
-                fullWidth 
+
+              <Button
+                fullWidth
                 variant={tier.recommended ? 'primary' : 'outline'}
                 onClick={() => navigate('/quote')}
               >
@@ -115,11 +132,16 @@ const PricingPage: React.FC = () => {
               </Button>
             </div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-16 text-center text-sm text-slate-500 max-w-2xl mx-auto">
-          <p>* Prices may vary based on specific hardware requirements (for IoT) or extreme complexity. Contact us for an exact quote.</p>
-        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mt-16 text-center text-sm text-slate-500 max-w-2xl mx-auto"
+        >
+          * Prices may vary based on specific hardware requirements (for IoT) or extreme complexity. Contact us for an exact quote.
+        </motion.p>
       </div>
     </div>
   );

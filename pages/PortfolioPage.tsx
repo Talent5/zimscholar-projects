@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Portfolio from '../components/Portfolio';
-import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 
 const PortfolioPage: React.FC = () => {
@@ -18,11 +18,19 @@ const PortfolioPage: React.FC = () => {
       <Portfolio />
         
       <div className="container mx-auto px-4">
-        <div className="mt-16 bg-brand-600 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+        <div className="mt-16 glass rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-neon-cyan/10">
+          <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/5 to-neon-purple/5 pointer-events-none" />
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Can't find what you're looking for?</h2>
-            <p className="mb-8 text-brand-100 max-w-xl mx-auto">We build custom projects based on your specific university requirements and topics.</p>
-            <Button variant="secondary" onClick={() => navigate('/quote')}>Start Custom Project</Button>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Can't find what you're looking for?</h2>
+            <p className="mb-8 text-slate-400 max-w-xl mx-auto">We build custom projects based on your specific university requirements and topics.</p>
+            <motion.button
+              onClick={() => navigate('/quote')}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-white text-sm font-semibold tracking-wide btn-glow"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Request Custom Quote
+            </motion.button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Clock, MessageCircle, DollarSign } from 'lucide-react';
+import { Clock, MessageCircle, DollarSign, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import QuoteRequestForm from '../components/QuoteRequestForm';
 import { SEO } from '../components/SEO';
 
@@ -16,90 +17,117 @@ const QuotePage: React.FC = () => {
         keywords="request quote Zimbabwe, custom project quote, academic project pricing, Zimbabwe custom software quote, tailored project quote, student project pricing Zimbabwe, custom development quote Harare"
         canonicalUrl="https://scholarxafrica.com/quote"
       />
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <h1 className="text-4xl font-bold text-slate-900 mb-6">Request a Custom Quote</h1>
-            <p className="text-slate-600 mb-8">
-              Tell us about your project and we'll provide you with a detailed, professional quotation within 24 hours.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
+                Request a Custom Quote
+              </h1>
+              <p className="text-lg text-slate-400 mb-8 leading-relaxed">
+                Tell us about your project and we'll provide you with a detailed, professional quotation within 24 hours.
+              </p>
+            </motion.div>
 
-            <div className="space-y-6 mb-10">
-              <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-full">
-                  <DollarSign size={24} />
+            <div className="space-y-4 mb-10">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 }}
+                className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border"
+              >
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center shrink-0">
+                  <DollarSign size={22} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Professional Quotations</h3>
-                  <p className="text-sm text-slate-600">Detailed PDF quotes sent to your email</p>
+                  <h3 className="font-semibold text-white">Professional Quotations</h3>
+                  <p className="text-sm text-slate-400">Detailed quotes sent to your email</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <a 
-                href="https://wa.me/263785183361?text=Hi, I'd like to request a quote for my project" 
+              <motion.a
+                href="https://wa.me/263785183361?text=Hi, I'd like to request a quote for my project"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-6 bg-green-50 rounded-xl border border-green-100 hover:shadow-md transition-all group"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25 }}
+                className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border hover:border-neon-cyan/30 transition-all group"
               >
-                <div className="bg-green-500 text-white p-3 rounded-full group-hover:scale-110 transition-transform">
-                  <MessageCircle size={24} />
+                <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <MessageCircle size={22} className="text-green-400" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Quick Chat (WhatsApp)</h3>
-                  <p className="text-sm text-slate-600">Get instant answers to your questions</p>
+                  <h3 className="font-semibold text-white group-hover:text-neon-cyan transition-colors">Quick Chat (WhatsApp)</h3>
+                  <p className="text-sm text-slate-400">Get instant answers to your questions</p>
                 </div>
-              </a>
+              </motion.a>
 
-              <div className="flex items-center gap-4 p-6 bg-white rounded-xl border border-slate-100">
-                <div className="bg-slate-100 text-slate-600 p-3 rounded-full">
-                  <Clock size={24} />
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.35 }}
+                className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border"
+              >
+                <div className="w-12 h-12 rounded-xl bg-glass-light flex items-center justify-center shrink-0">
+                  <Clock size={22} className="text-slate-400" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Response Time</h3>
-                  <p className="text-sm text-slate-600">Quotations delivered within 24 hours</p>
+                  <h3 className="font-semibold text-white">Response Time</h3>
+                  <p className="text-sm text-slate-400">Quotations delivered within 24 hours</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-xl border border-amber-200">
-              <h3 className="font-bold text-slate-900 mb-3">What You'll Get:</h3>
-              <ul className="space-y-2 text-sm text-slate-700">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Detailed project breakdown with pricing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Timeline and delivery expectations</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Clear payment terms and milestones</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Professional PDF quotation document</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>No obligation - free consultation</span>
-                </li>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
+              className="glass rounded-2xl p-6 border border-neon-cyan/10"
+            >
+              <h3 className="font-semibold text-white mb-4">What You'll Get:</h3>
+              <ul className="space-y-3 text-sm text-slate-300">
+                {[
+                  'Detailed project breakdown with pricing',
+                  'Timeline and delivery expectations',
+                  'Clear payment terms and milestones',
+                  'Professional quotation document',
+                  'No obligation — free consultation',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle size={16} className="text-neon-cyan shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Quote Request Form */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100">
-            {projectInfo && (
-              <div className="mb-6 p-4 bg-brand-50 border border-brand-200 rounded-lg">
-                <p className="text-sm font-semibold text-brand-900 mb-1">📌 Requesting quote for:</p>
-                <p className="text-brand-700 font-bold">{projectInfo.projectTitle}</p>
-                {projectInfo.projectId && (
-                  <p className="text-xs text-brand-600 mt-1 font-mono">{projectInfo.projectId}</p>
-                )}
-              </div>
-            )}
-            <QuoteRequestForm projectInfo={projectInfo || undefined} />
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="glass rounded-2xl p-8 border border-glass-border"
+            >
+              {projectInfo && (
+                <div className="mb-6 p-4 glass rounded-xl border border-neon-cyan/20">
+                  <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">
+                    Requesting quote for:
+                  </p>
+                  <p className="text-white font-bold">{projectInfo.projectTitle}</p>
+                  {projectInfo.projectId && (
+                    <p className="text-xs text-slate-500 mt-1 font-mono">{projectInfo.projectId}</p>
+                  )}
+                </div>
+              )}
+              <h2 className="text-2xl font-bold text-white mb-6">Project Details</h2>
+              <QuoteRequestForm projectInfo={projectInfo || undefined} />
+            </motion.div>
           </div>
         </div>
       </div>

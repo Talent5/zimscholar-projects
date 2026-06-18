@@ -1,6 +1,6 @@
-// === C:\Users\Takunda Mundwa\Desktop\zimscholar-projects\pages\ContactPage.tsx ===
 import React from 'react';
 import { Clock, MessageCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import ContactForm from '../components/ContactForm';
 import { SEO } from '../components/SEO';
 
@@ -13,45 +13,71 @@ const ContactPage: React.FC = () => {
         keywords="contact ScholarXafrica, academic project help Zimbabwe, WhatsApp support, Harare contact, Zimbabwe software development contact, project assistance Zimbabwe, student support Harare"
         canonicalUrl="https://scholarxafrica.com/contact"
       />
-      <div className="container mx-auto px-4 max-w-5xl">
+
+      <div className="max-w-5xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-6">Get In Touch</h1>
-            <p className="text-slate-400 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full glass border border-neon-cyan/20 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
+              Contact
+            </span>
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
+              Get In Touch
+            </h1>
+            <p className="text-lg text-slate-400 mb-8 leading-relaxed">
               Ready to start? Have a question? We typically reply within 1 hour during business hours.
             </p>
 
-            <div className="space-y-6 mb-10">
-              <a 
-                href="https://wa.me/263770000000" 
-                className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border hover:shadow-md hover:border-neon-cyan/30 transition-all group"
+            <div className="space-y-4 mb-10">
+              <motion.a
+                href="https://wa.me/26784286089"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 }}
+                className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border hover:border-neon-cyan/30 transition-all group"
               >
-                <div className="bg-green-500 text-white p-3 rounded-full group-hover:scale-110 transition-transform">
-                  <MessageCircle size={24} />
+                <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+                  <MessageCircle size={22} className="text-green-400" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white">WhatsApp Us (Fastest)</h3>
+                  <h3 className="font-semibold text-white group-hover:text-neon-cyan transition-colors">
+                    WhatsApp Us (Fastest)
+                  </h3>
                   <p className="text-sm text-slate-400">Click to chat instantly</p>
                 </div>
-              </a>
+              </motion.a>
 
-              <div className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border">
-                <div className="bg-white/10 text-slate-400 p-3 rounded-full">
-                  <Clock size={24} />
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25 }}
+                className="flex items-center gap-4 p-6 glass rounded-xl border border-glass-border"
+              >
+                <div className="w-12 h-12 rounded-xl bg-glass-light flex items-center justify-center shrink-0">
+                  <Clock size={22} className="text-slate-400" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white">Business Hours</h3>
-                  <p className="text-sm text-slate-400">Mon - Fri: 09:00 - 18:00</p>
+                  <h3 className="font-semibold text-white">Business Hours</h3>
+                  <p className="text-sm text-slate-400">Mon – Fri: 09:00 – 18:00</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Contact Form */}
-          <div className="glass rounded-2xl p-8 border border-glass-border">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="glass rounded-2xl p-8 border border-glass-border"
+          >
             <h2 className="text-2xl font-bold text-white mb-6">Send a Message</h2>
             <ContactForm />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
