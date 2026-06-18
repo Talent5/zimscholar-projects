@@ -32,20 +32,20 @@ function ScrollProgress() {
       className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
       style={{
         scaleX: scrollYProgress,
-        background: 'linear-gradient(90deg, #0ea5e9, #6366f1, #2563eb)',
+        background: '#0ea5e9',
       }}
     />
   );
 }
 
 const pageVariants = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 },
+  exit: { opacity: 0, y: -16 },
 };
 
 const pageTransition = {
-  duration: 0.4,
+  duration: 0.35,
   ease: [0.4, 0, 0.2, 1],
 };
 
@@ -78,7 +78,7 @@ function AppContent() {
         {isActive && (
           <motion.div
             layoutId="nav-underline"
-            className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-neon-cyan to-neon-purple rounded-full"
+            className="absolute -bottom-1 left-0 right-0 h-[2px] bg-neon-cyan rounded-full"
             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
           />
         )}
@@ -90,12 +90,11 @@ function AppContent() {
     <div className="min-h-screen flex flex-col bg-void-950 text-white">
       <ScrollProgress />
 
-      {/* Navbar */}
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'glass-heavy border-b border-glass-border'
-            : 'bg-transparent border-b border-transparent'
+            ? 'glass-heavy'
+            : 'bg-transparent'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -103,28 +102,23 @@ function AppContent() {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 sm:h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <motion.div
-              className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan via-neon-purple to-neon-pink flex items-center justify-center shadow-lg shadow-neon-purple/25"
-              whileHover={{ scale: 1.05, rotate: -5 }}
-              transition={{ type: 'spring', stiffness: 400 }}
-            >
+            <div className="w-9 h-9 rounded-lg bg-neon-cyan flex items-center justify-center">
               <img
                 src="/scholarxafrica-logo.png"
                 alt="ScholarXafrica Logo"
-                className="h-6 w-auto"
+                className="h-5 w-auto"
               />
-            </motion.div>
+            </div>
             <div>
-              <span className="text-lg sm:text-xl font-bold tracking-tight group-hover:text-neon-cyan transition-colors">
+              <span className="text-lg sm:text-xl font-bold tracking-tight group-hover:text-neon-cyan transition-colors duration-300">
                 ScholarXafrica
               </span>
-              <span className="hidden sm:block text-[10px] text-neon-cyan/60 uppercase tracking-[0.2em] leading-none">
+              <span className="hidden sm:block text-[10px] text-slate-500 uppercase tracking-[0.2em] leading-none">
                 Academic Projects
               </span>
             </div>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <NavLink to="/" label="Home" />
             <NavLink to="/services" label="Services" />
@@ -145,7 +139,6 @@ function AppContent() {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <motion.button
             className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg glass text-slate-300 hover:text-white transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -177,11 +170,10 @@ function AppContent() {
           </motion.button>
         </div>
 
-        {/* Mobile Nav Dropdown */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl bg-void-900/95 backdrop-blur-xl border border-glass-border shadow-2xl shadow-neon-purple/10 overflow-hidden"
+              className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl bg-void-900/95 backdrop-blur-xl border border-glass-border shadow-2xl overflow-hidden"
               initial={{ opacity: 0, height: 0, scale: 0.98 }}
               animate={{ opacity: 1, height: 'auto', scale: 1 }}
               exit={{ opacity: 0, height: 0, scale: 0.98 }}
@@ -230,7 +222,6 @@ function AppContent() {
         </AnimatePresence>
       </motion.nav>
 
-      {/* Main Content Area */}
       <main className="flex-grow pt-16 sm:pt-20">
         <AnimatePresence mode="wait">
           <motion.div

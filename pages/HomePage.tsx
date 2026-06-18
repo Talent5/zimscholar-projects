@@ -11,7 +11,6 @@ import {
   ArrowRight,
   Sparkles,
   Zap,
-  Globe,
   Cpu,
 } from 'lucide-react';
 import { TESTIMONIALS } from '../constants';
@@ -37,65 +36,6 @@ interface PortfolioProject {
   demoUrl?: string;
 }
 
-/* ── Particle Background ── */
-const ParticleBackground: React.FC = () => {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div className="absolute inset-0 cyber-grid opacity-20" />
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
-      <div className="orb orb-3" />
-      {/* Floating particles */}
-      {Array.from({ length: 20 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full bg-neon-cyan/30"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-/* ── Trust Signal Card ── */
-const TrustCard: React.FC<{
-  icon: React.ReactNode;
-  label: string;
-  index: number;
-}> = ({ icon, label, index }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-  return (
-    <motion.div
-      ref={ref}
-      className="flex flex-col items-center gap-3 p-6 rounded-2xl glass border border-glass-border"
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -4, borderColor: 'rgba(14,165,233,0.3)' }}
-    >
-      <div className="w-12 h-12 rounded-xl bg-glass-light flex items-center justify-center text-neon-cyan">
-        {icon}
-      </div>
-      <span className="text-sm font-medium text-slate-300">{label}</span>
-    </motion.div>
-  );
-};
-
-/* ── HomePage Component ── */
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [featuredProjects, setFeaturedProjects] = useState<PortfolioProject[]>([]);
@@ -104,7 +44,7 @@ const HomePage: React.FC = () => {
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
+  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
@@ -124,11 +64,11 @@ const HomePage: React.FC = () => {
 
   const containerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.12 } },
+    visible: { transition: { staggerChildren: 0.15 } },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] } },
   };
 
@@ -147,7 +87,11 @@ const HomePage: React.FC = () => {
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        <ParticleBackground />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 swiss-grid opacity-40" />
+          <div className="orb orb-1" />
+          <div className="orb orb-2" />
+        </div>
 
         <motion.div
           className="relative z-10 max-w-5xl mx-auto px-6 text-center"
@@ -158,17 +102,14 @@ const HomePage: React.FC = () => {
             initial="hidden"
             animate="visible"
           >
-            {/* Badge */}
-            <motion.div variants={itemVariants} className="mb-8">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neon-cyan/20 text-neon-cyan text-sm font-semibold uppercase tracking-wider badge-pulse">
-                <Sparkles size={14} />
+            <motion.div variants={itemVariants} className="mb-10">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em]">
                 Academic Solutions
               </span>
             </motion.div>
 
-            {/* Heading with overlap effect */}
-            <motion.h1 variants={itemVariants} className="mb-8">
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tighter leading-none text-slate-400">
+            <motion.h1 variants={itemVariants} className="mb-10">
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tighter leading-none text-slate-500">
                 Build The
               </span>
               <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none text-white text-overlap">
@@ -176,34 +117,32 @@ const HomePage: React.FC = () => {
               </span>
             </motion.h1>
 
-            {/* Subtitle */}
             <motion.p
               variants={itemVariants}
-              className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance"
+              className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-balance font-light"
             >
               Ready-made & custom academic projects in Data Science, Machine Learning,
               Software Engineering & IoT — built for students in Zimbabwe.
             </motion.p>
 
-            {/* CTA Buttons */}
             <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <motion.button
                 onClick={() => navigate('/portfolio')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-white text-sm font-semibold tracking-wide btn-glow"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-neon-cyan text-white text-sm font-semibold tracking-wide btn-primary"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Sparkles size={18} />
                 Explore Projects
               </motion.button>
               <motion.button
                 onClick={() => navigate('/quote')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-glass-border glass text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-neon-cyan/40 hover:shadow-lg hover:shadow-neon-cyan/10"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-white/10 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-white/20 hover:bg-white/[0.03]"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Request Custom Quote
                 <ArrowRight size={18} />
@@ -211,9 +150,8 @@ const HomePage: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Floating stats */}
           <motion.div
-            className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4"
+            className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.6 }}
@@ -226,34 +164,33 @@ const HomePage: React.FC = () => {
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                className="p-4 rounded-2xl glass border border-glass-border"
-                whileHover={{ y: -2, borderColor: 'rgba(14,165,233,0.3)' }}
+                className="p-5 rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-colors duration-300"
+                whileHover={{ y: -2 }}
               >
-                <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-xs text-slate-500">{stat.label}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white mb-1 tracking-tight">{stat.value}</div>
+                <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
         >
-          <div className="w-5 h-8 rounded-full border border-glass-border flex items-start justify-center p-1">
+          <div className="w-5 h-8 rounded-full border border-white/10 flex items-start justify-center p-1">
             <motion.div
-              className="w-1.5 h-1.5 rounded-full bg-neon-cyan"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="w-1 h-1.5 rounded-full bg-neon-cyan"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity }}
             />
           </div>
         </motion.div>
       </section>
 
       {/* ═══════ TRUST SIGNALS ═══════ */}
-      <section className="relative py-16 border-t border-glass-border">
+      <section className="relative py-16 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <TrustCard index={0} icon={<ShieldCheck size={24} />} label="Plagiarism Free" />
@@ -270,12 +207,12 @@ const HomePage: React.FC = () => {
       {/* ═══════ FEATURED PROJECTS ═══════ */}
       {featuredProjects.length > 0 && (
         <section className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0 cyber-grid opacity-10 pointer-events-none" />
+          <div className="absolute inset-0 swiss-grid opacity-30 pointer-events-none" />
           <div className="relative max-w-7xl mx-auto px-6">
             <SectionHeading
               badge="Portfolio"
               title="Featured Projects"
-              subtitle="Check out some of our best work - ready-made projects and custom showcases"
+              subtitle="Check out some of our best work — ready-made projects and custom showcases"
             />
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -284,18 +221,23 @@ const HomePage: React.FC = () => {
               ))}
             </div>
 
-            <div className="text-center mt-12">
-              <Button onClick={() => navigate('/portfolio')} variant="outline" size="lg">
+            <div className="text-center mt-14">
+              <motion.button
+                onClick={() => navigate('/portfolio')}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/10 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-white/20 hover:bg-white/[0.03]"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 View All Projects
                 <ArrowRight size={18} />
-              </Button>
+              </motion.button>
             </div>
           </div>
         </section>
       )}
 
       {/* ═══════ TESTIMONIALS ═══════ */}
-      <section className="relative py-24 border-t border-glass-border">
+      <section className="relative py-24 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <SectionHeading
             badge="Testimonials"
@@ -315,8 +257,8 @@ const HomePage: React.FC = () => {
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-void-950 via-void-900 to-void-950" />
-          <div className="orb orb-1" style={{ opacity: 0.15 }} />
-          <div className="orb orb-2" style={{ opacity: 0.15 }} />
+          <div className="orb orb-1" />
+          <div className="orb orb-2" />
         </div>
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.div
@@ -325,30 +267,30 @@ const HomePage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
               Ready to Start Your
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">
+              <span className="block text-neon-cyan">
                 Next Project?
               </span>
             </h2>
-            <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto font-light">
               Get in touch today and let us help you deliver an outstanding academic project.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <motion.button
                 onClick={() => navigate('/quote')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-white text-sm font-semibold tracking-wide btn-glow"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-neon-cyan text-white text-sm font-semibold tracking-wide btn-primary"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Zap size={18} />
                 Get Your Free Quote
               </motion.button>
               <motion.button
                 onClick={() => navigate('/portfolio')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-glass-border glass text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-neon-cyan/40 hover:shadow-lg hover:shadow-neon-cyan/10"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-white/10 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:border-white/20 hover:bg-white/[0.03]"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Cpu size={18} />
                 Browse Projects
@@ -358,6 +300,30 @@ const HomePage: React.FC = () => {
         </div>
       </section>
     </div>
+  );
+};
+
+/* ── Trust Signal Card ── */
+const TrustCard: React.FC<{
+  icon: React.ReactNode;
+  label: string;
+  index: number;
+}> = ({ icon, label, index }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <motion.div
+      ref={ref}
+      className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/[0.04]"
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+    >
+      <div className="w-12 h-12 rounded-xl bg-white/[0.03] flex items-center justify-center text-slate-400">
+        {icon}
+      </div>
+      <span className="text-sm font-medium text-slate-300">{label}</span>
+    </motion.div>
   );
 };
 
@@ -373,15 +339,15 @@ const SectionHeading: React.FC<{
     <motion.div
       ref={ref}
       className="text-center mb-16"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
     >
-      <span className="inline-block px-4 py-1.5 rounded-full glass border border-neon-cyan/20 text-neon-cyan text-xs font-semibold uppercase tracking-wider mb-4">
+      <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 text-slate-400 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
         {badge}
       </span>
-      <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{title}</h2>
-      <p className="text-slate-400 max-w-xl mx-auto">{subtitle}</p>
+      <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">{title}</h2>
+      <p className="text-slate-400 max-w-xl mx-auto font-light">{subtitle}</p>
     </motion.div>
   );
 };
@@ -398,13 +364,12 @@ const ProjectCard: React.FC<{
   return (
     <motion.div
       ref={ref}
-      className="group rounded-2xl overflow-hidden glass border border-glass-border glow-card cursor-pointer"
+      className="group rounded-2xl overflow-hidden border border-white/[0.04] glow-card cursor-pointer"
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.15, duration: 0.5 }}
       onClick={() => navigate('/portfolio')}
     >
-      {/* Media */}
       <div className="relative h-52 bg-void-800 overflow-hidden">
         {project.videoUrl ? (
           <video
@@ -421,22 +386,20 @@ const ProjectCard: React.FC<{
           />
         ) : null}
         <div className="absolute top-3 right-3">
-          <div className="w-9 h-9 rounded-lg bg-glass-heavy border border-glass-border flex items-center justify-center">
+          <div className="w-9 h-9 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center">
             <Star size={16} className="text-neon-cyan" fill="currentColor" />
           </div>
         </div>
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-void-950 via-transparent to-transparent opacity-60" />
       </div>
 
-      {/* Content */}
       <div className="p-6">
         <div className="flex gap-2 mb-3 flex-wrap">
-          <span className="px-3 py-1 rounded-full glass border border-neon-purple/20 text-neon-purple text-[10px] font-semibold uppercase tracking-wider">
+          <span className="px-3 py-1 rounded-full border border-white/[0.06] text-slate-400 text-[10px] font-semibold uppercase tracking-wider">
             {project.category}
           </span>
           {project.projectId && (
-            <span className="px-3 py-1 rounded-full glass border border-glass-border text-slate-400 text-[10px] font-mono">
+            <span className="px-3 py-1 rounded-full border border-white/[0.06] text-slate-500 text-[10px] font-mono">
               {project.projectId}
             </span>
           )}
@@ -451,12 +414,12 @@ const ProjectCard: React.FC<{
         {project.technologies && project.technologies.length > 0 && (
           <div className="flex gap-2 flex-wrap mb-4">
             {project.technologies.slice(0, 3).map((tech, idx) => (
-              <span key={idx} className="px-2 py-1 rounded-md bg-glass-light text-slate-400 text-[10px] font-medium">
+              <span key={idx} className="px-2 py-1 rounded-md bg-white/[0.03] text-slate-500 text-[10px] font-medium">
                 {tech}
               </span>
             ))}
             {project.technologies.length > 3 && (
-              <span className="px-2 py-1 rounded-md bg-glass-light text-slate-400 text-[10px] font-medium">
+              <span className="px-2 py-1 rounded-md bg-white/[0.03] text-slate-500 text-[10px] font-medium">
                 +{project.technologies.length - 3}
               </span>
             )}
@@ -464,7 +427,7 @@ const ProjectCard: React.FC<{
         )}
 
         {project.projectType === 'ready-made' && project.price && (
-          <div className="flex justify-between items-center p-3 rounded-xl bg-glass-light mb-4">
+          <div className="flex justify-between items-center p-3 rounded-xl bg-white/[0.02] mb-4">
             <span className="text-xl font-bold text-white">${project.price}</span>
             <span
               className={`px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
@@ -481,14 +444,14 @@ const ProjectCard: React.FC<{
         <div className="flex gap-3">
           <button
             onClick={(e) => { e.stopPropagation(); navigate('/portfolio'); }}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-gradient-to-r from-neon-cyan to-neon-blue text-void-950 text-sm font-semibold hover:shadow-lg hover:shadow-neon-cyan/25 transition-all"
+            className="flex-1 px-4 py-2.5 rounded-xl bg-neon-cyan text-white text-sm font-semibold hover:shadow-lg hover:shadow-neon-cyan/15 transition-all"
           >
             View Details
           </button>
           {project.demoUrl && (
             <button
               onClick={(e) => { e.stopPropagation(); window.open(project.demoUrl, '_blank'); }}
-              className="p-2.5 rounded-xl glass border border-glass-border text-slate-400 hover:text-neon-cyan hover:border-neon-cyan/30 transition-all"
+              className="p-2.5 rounded-xl border border-white/[0.06] text-slate-400 hover:text-neon-cyan hover:border-white/[0.12] transition-all"
             >
               <ExternalLink size={16} />
             </button>
@@ -510,11 +473,11 @@ const TestimonialCard: React.FC<{
   return (
     <motion.div
       ref={ref}
-      className="p-6 rounded-2xl glass border border-glass-border"
-      initial={{ opacity: 0, y: 30 }}
+      className="p-6 rounded-2xl border border-white/[0.04]"
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.15, duration: 0.5 }}
-      whileHover={{ y: -4, borderColor: 'rgba(14,165,233,0.2)' }}
+      whileHover={{ y: -2, borderColor: 'rgba(255,255,255,0.08)' }}
     >
       <div className="flex text-neon-cyan mb-4 gap-0.5">
         {[...Array(5)].map((_, i) => (
@@ -522,8 +485,8 @@ const TestimonialCard: React.FC<{
         ))}
       </div>
       <p className="text-slate-400 text-sm italic mb-4 leading-relaxed">"{testimonial.content}"</p>
-      <div className="flex items-center gap-3 pt-4 border-t border-glass-border">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center text-xs font-bold text-white">
+      <div className="flex items-center gap-3 pt-4 border-t border-white/[0.04]">
+        <div className="w-8 h-8 rounded-full bg-neon-cyan flex items-center justify-center text-xs font-bold text-white">
           {testimonial.name[0]}
         </div>
         <div>

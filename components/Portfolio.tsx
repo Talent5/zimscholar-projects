@@ -127,10 +127,10 @@ const Portfolio: React.FC = () => {
               key={cat}
               onClick={() => setCategoryFilter(cat)}
               className={`
-                glass px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300
+                px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border
                 ${categoryFilter === cat
-                  ? 'bg-neon-cyan/15 border-neon-cyan/30 text-neon-cyan shadow-lg shadow-neon-cyan/10'
-                  : 'border-glass-border text-slate-400 hover:text-white hover:border-white/20'
+                  ? 'bg-neon-cyan text-white border-neon-cyan'
+                  : 'border-white/[0.06] text-slate-400 hover:text-white hover:border-white/15'
                 }
               `}
             >
@@ -193,10 +193,10 @@ const Portfolio: React.FC = () => {
                       {project.category}
                     </span>
                     <span className={`
-                      px-3 py-1 rounded-full glass border text-xs font-semibold
+                      px-3 py-1 rounded-full border text-xs font-semibold
                       ${project.projectType === 'ready-made'
-                        ? 'border-neon-purple/20 text-neon-purple'
-                        : 'border-neon-cyan/20 text-neon-cyan'
+                        ? 'border-neon-cyan/20 text-neon-cyan'
+                        : 'border-white/[0.06] text-slate-400'
                       }
                     `}>
                       {project.projectType === 'ready-made' ? 'Ready-Made' : 'Showcase'}
@@ -245,7 +245,7 @@ const Portfolio: React.FC = () => {
                       <span className={`
                         px-3 py-1 rounded-full text-xs font-semibold
                         ${project.isAvailable
-                          ? 'bg-neon-purple/10 border border-neon-purple/20 text-neon-purple'
+                          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
                           : 'bg-red-500/10 border border-red-500/20 text-red-400'
                         }
                       `}>

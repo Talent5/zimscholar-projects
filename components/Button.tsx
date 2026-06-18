@@ -14,13 +14,13 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseStyles = "inline-flex items-center justify-center font-semibold tracking-wide transition-all duration-300 rounded-xl focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseStyles = "inline-flex items-center justify-center font-semibold tracking-wide transition-all duration-300 rounded-full focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
-    primary: "bg-gradient-to-r from-neon-cyan to-neon-purple text-white shadow-lg shadow-neon-purple/20 hover:shadow-neon-purple/40 hover:-translate-y-0.5 active:translate-y-0",
-    secondary: "glass text-white border border-glass-border hover:border-neon-cyan/30 hover:shadow-lg hover:shadow-neon-cyan/10 hover:-translate-y-0.5 active:translate-y-0",
-    outline: "border-2 border-neon-cyan/40 text-neon-cyan hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-lg hover:shadow-neon-cyan/10",
-    ghost: "text-slate-400 hover:text-white hover:bg-glass-light",
+    primary: "bg-neon-cyan text-white hover:shadow-lg hover:shadow-neon-cyan/15 hover:-translate-y-0.5 active:translate-y-0",
+    secondary: "border border-white/10 text-white hover:border-white/20 hover:bg-white/[0.03] hover:-translate-y-0.5 active:translate-y-0",
+    outline: "border border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan/5 hover:border-neon-cyan/50 hover:-translate-y-0.5 active:translate-y-0",
+    ghost: "text-slate-400 hover:text-white hover:bg-white/[0.03]",
   };
 
   const sizes = {
