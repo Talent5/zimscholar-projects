@@ -28,7 +28,7 @@ function ScrollProgress() {
   return (
     <motion.div
       className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
-      style={{ scaleX: scrollYProgress, background: '#2563eb' }}
+      style={{ scaleX: scrollYProgress, background: '#2b59d1' }}
     />
   );
 }
@@ -72,7 +72,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#faf7f3', color: '#1b1a2a' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#f6f3f1', color: '#242424' }}>
       <ScrollProgress />
 
       <motion.nav

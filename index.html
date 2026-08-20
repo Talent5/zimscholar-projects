@@ -23,8 +23,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://scholarxafrica.com/" />
     <meta property="og:site_name" content="ScholarXafrica" />
-    <meta property="og:title" content="ScholarXafrica | Academic Projects & Software Development Services in Zimbabwe" />
-    <meta property="og:description" content="Leading academic project assistance and custom software development in Zimbabwe. Get ready-made or custom projects in Data Science, Machine Learning, Web Development, IoT & Software Engineering." />
+    <meta property="og:title" content="ScholarXafrica | Research Papers & Academic Projects Zimbabwe — All Disciplines" />
+    <meta property="og:description" content="Zimbabwe's trusted academic service. Research papers, dissertations, proposals, essays, data analysis, and projects across all disciplines. Turnitin-checked, plagiarism-free, AI content removed." />
     <meta property="og:image" content="https://scholarxafrica.com/scholarxafrica-logo.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -33,12 +33,12 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://scholarxafrica.com/" />
-    <meta name="twitter:title" content="ScholarXafrica | Academic Projects & Software Development Services in Zimbabwe" />
-    <meta name="twitter:description" content="Leading academic project assistance and custom software development in Zimbabwe. Ready-made and custom projects for students." />
+    <meta name="twitter:title" content="ScholarXafrica | Research Papers & Academic Projects Zimbabwe — All Disciplines" />
+    <meta name="twitter:description" content="Zimbabwe's trusted academic service. Research papers, dissertations, proposals, essays, data analysis, and projects across all disciplines. Turnitin-checked, plagiarism-free." />
     <meta name="twitter:image" content="https://scholarxafrica.com/scholarxafrica-logo.png" />
     
     <!-- Additional SEO -->
-    <meta name="theme-color" content="#0a0a1a" />
+    <meta name="theme-color" content="#f6f3f1" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
     <meta name="rating" content="general" />
@@ -54,25 +54,49 @@
         theme: {
           extend: {
             colors: {
+              parchment: {
+                50: '#f6f3f1',
+                100: '#efeae6',
+                200: '#e2dcd6',
+                300: '#cecac8',
+              },
+              lake: {
+                DEFAULT: '#2b59d1',
+                100: '#d6e0f7',
+                600: '#2b59d1',
+                700: '#2247ad',
+                900: '#1e3a5f',
+              },
+              periwinkle: '#cfdaf5',
+              sky: '#a0b5eb',
+              mint: '#a7fccd',
+              coral: '#ff9473',
+              gold: '#ecda98',
+              crimson: '#f37a0a',
+              offblack: '#242424',
+              ink: '#000000',
+              graphite: '#4e4d4d',
+              smoke: '#797776',
+              ash: '#cecac8',
               surface: {
-                50: '#faf7f3',
-                100: '#f5f1ec',
-                200: '#ebe7e0',
-                300: '#d9d4cc',
+                50: '#f6f3f1',
+                100: '#efeae6',
+                200: '#e2dcd6',
+                300: '#cecac8',
               },
               neon: {
-                cyan: '#2563eb',
-                blue: '#1d4ed8',
-                purple: '#5b586a',
-                pink: '#9491a2',
-                green: '#2563eb',
+                cyan: '#2b59d1',
+                blue: '#2247ad',
+                purple: '#4e4d4d',
+                pink: '#797776',
+                green: '#2b59d1',
               },
               brand: {
-                50: '#eff6ff',
-                100: '#dbeafe',
-                200: '#bfdbfe',
-                600: '#2563eb',
-                700: '#1d4ed8',
+                50: '#e8edfa',
+                100: '#d6e0f7',
+                200: '#c3d1f2',
+                600: '#2b59d1',
+                700: '#2247ad',
                 900: '#1e3a5f',
               },
               glass: {
@@ -83,7 +107,8 @@
               },
             },
             fontFamily: {
-              sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+              sans: ['Fraunces', 'Georgia', 'serif'],
+              serif: ['Fraunces', 'Georgia', 'serif'],
               mono: ['JetBrains Mono', 'monospace'],
             },
             animation: {
@@ -99,16 +124,16 @@
                 '50%': { transform: 'translateY(-20px)' },
               },
               pulseGlow: {
-                '0%, 100%': { boxShadow: '0 0 20px rgba(14,165,233,0.2)' },
-                '50%': { boxShadow: '0 0 40px rgba(14,165,233,0.4), 0 0 80px rgba(14,165,233,0.08)' },
+                '0%, 100%': { boxShadow: '0 0 20px rgba(43,89,209,0.2)' },
+                '50%': { boxShadow: '0 0 40px rgba(43,89,209,0.4), 0 0 80px rgba(43,89,209,0.08)' },
               },
               gridScroll: {
                 '0%': { transform: 'translateY(0)' },
                 '100%': { transform: 'translateY(-50%)' },
               },
               borderGlow: {
-                '0%, 100%': { borderColor: 'rgba(14,165,233,0.3)' },
-                '50%': { borderColor: 'rgba(14,165,233,0.6)' },
+                '0%, 100%': { borderColor: 'rgba(43,89,209,0.3)' },
+                '50%': { borderColor: 'rgba(43,89,209,0.6)' },
               },
               flicker: {
                 '0%, 100%': { opacity: '1' },
@@ -125,25 +150,25 @@
     </script>
     <style>
       body {
-        font-family: 'Space Grotesk', 'Inter', sans-serif;
-        background: #faf7f3;
-        color: #1b1a2a;
+        font-family: 'JetBrains Mono', monospace;
+        background: #f6f3f1;
+        color: #242424;
       }
       ::-webkit-scrollbar {
         width: 5px;
       }
       ::-webkit-scrollbar-track {
-        background: #f5f1ec;
+        background: #efeae6;
       }
       ::-webkit-scrollbar-thumb {
-        background: #d9d4cc;
+        background: #cecac8;
         border-radius: 3px;
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #b8b2a8;
       }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script type="importmap">
 {
   "imports": {
@@ -156,7 +181,7 @@
 </script>
 <link rel="stylesheet" href="/styles/forms.css">
 </head>
-  <body class="antialiased" style="background:#faf7f3;color:#1b1a2a">
+  <body class="antialiased" style="background:#f6f3f1;color:#242424">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   <script type="module" src="/index.tsx"></script>
